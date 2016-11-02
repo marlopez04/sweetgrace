@@ -1,0 +1,22 @@
+	<div class="header-section">
+	<!-- top_bg -->
+			<div class="top_bg">
+				
+					<div class="header_top">
+						<div class="top_right">
+							<ul>
+								<li><a href="contact.html">help</a></li>|
+								<li><a href="contact.html">Contact</a></li>|
+								<li><a href="checkout.html">Delivery information</a></li>
+							</ul>
+						</div>
+						<div class="top_left">
+							<h2><span></span> USUARIO</h2>
+						</div>
+							<div class="clearfix"> </div>
+					</div>
+				
+			</div>
+		<div class="clearfix"></div>
+	<!-- /top_bg -->
+	</div>
