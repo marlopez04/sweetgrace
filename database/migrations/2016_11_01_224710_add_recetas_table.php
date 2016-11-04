@@ -14,6 +14,8 @@ class AddRecetasTable extends Migration
     {
         Schema::create('recetas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
+            $table->double('costo', 10, 2);
             $table->timestamps();
         });
     }
