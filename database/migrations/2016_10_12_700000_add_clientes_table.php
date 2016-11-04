@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddInsumosTable extends Migration
+class AddClienteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,12 @@ class AddInsumosTable extends Migration
      */
     public function up()
     {
-        Schema::create('insumos', function (Blueprint $table) {
+        Schema::create('cliente', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
+            $table->string('email')->unique();
+            $table->string('telefono');
+            $table->string('direccion');
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ class AddInsumosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('insumos');
+        Schema::drop('cliente');
     }
 }

@@ -14,6 +14,10 @@ class AddIngredientesTable extends Migration
     {
         Schema::create('ingredientes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
+            $table->double('costo', 10, 2);
+            $table->double('cantidad', 10, 0);
+            $table->double('stockcritico', 10, 0);
             $table->timestamps();
         });
     }

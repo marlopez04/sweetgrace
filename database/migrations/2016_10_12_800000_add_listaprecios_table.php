@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddClienteTable extends Migration
+class AddListapreciosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddClienteTable extends Migration
      */
     public function up()
     {
-        Schema::create('cliente', function (Blueprint $table) {
+        Schema::create('listaprecios', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ class AddClienteTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cliente');
+        Schema::drop('listaprecios');
     }
 }

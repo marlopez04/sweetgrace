@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStockingredientesTable extends Migration
+class AddInsumosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,12 @@ class AddStockingredientesTable extends Migration
      */
     public function up()
     {
-        Schema::create('stockingredientes', function (Blueprint $table) {
+        Schema::create('insumos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->double('costo', 10, 2);
             $table->double('cantidad', 10, 0);
-            $table->integer('ingrediente_id')->unsigned();
-            $table->foreign('ingrediente_id')->references('id')->on('ingredientes');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->double('stockcritico', 10, 0);
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class AddStockingredientesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('stockingredientes');
+        Schema::drop('insumos');
     }
 }

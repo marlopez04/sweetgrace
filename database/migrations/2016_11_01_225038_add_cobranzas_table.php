@@ -14,6 +14,12 @@ class AddCobranzasTable extends Migration
     {
         Schema::create('cobranzas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('pedido_id')->unsigned();
+            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->enum('tipo',['seña', 'pago'])->default('pago');
+            $table->double('cantidad', 10, 2);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
