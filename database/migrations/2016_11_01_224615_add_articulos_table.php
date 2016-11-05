@@ -22,7 +22,7 @@ class AddArticulosTable extends Migration
             $table->integer('receta_id')->unsigned();
             $table->foreign('receta_id')->references('id')->on('recetas');
             $table->integer('lista_id')->unsigned();
-            $table->foreign('lista_id')->references('id')->on('listaprecio');
+            $table->foreign('lista_id')->references('id')->on('listaprecios');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

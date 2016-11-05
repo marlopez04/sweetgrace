@@ -15,7 +15,7 @@ class AddImagenesTable extends Migration
         Schema::create('imagenes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->enum('type',['categoria', 'articulo'])->default('member');
+            $table->enum('type',['categoria', 'articulo'])->default('articulo');
             $table->timestamps();
         });
     }
