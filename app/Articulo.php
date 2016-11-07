@@ -35,4 +35,9 @@ class Articulo extends Model
     {
     	return $this->hasMany('App\ImagenesArticulos');
     }
+
+    public function pedidoarticulo()
+    {
+        return $this->hasMany('App\PedidoArticulo');
+    }
 }

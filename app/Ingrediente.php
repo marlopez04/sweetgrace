@@ -14,4 +14,9 @@ class Ingrediente extends Model
     	return $this->hasMany('App\StockIngrediente');
     }
 
+    public function recetaingredientes()
+    {
+    	return $this->hasMany('App\RecetaIngrediente');
+    }
+
 }

@@ -314,6 +314,7 @@ class ComposerStaticInit73c24fcc2afe95bbff6595c3d130c0e3
         'AddPedidoarticulosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_224937_add_pedidoarticulos_table.php',
         'AddPedidosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_224903_add_pedidos_table.php',
         'AddRecetaingredientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_04_180827_add_recetaingredientes_table.php',
+        'AddRecetainsumosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_203127_add_recetainsumos_table.php',
         'AddRecetasTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_400000_add_recetas_table.php',
         'AddStockingredientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_224742_add_stockingredientes_table.php',
         'AddStockinsumosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_225102_add_stockinsumos_table.php',
