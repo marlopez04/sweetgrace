@@ -17,7 +17,7 @@ class AddCobranzasTable extends Migration
             $table->integer('pedido_id')->unsigned();
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->enum('tipo',['seña', 'pago'])->default('pago');
-            $table->double('cantidad', 10, 2);
+            $table->double('importe', 10, 2);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
