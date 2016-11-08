@@ -14,13 +14,12 @@ class AddStockingredientesTable extends Migration
     {
         Schema::create('stockingredientes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
             $table->double('costo', 10, 2);
             $table->double('cantidad', 10, 0);
             $table->integer('ingrediente_id')->unsigned();
             $table->foreign('ingrediente_id')->references('id')->on('ingredientes');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->enum('estado',['pendiente', 'confirmado'])->default('pendiente');
+            $table->enum('tipo',['ingreso', 'egreso'])->default('ingreso');
             $table->timestamps();
         });
     }
