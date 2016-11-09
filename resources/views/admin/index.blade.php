@@ -1,4 +1,4 @@
-@extends('admin.template.mainprueba')
+@extends('admin.template.main')
 
 @section('title', 'Pedidos pendientes.')
 

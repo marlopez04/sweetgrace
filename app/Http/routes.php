@@ -11,6 +11,7 @@
 |
 */
 
+/*   ----------rotuas que estaba probando------
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,7 +27,18 @@ Route::get('/admin2', function(){
 Route::get('/contacto', function(){
 	return view('front.contacto');
 });
+   ----------rotuas que estaba probando------ */
 
-Route::get('/admin', function(){
-	return view('admin.index');
+Route::group(['prefix' => 'admin'], function(){
+
+	Route::get('/',['as' => 'admin.index', function () {
+    return view('admin.index');
+	}]);
+
+	Route::resource('insumos', 'InsumosController');
+
 });
+
+
+
+

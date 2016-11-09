@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Insumo;
+use Laracasts\Flash\Flash;
 
 class InsumosController extends Controller
 {
@@ -26,7 +27,7 @@ class InsumosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.insumos.create');
     }
 
     /**
@@ -37,7 +38,9 @@ class InsumosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insumo = new Insumo($request->all());
+        $insumo->save();
+        dd($insumo);
     }
 
     /**

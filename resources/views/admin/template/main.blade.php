@@ -1,34 +1,73 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE HTML>
+<html>
 <head>
-	<meta charset="UTF-8">
 	<title> @yield('title', 'Default') |Panel de Administracion</title>
-	<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-	<link rel="stylesheet" href="{{asset('plugins/bootstrap/css/bootstrap.css')}}">
-	<link rel="stylesheet" href="{{ asset('plugins/chosen/chosen.css') }}">
-	<link rel="stylesheet" href="{{ asset('plugins/trumbowyg/ui/trumbowyg.css')}}">
-</head>
-<body class="admin-body">
-	
-	@include('admin.template.partials.nav')
-	
-	<section class="section-admin">
-		<div class="panel panel-default">
-			<div class="panel panel-heading">
-				<h3 class="panel-title">@yield('title')</h3>
-			</div>
-			<div class="panel-body">
-				@include('flash::message')
-				@include('admin.template.partials.errors')
-				@yield('content')
-			</div>
-		</div>
-	</section>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,3); } </script>
+<!-- Bootstrap Core CSS -->
+<link href="{{asset('plugins/gretong-admin/css/bootstrap.min.css')}}" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="{{asset('plugins/gretong-admin/css/style.css')}}" rel='stylesheet' type='text/css' />
+<!-- Graph CSS -->
+<link href="{{asset('plugins/gretong-admin/css/font-awesome.css')}}" rel="stylesheet"> 
+<!-- jQuery -->
+<link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<!-- lined-icons -->
+<link rel="stylesheet" href="{{asset('plugins/gretong-admin/css/icon-font.min.css')}}" type='text/css' />
+<script src="{{asset('plugins/gretong-admin/js/amcharts.js')}}"></script>	
+<script src="{{asset('plugins/gretong-admin/js/serial.js')}}"></script>	
+<script src="{{asset('plugins/gretong-admin/js/light.js')}}"></script>	
+<!-- //lined-icons -->
+<script src="{{asset('plugins/gretong-admin/js/jquery-1.10.2.min.js')}}"></script>
+   <!--pie-chart-->
+<script src="{{asset('plugins/gretong-admin/js/pie-chart.js')}}" type="text/javascript"></script>
 
-	<script src="{{ asset('plugins/jquery/jquery-2.2.4.js') }}"></script>
-	<script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
-	<script src="{{ asset('plugins/chosen/chosen.jquery.js') }}"></script>
-	<script src="{{ asset('plugins/trumbowyg/trumbowyg.js')}}"></script>
-	@yield('js')
+</head> 
+<body>
+   <div class="page-container">
+   <!--/content-inner-->
+	<div class="left-content">
+	   <div class="inner-content">
+		<!-- header-starts -->
+			@include('admin.template.partials.header')
+		<!-- //header-ends -->
+				
+				<!--content-->
+			<div class="content">
+					
+					@yield('content')
+			
+						<!--//area-->
+							
+						<div class="clearfix"></div>
+			</div>
+
+
+			<!--content-->
+		</div>
+		<div class="footer">
+				<div class="fo-top-di">
+					<div class="foot-top">
+						@include('admin.template.partials.footer')
+					</div>
+		    	</div>
+			</div>
+</div>
+				<!--//content-inner-->
+			<!--/sidebar-menu-->
+			@include('admin.template.partials.nav2')
+<!--js -->
+<script src="{{asset('plugins/gretong-admin/js/jquery.nicescroll.js')}}"></script>
+<script src="{{asset('plugins/gretong-admin/js/scripts.js')}}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{asset('plugins/gretong-admin/js/bootstrap.min.js')}}"></script>
+<!-- /Bootstrap Core JavaScript -->
+<!-- real-time -->
+<!-- /real-time -->
+ <script src="{{asset('plugins/gretong-admin/js/menu_jquery.js')}}"></script>
 </body>
 </html>
