@@ -17,7 +17,8 @@ class InsumosController extends Controller
      */
     public function index()
     {
-        //
+        $insumos = Insumo::orderBy('id', 'DESC')->paginate(5);
+        return view('admin.insumos.index')->with('insumos', $insumos);
     }
 
     /**
@@ -40,7 +41,9 @@ class InsumosController extends Controller
     {
         $insumo = new Insumo($request->all());
         $insumo->save();
-        dd($insumo);
+        
+        Flash::warning('El insumo '. $insumo->name . ' ha sido creado con exito');
+        return redirect()->route('admin.insumos.index');
     }
 
     /**
@@ -62,7 +65,9 @@ class InsumosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $insumo = Insumo::find($id);
+
+        return view('admin.insumos.edit')->with('insumo', $insumo);
     }
 
     /**
@@ -74,7 +79,12 @@ class InsumosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $insumo = Insumo::find($id);
+        $insumo->fill($request->all());
+        $insumo->save();
+
+        Flash::warning('El insumo '. $insumo->nombre . ' ha sido editado con exito');
+        return redirect()->route('admin.insumo.index');
     }
 
     /**
@@ -85,6 +95,10 @@ class InsumosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $insumo = Insumo::find($id);
+        $insumo->delete();
+
+        Flash::error('El insumo '. $insumo->nombre . ' ha sido borrado con exito.');
+        return redirect()->route('admin.insumo.index');
     }
 }

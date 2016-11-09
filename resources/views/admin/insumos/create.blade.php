@@ -3,6 +3,10 @@
 @section('title', 'Agregar Un Insumo')
 
 @section('content')
+<div class="panel panel-widget">
+	<div class="panel-title">
+			Agregar Insumo	  
+	</div>
 	{!! Form::open(['route' =>'admin.insumos.store', 'method' => 'POST']) !!}
 		<div class="form-group">
 			<h4>Nombre</h4>
@@ -19,4 +23,5 @@
 		</div>
 	{!!Form::close()!!}
 
+</div>
 @endsection

@@ -38,6 +38,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 				<!--content-->
 			<div class="content">
+					@include('flash::message')
+					@include('admin.template.partials.errors')
 					
 					@yield('content')
 			
@@ -49,13 +51,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			<!--content-->
 		</div>
-		<div class="footer">
-				<div class="fo-top-di">
-					<div class="foot-top">
-						@include('admin.template.partials.footer')
-					</div>
-		    	</div>
-			</div>
+		
 </div>
 				<!--//content-inner-->
 			<!--/sidebar-menu-->
