@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Request\InsumoRequest;
 use App\Http\Controllers\Controller;
 use App\Insumo;
 use Laracasts\Flash\Flash;
@@ -84,7 +85,7 @@ class InsumosController extends Controller
         $insumo->save();
 
         Flash::warning('El insumo '. $insumo->nombre . ' ha sido editado con exito');
-        return redirect()->route('admin.insumo.index');
+        return redirect()->route('admin.insumos.index');
     }
 
     /**
@@ -99,6 +100,6 @@ class InsumosController extends Controller
         $insumo->delete();
 
         Flash::error('El insumo '. $insumo->nombre . ' ha sido borrado con exito.');
-        return redirect()->route('admin.insumo.index');
+        return redirect()->route('admin.insumos.index');
     }
 }

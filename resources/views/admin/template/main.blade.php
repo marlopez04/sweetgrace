@@ -56,6 +56,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<!--//content-inner-->
 			<!--/sidebar-menu-->
 			@include('admin.template.partials.nav2')
+
+			@yield('js')
 <!--js -->
 <script src="{{asset('plugins/gretong-admin/js/jquery.nicescroll.js')}}"></script>
 <script src="{{asset('plugins/gretong-admin/js/scripts.js')}}"></script>

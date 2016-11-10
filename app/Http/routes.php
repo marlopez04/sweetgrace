@@ -36,6 +36,10 @@ Route::group(['prefix' => 'admin'], function(){
 	}]);
 
 	Route::resource('insumos', 'InsumosController');
+	Route::get('insumos/{id}/destroy',[
+		'uses' => 'InsumosController@destroy',
+		'as'   => 'admin.insumos.destroy'
+	]);
 
 });
 

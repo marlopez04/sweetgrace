@@ -7,14 +7,14 @@
 	<div class="panel-title">
 			Editar {{ $insumo->nombre }}
 	</div>
-	{!! Form::open(['route' =>'admin.insumos.update', 'method' => 'PUT']) !!}
+	{!! Form::open(['route' =>['admin.insumos.update', $insumo], 'method' => 'PUT']) !!}
 		<div class="form-group">
 			<h4>Nombre</h4>
 			{!!	Form::text('nombre',$insumo->nombre,['class'=>'form-control', 'required'])!!}
 			<h4>Costo</h4>
 			{!!	Form::number('costo',$insumo->costo,['class'=>'form-control', 'required'])!!}
 			<h4>Cantidad</h4>
-			{!!	Form::number('cantidad',$insumo->costo,['class'=>'form-control', 'required'])!!}
+			{!!	Form::number('cantidad',$insumo->cantidad,['class'=>'form-control', 'required'])!!}
 			<h4>StockCritico</h4>
 			{!!	Form::number('stockcritico',$insumo->stockcritico,['class'=>'form-control', 'required'])!!}
 		</div>
@@ -25,3 +25,5 @@
 
 </div>
 @endsection
+
+
