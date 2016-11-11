@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Request\InsumoRequest;
 use App\Http\Requests;
+use App\Ingrediente;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class IngredientesController extends Controller
 {
@@ -16,7 +18,8 @@ class IngredientesController extends Controller
      */
     public function index()
     {
-        //
+        $ingredientes = Ingrediente::orderBy('id', 'DESC')->paginate(5);
+        return view('admin.ingredientes.index')->with('ingredientes', $ingredientes);
     }
 
     /**
@@ -26,7 +29,7 @@ class IngredientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.ingredientes.create');
     }
 
     /**
@@ -37,7 +40,11 @@ class IngredientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ingrediente = new Ingrediente($request->all());
+        $ingrediente->save();
+        
+        Flash::warning('El ingrediente '. $ingrediente->name . ' ha sido creado con exito');
+        return redirect()->route('admin.ingredientes.index');
     }
 
     /**
@@ -59,7 +66,9 @@ class IngredientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ingrediente = Ingrediente::find($id);
+
+        return view('admin.ingredientes.edit')->with('ingrediente', $ingrediente);
     }
 
     /**
@@ -71,7 +80,12 @@ class IngredientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ingrediente = Ingrediente::find($id);
+        $ingrediente->fill($request->all());
+        $ingrediente->save();
+
+        Flash::warning('El ingrediente '. $ingrediente->nombre . ' ha sido editado con exito');
+        return redirect()->route('admin.ingredientes.index');
     }
 
     /**
@@ -82,6 +96,10 @@ class IngredientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ingrediente = Ingrediente::find($id);
+        $ingrediente->delete();
+
+        Flash::error('El ingrediente '. $ingrediente->nombre . ' ha sido borrado con exito.');
+        return redirect()->route('admin.ingredientes.index');
     }
 }

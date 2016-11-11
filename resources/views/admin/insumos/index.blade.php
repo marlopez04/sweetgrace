@@ -11,7 +11,8 @@
 		</div>
 			<div class="panel-body">
 				<!-- status -->
-				<div class="contain">									<a href="{{ route('admin.insumos.create') }}" class="btn btn-info">Registrar nuevo insumo</a><hr>
+				<div class="contain">
+					<a href="{{ route('admin.insumos.create') }}" class="btn btn-info">Registrar nuevo insumo</a><hr>
 					<div class="gantt">
 						<table class="table table-striped">
 							<thead>
