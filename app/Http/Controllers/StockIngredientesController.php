@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\StockIngrediente;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class StockIngredientesController extends Controller
 {
@@ -26,7 +27,7 @@ class StockIngredientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.ingredientes.create');
     }
 
     /**
@@ -37,7 +38,11 @@ class StockIngredientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ingrediente = new Ingrediente($request->all());
+        $ingrediente->save();
+        
+        Flash::warning('El ingrediente '. $ingrediente->name . ' ha sido creado con exito');
+        return redirect()->route('admin.ingredientes.index');
     }
 
     /**

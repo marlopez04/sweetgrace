@@ -31,8 +31,12 @@ Route::get('/contacto', function(){
 
 Route::group(['prefix' => 'admin'], function(){
 
+	Route::get('login',['as' => 'admin.auth.login', function () {
+		return view('admin.auth.login');
+	}]);
+
 	Route::get('/',['as' => 'admin.index', function () {
-    return view('admin.index');
+    	return view('admin.index');
 	}]);
 
 	Route::resource('insumos', 'InsumosController');
