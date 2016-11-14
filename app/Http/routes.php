@@ -28,6 +28,9 @@ Route::get('/contacto', function(){
 	return view('front.contacto');
 });
    ----------rotuas que estaba probando------ */
+Route::get('/', function(){
+	return view('front.index');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
