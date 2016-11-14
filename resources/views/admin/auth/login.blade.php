@@ -18,51 +18,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<div class="main">
-		<h1>Sign In & Sign Up Form Widget</h1>
+		<h1>Sweet Grace</h1>
 		<div class="w3_login">
 			<div class="w3_login_module">
 				<div class="module form-module">
-				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
-					<div class="tooltip">Click Me</div>
+				  <div class="toggle">
 				  </div>
 				  <div class="form">
-					<h2>Login to your account</h2>
-					<form action="#" method="post">
-					  <input type="text" name="Username" placeholder="Username" required=" ">
-					  <input type="password" name="Password" placeholder="Password" required=" ">
-					  <input type="submit" value="Login">
-					</form>
+					<h2>Iniciar Sesión</h2>
+					{!! Form::open(['route'=>'admin.auth.login', 'method' => 'POST']) !!}
+					  {!! Form::email('email', null,['class' => 'form-control', 'placeholder' => 'example@mail.com'])!!}
+					  {!! Form::password('password', ['class' =>'form-control', 'placeholder' => '*********'])!!}
+					  {!! Form::submit('Acceder', ['class' => 'btn btn-primary'])!!}
+					{!! Form::close()!!}
 				  </div>
-				  <div class="form">
-					<h2>Create an account</h2>
-					<form action="#" method="post">
-					  <input type="text" name="Username" placeholder="Username" required=" ">
-					  <input type="password" name="Password" placeholder="Password" required=" ">
-					  <input type="email" name="Email" placeholder="Email Address" required=" ">
-					  <input type="text" name="Phone" placeholder="Phone Number" required=" ">
-					  <input type="submit" value="Register">
-					</form>
-				  </div>
-				  <div class="cta"><a href="#">Forgot your password?</a></div>
+				  <div class="cta"></div>
 				</div>
 			</div>
-			<script>
-				$('.toggle').click(function(){
-				  // Switches the Icon
-				  $(this).children('i').toggleClass('fa-pencil');
-				  // Switches the forms  
-				  $('.form').animate({
-					height: "toggle",
-					'padding-top': 'toggle',
-					'padding-bottom': 'toggle',
-					opacity: "toggle"
-				  }, "slow");
-				});
-			</script>
 		</div>
-		<div class="agileits_copyright">
-			<p>© 2016 Sign In & Sign Up Form Widget. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
-		</div>
+		
 	</div>
 </body>
 </html>

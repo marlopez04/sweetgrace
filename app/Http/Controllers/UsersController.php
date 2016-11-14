@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
+use App\Http\Request\UserRequest;
 
-class UsuariosController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy('id','ASC')->paginate(5);
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
@@ -26,7 +29,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -37,7 +40,14 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User($request->all());
+        $user ->password = bcrypt($request -> password);
+        $user -> save();
+
+        Flash::success("Se ha registrado " . $user->name. " de forma exitosa.");
+
+        return redirect()->route('admin.users.index');
+
     }
 
     /**
@@ -59,7 +69,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit')->with('user', $user);
     }
 
     /**
@@ -71,7 +82,23 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        //esta linea de abajo reemplaza
+        $user ->fill($request->all());
+        /* todo lo que yo tengo escrito en comentarios
+            es una manera mas sencilla de tomar todo lo que trae
+            el request y ponerlo en el objeto user, para luego ser
+            guardado en la tabla
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->type = $request->type;
+        */
+        $user->save();
+
+        Flash::warning('El usuario '.$user->name.' ha sido editado con exito');
+        return redirect()->route('admin.users.index');
+
     }
 
     /**
@@ -82,6 +109,10 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        Flash::error('El usuario '. $user->name .' a sido borrado de forma exitosa');
+        return redirect()->route('admin.users.index');
     }
 }
