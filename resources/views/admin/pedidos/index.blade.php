@@ -113,12 +113,11 @@
 <div class="monthly-grid">
 	<div class="panel panel-widget">
 		<div class="panel-title">
-			Insumos	  
 		</div>
 			<div class="panel-body">
 				<!-- status -->
 				<div class="contain">
-
+					<h4>Categorias</h4>
 					    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden; visibility: hidden;">
 				        <!-- Loading Screen -->
 				        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -155,46 +154,6 @@
 				            </div>
 				            <div style="display: none;">
 				                <img data-u="image" src="{{asset('plugins/carousel-slider/img/024.jpg')}}" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/025.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/027.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/029.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/030.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/031.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/030.jpg" />
-				            </div>
-				            <a data-u="any" href="http://www.jssor.com" style="display:none">Carousel</a>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/034.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/038.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/039.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/043.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/044.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/047.jpg" />
-				            </div>
-				            <div style="display: none;">
-				                <img data-u="image" src="img/050.jpg" />
 				            </div>
 				        </div>
 				        <!-- Bullet Navigator -->
