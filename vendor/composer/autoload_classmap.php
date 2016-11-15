@@ -20,7 +20,7 @@ return array(
     'AddRecetaingredientesTable' => $baseDir . '/database/migrations/2016_11_04_180827_add_recetaingredientes_table.php',
     'AddRecetainsumosTable' => $baseDir . '/database/migrations/2016_11_07_203127_add_recetainsumos_table.php',
     'AddRecetasTable' => $baseDir . '/database/migrations/2016_10_12_400000_add_recetas_table.php',
-    'AddStockTable' => $baseDir . '/database/migrations/2016_11_08_164438_add_stock_table.php',
+    'AddStockTable' => $baseDir . '/database/migrations/2016_11_01_100000_add_stock_table.php',
     'AddStockingredientesTable' => $baseDir . '/database/migrations/2016_11_01_224742_add_stockingredientes_table.php',
     'AddStockinsumosTable' => $baseDir . '/database/migrations/2016_11_01_225102_add_stockinsumos_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
@@ -532,4 +532,5 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UserSeeder' => $baseDir . '/database/seeds/UserSeeder.php',
 );

@@ -316,7 +316,7 @@ class ComposerStaticInit73c24fcc2afe95bbff6595c3d130c0e3
         'AddRecetaingredientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_04_180827_add_recetaingredientes_table.php',
         'AddRecetainsumosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_203127_add_recetainsumos_table.php',
         'AddRecetasTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_400000_add_recetas_table.php',
-        'AddStockTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_08_164438_add_stock_table.php',
+        'AddStockTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_100000_add_stock_table.php',
         'AddStockingredientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_224742_add_stockingredientes_table.php',
         'AddStockinsumosTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_225102_add_stockinsumos_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
@@ -828,6 +828,7 @@ class ComposerStaticInit73c24fcc2afe95bbff6595c3d130c0e3
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UserSeeder' => __DIR__ . '/../..' . '/database/seeds/UserSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
