@@ -113,11 +113,12 @@
 <div class="monthly-grid">
 	<div class="panel panel-widget">
 		<div class="panel-title">
+            <h4>Categorias</h4>
 		</div>
 			<div class="panel-body">
+                <div class="row">
 				<!-- status -->
-				<div class="contain">
-					<h4>Categorias</h4>
+				<div class="col-md-8">
 					    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden; visibility: hidden;">
 				        <!-- Loading Screen -->
 				        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -167,12 +168,217 @@
 				        <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
 				        <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
 				    </div>
-
+            
 				</div>
+            <div class="col-md-1"><h4>   </h4></div>
+                <!-- carrito de compras -->
+            <div class="col-md-3 cart-total">
+             <a class="continue" href="#">Pedido</a>
+             <div class="price-details">
+                 <h3>Articulos</h3>
+                 <span>Tarta Coco</span>
+                 <span class="total1">120.00</span>
+                 <span>Budin</span>
+                 <span class="total1">80.00</span>
+                 <span>Pan Dulce</span>
+                 <span class="total1">150.00</span>
+                 <div class="clearfix"></div>                
+             </div> 
+             <ul class="total_price">
+               <li class="last_price"> <h4>TOTAL</h4></li>  
+               <li class="last_price"><span>350.00</span></li>
+               <div class="clearfix"> </div>
+             </ul>
+            </div>
+            <!-- carrito de compras -->
+
 			</div>
 			<!-- status -->
+            </div>
 		</div>
 	</div>
+
+          <!-- articulos de la categoria-->
+<div class="women_main">
+<div class="w_content">
+        <div class="women">
+            <h4>Articulos</h4>
+             <div class="clearfix"></div>   
+        </div>
+        <!-- grids_of_4 -->
+        <div class="grids_of_4">
+          <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/005.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $99.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/006.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $76.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/011.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $58.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/013.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $112.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        
+        
+        <div class="grids_of_4">
+         <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/014.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $109.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/019.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $95.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/020.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $68.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/021.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $74.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="grids_of_4">
+          <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/022.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $80.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/024.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $65.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/005.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $90.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="grid1_of_4">
+                <div class="content_box"><a href="details.html">
+                     <img src="{{asset('plugins/carousel-slider/img/011.jpg')}}" class="img" alt="">
+                      </a>
+                    <h4><a href="details.html"> Duis autem</a></h4>
+                     <p>It is a long established fact that</p>
+                     <div class="grid_1 simpleCart_shelfItem">
+                    
+                     <div class="item_add"><span class="item_price"><h6>ONLY $75.00</h6></span></div>
+                    <div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
+                     </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- end grids_of_4 -->
+        
+        
+    </div>
+</div>
+<!-- articulos de la categoria-->
 
 @endsection
 
