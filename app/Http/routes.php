@@ -69,6 +69,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.pedidos.destroy'
 	]);
 
+	Route::resource('categorias', 'CategoriasController');
+	Route::get('categorias/{id}/destroy',[
+		'uses' => 'CategoriasController@destroy',
+		'as'   => 'admin.categorias.destroy'
+	]);
+
 });
 
 Route::get('admin/auth/login', [

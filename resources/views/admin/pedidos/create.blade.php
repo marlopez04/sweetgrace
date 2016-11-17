@@ -1,6 +1,6 @@
 @extends('admin.template.main')
 
-@section('title', 'Agregar Un Insumo')
+@section('title', 'Nuevo Pedido')
 
 @section('content')
 <div class="panel panel-widget">

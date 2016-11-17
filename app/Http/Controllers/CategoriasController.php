@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Categoria;
+use App\ImagenCategoria;
+use Laracasts\Flash\Flash;
+use App\Http\Request\CategoriaRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoriasController extends Controller
 {
@@ -16,7 +21,14 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::orderBy('id', 'DESC');  
+        $categorias->each(function($categorias){
+            $categorias->imagencategoria;
+        });
+
+        return view('admin.categorias.index')
+            ->with('categorias', $categorias);
+            
     }
 
     /**
@@ -26,7 +38,7 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categorias.create');
     }
 
     /**
@@ -37,7 +49,26 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->file('imagen'))
+        {
+            $file = $request->file('imagen');
+            $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/imagenes/categorias/';
+            $file->move($path, $nombre);     
+        }
+
+        $categoria = new Categoria($request->all());
+        $categoria->save();
+
+        $imagen = new ImagenCategoria();
+        $imagen->nombre = $nombre;
+        $imagen->categoria()->associate($categoria);
+        $imagen->save();
+
+        
+        dd($imagen);
+
+
     }
 
     /**

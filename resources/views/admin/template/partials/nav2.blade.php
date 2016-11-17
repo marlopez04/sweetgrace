@@ -5,12 +5,12 @@
 						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
                            <div class="menu">
 									<ul id="menu" >
-										<li><a href="index.html"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
-										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span> New Arrivals</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										<li><a href="{{ route('admin.index')}}"><i class="fa fa-tachometer"></i> <span>Inicio</span></a></li>
+										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Pedidos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="shoes.html">Shoes</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="products.html">Watches</a></li>
-											<li id="menu-academico-boletim" ><a href="sunglasses.html">Sunglasses</a></li>
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.create')}}">Nuevo Pedido</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.create')}}">Pendientes</a></li>
+											<li id="menu-academico-boletim" ><a href="{{ route('admin.pedidos.create')}}">Entregados</a></li>
 										  </ul>
 										</li>
 										 <li id="menu-academico" ><a href="sunglasses.html"><i class="fa fa-file-text-o"></i> <span>Sunglasses</span></a></li>

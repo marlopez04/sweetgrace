@@ -9,11 +9,11 @@ class Categoria extends Model
 
 
 	protected $table = "categorias";
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', ];
 
-	public function images()
+	public function imagenescategorias()
     {
-    	return $this->hasMany('App\ImagenesCategorias');
+    	return $this->hasMany('App\ImagenCategoria');
     }
 
     public function articulos()

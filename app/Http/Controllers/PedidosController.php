@@ -26,7 +26,7 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pedidos.index');
     }
 
     /**
