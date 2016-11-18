@@ -40,7 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- header -->
 		@yield('content')
 <!-- //newsletter-bottom -->
-		@include('front.template.partials.fooler')
+		@include('front.template.partials.footer')
 <!-- for bootstrap working -->
 	<script src="{{asset('plugins/cooks-web/js/bootstrap.js')}}"></script>
 <!-- //for bootstrap working -->

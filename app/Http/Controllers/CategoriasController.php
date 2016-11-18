@@ -21,10 +21,16 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::orderBy('id', 'DESC');  
-        $categorias->each(function($categorias){
-            $categorias->imagencategoria;
-        });
+        //$categorias = Categoria::all();
+        //$categorias = Categoria::all()->sortBy("id")->paginate(3);
+  
+        $categorias = Categoria::orderBy('id', 'DESC')->paginate(8);  
+        
+        //$categorias->each(function($categorias){
+        //    $categorias->imagenescategorias;
+        //});
+
+//        dd($categorias);
 
         return view('admin.categorias.index')
             ->with('categorias', $categorias);
@@ -66,7 +72,8 @@ class CategoriasController extends Controller
         $imagen->save();
 
         
-        dd($imagen);
+        Flash::success('La Categoria '.$categoria->nombre.' ha sido creada con exito');
+        return redirect()->route('admin.categorias.index');
 
 
     }
@@ -102,7 +109,22 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        $categoria->fill($request->all());
+        $categoria->save();
+
+        if ($request->file('imagen'))
+        {
+            $imagen = ImagenCategoria::find($id);
+            $imagen->delete();
+
+            $file = $request->file('imagen');
+            $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/imagenes/categorias/';
+            $file->move($path, $nombre);     
+        }
+        
+
     }
 
     /**
