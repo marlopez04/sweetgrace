@@ -1,11 +1,11 @@
 @extends('admin.template.main')
 
-@section('title', 'Agregar Un Ingrediente')
+@section('title', 'Editar categoria ' . $categoria->nombre)
 
 @section('content')
 <div class="panel panel-widget">
 	<div class="panel-title">
-			Agregar Categoria
+			Editar categoria {{$categoria->nombre}}
 	</div>
 	{!! Form::open(['route' =>['admin.categorias.update', $categoria], 'method' => 'PUT']) !!}
 		<div class="form-group">
@@ -19,11 +19,11 @@
             @endforeach
 		</div>
 		<div class="form-group">
-			<h4>Imagen</h4>
+			<h4>Nueva imagen</h4>
 			{!! Form::file('imagen')!!}
 		</div>
 		<div class="form-group">
-			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}
+			{!!	Form::submit('Guardar',['class' =>'btn btn-primary']) !!}
 		</div>
 	{!!Form::close()!!}
 

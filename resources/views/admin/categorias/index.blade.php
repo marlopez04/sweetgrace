@@ -22,11 +22,11 @@
                       @endforeach
                       </a>
                     <h4><a href=""> {{$categoria->nombre}}</a></h4>
-                     <p>It is a long established fact that</p>
+                     
                      <div class="grid_1 simpleCart_shelfItem">
                     
-                     <div class="item_add"><span class="item_price"><h6>ONLY $99.00</h6></span></div>
-                    <div class="item_add"><span class="item_price"><a href="#">Editar</a></span></div>
+                     <div class="item_add"><span class="item_price"></div>
+                    <div class="item_add"><span class="item_price"><a href="{{ route('admin.categorias.edit', $categoria->id) }}">Editar</a></span></div>
                      </div>
                 </div>
             </div>

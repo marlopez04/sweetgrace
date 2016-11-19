@@ -97,7 +97,10 @@ class CategoriasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = Categoria::find($id);
+
+        return view('admin.categorias.edit')
+            ->with('categoria', $categoria);
     }
 
     /**
@@ -123,6 +126,7 @@ class CategoriasController extends Controller
             $path = public_path() . '/imagenes/categorias/';
             $file->move($path, $nombre);     
         }
+        
         
 
     }
