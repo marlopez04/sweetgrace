@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Categoria;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +26,10 @@ class ArticulosController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::orderBy('nombre', 'ASC')->lists('nombre', 'id');
+
+        return view('admin.articulos.create')
+            ->with('categorias', $categorias);
     }
 
     /**

@@ -24,7 +24,7 @@ class CategoriasController extends Controller
         //$categorias = Categoria::all();
         //$categorias = Categoria::all()->sortBy("id")->paginate(3);
   
-        $categorias = Categoria::orderBy('id', 'DESC')->paginate(8);  
+        $categorias = Categoria::orderBy('id', 'DESC')->paginate(8);
         
         //$categorias->each(function($categorias){
         //    $categorias->imagenescategorias;
@@ -111,23 +111,37 @@ class CategoriasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+
+//$categoria      = Categoria::find($id);
+//$imagencategoria   = $categoria->imagenescategorias;
+//$imagencategoriaId = $imagencategoria->$nombre;
+
+        //$categoria = Categoria::find($id)->imagenescategorias;
+//        dd($imagencategoria);
+
         $categoria = Categoria::find($id);
         $categoria->fill($request->all());
         $categoria->save();
 
         if ($request->file('imagen'))
         {
-            $imagen = ImagenCategoria::find($id);
+            $imagen = ImagenCategoria::find($request->img_id);
+            $path = public_path() . '/imagenes/categorias/';
+            unlink($path . $imagen->nombre);
             $imagen->delete();
 
             $file = $request->file('imagen');
             $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
-            $path = public_path() . '/imagenes/categorias/';
             $file->move($path, $nombre);     
         }
-        
-        
+
+        $imagen = new ImagenCategoria();
+        $imagen->nombre = $nombre;
+        $imagen->categoria()->associate($categoria);
+        $imagen->save();
+
+        return redirect()->route('admin.categorias.index');
 
     }
 
@@ -139,6 +153,16 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $imagen = ImagenCategoria::find($id);
+        $idcategoria = $imagen->categoria_id;
+        $categoria = Categoria::find($idcategoria);
+        $path = public_path() . '/imagenes/categorias/';
+        unlink($path . $imagen->nombre);
+        $imagen->delete();
+        $categoria->delete();
+
+        Flash::error('se ha borrado la categoria '. $categoria->nombre .' de forma exitosa!');
+        return redirect()->route('admin.categorias.index');
+
     }
 }

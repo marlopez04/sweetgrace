@@ -17,17 +17,21 @@
           @foreach($categorias as $categoria)
           <div class="grid1_of_4">
                      <div class="content_box"><a href="">
+                      <h4><a href=""> {{$categoria->nombre}}</a></h4>
                       @foreach($categoria->imagenescategorias as $imagen)                    
                        <img src="{{ asset('imagenes/categorias/' . $imagen->nombre) }}" class="img" alt="">
-                      @endforeach
+                      
                       </a>
-                    <h4><a href=""> {{$categoria->nombre}}</a></h4>
+                      
                      
                      <div class="grid_1 simpleCart_shelfItem">
-                    
                      <div class="item_add"><span class="item_price"></div>
-                    <div class="item_add"><span class="item_price"><a href="{{ route('admin.categorias.edit', $categoria->id) }}">Editar</a></span></div>
+                    <div class="item_add"><span class="item_price">
+                      <a href="{{ route('admin.categorias.edit', $categoria->id) }}">Editar</a></span>
+                      <a href="{{ route('admin.categorias.destroy', $imagen->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger">Eliminar</a>
+                    </div>
                      </div>
+                     @endforeach
                 </div>
             </div>
             <?php $cantidad++  ?>

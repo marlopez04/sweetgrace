@@ -14,7 +14,7 @@
 		</div>
 		<div class="form-group">
 			<h4>Imagen</h4>
-			{!! Form::file('imagen')!!}
+			{!! Form::file('imagen',['required'])!!}
 		</div>
 		<div class="form-group">
 			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}

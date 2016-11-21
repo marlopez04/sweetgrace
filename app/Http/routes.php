@@ -75,6 +75,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.categorias.destroy'
 	]);
 
+	Route::resource('articulos', 'ArticulosController');
+	Route::get('articulos/{id}/destroy',[
+		'uses' => 'ArticulosController@destroy',
+		'as'   => 'admin.articulos.destroy'
+	]);
+
+
 });
 
 Route::get('admin/auth/login', [
