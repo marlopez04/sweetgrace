@@ -7,14 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
 
-
 	protected $table = "categorias";
-    protected $fillable = ['nombre'];
-
-	public function imagenescategorias()
-    {
-    	return $this->hasMany('App\ImagenCategoria');
-    }
+    protected $fillable = ['nombre', 'imagen'];
 
     public function articulos()
     {

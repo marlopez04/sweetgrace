@@ -9,7 +9,7 @@ class Articulo extends Model
 
 
     protected $table = "articulos";
-    protected $fillable = ['nombre','descripcion','precio','receta_id','lista_id','user_id','categoria_id'];
+    protected $fillable = ['nombre','descripcion','precio','lista_id','user_id','categoria_id', 'imagen'];
 
     public function recetas()
     {
@@ -29,11 +29,6 @@ class Articulo extends Model
     public function categorias()
     {
     	return $this->belongsTo('App\Categoria');
-    }
-
-	public function images()
-    {
-    	return $this->hasMany('App\ImagenesArticulos');
     }
 
     public function pedidoarticulo()

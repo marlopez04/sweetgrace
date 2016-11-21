@@ -64,13 +64,8 @@ class CategoriasController extends Controller
         }
 
         $categoria = new Categoria($request->all());
+        $categoria->imagen = $nombre
         $categoria->save();
-
-        $imagen = new ImagenCategoria();
-        $imagen->nombre = $nombre;
-        $imagen->categoria()->associate($categoria);
-        $imagen->save();
-
         
         Flash::success('La Categoria '.$categoria->nombre.' ha sido creada con exito');
         return redirect()->route('admin.categorias.index');
@@ -153,12 +148,9 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
-        $imagen = ImagenCategoria::find($id);
-        $idcategoria = $imagen->categoria_id;
-        $categoria = Categoria::find($idcategoria);
+        $categoria = Categoria::find($id);
         $path = public_path() . '/imagenes/categorias/';
-        unlink($path . $imagen->nombre);
-        $imagen->delete();
+        unlink($path . $categoria->imagen);
         $categoria->delete();
 
         Flash::error('se ha borrado la categoria '. $categoria->nombre .' de forma exitosa!');
