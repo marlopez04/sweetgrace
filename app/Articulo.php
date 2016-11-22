@@ -16,9 +16,9 @@ class Articulo extends Model
     	return $this->belongsTo('App\Receta');
     }
 
-    public function listaprecios()
+    public function listaprecio()
     {
-    	return $this->belongsTo('App\ListaPrecios');
+    	return $this->belongsTo('App\ListaPrecio');
     }
 
     public function users()
@@ -26,7 +26,7 @@ class Articulo extends Model
     	return $this->belongsTo('App\User');
     }
 
-    public function categorias()
+    public function categoria()
     {
     	return $this->belongsTo('App\Categoria');
     }

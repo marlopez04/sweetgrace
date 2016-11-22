@@ -8,6 +8,7 @@ use App\Articulo;
 use App\ListaPrecio;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class ArticulosController extends Controller
 {
@@ -18,7 +19,15 @@ class ArticulosController extends Controller
      */
     public function index()
     {
-        //
+        $articulos = Articulo::orderBy('id', 'DESC')->paginate(8);
+        $articulos->each(function($articulos){
+            $articulos->categoria;
+            $articulos->listaprecio;
+        });
+
+        dd($articulos);
+//        return view('admin.articulos.index')
+//            ->with('articulos', $articulos);
     }
 
     /**
@@ -58,7 +67,7 @@ class ArticulosController extends Controller
         $articulo->imagen = $nombre;
         $articulo->save();
 
-        Flash::success('Se ha creado el articulo '. $article->nombre . ' de forma satisfactoria!');
+        Flash::success('Se ha creado el articulo '. $articulo->nombre . ' de forma satisfactoria!');
 
         return redirect()->route('admin.articles.index');
           

@@ -13,5 +13,4 @@ class ListaPrecio extends Model
     {
     	return $this->hasMany('App\Articulo');
     }
-
 }

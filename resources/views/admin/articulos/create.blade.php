@@ -13,13 +13,15 @@
 			{!! Form::select('categoria_id', $categorias, null, ['class' => 'form-control select-category', 'required']) !!}
 		</div>
 				<div class="form-group">
-			<h4>Categoria</h4>
+			<h4>Lista de Precio</h4>
 			{!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'required']) !!}
 		</div>
+		<h4>Precio</h4>
+			{!!	Form::number('precio',null,['class'=>'form-control', 'required'])!!}
 
 		<div class="form-group">
-			{!! Form::label('image', 'Imagen')!!}
-			{!! Form::file('image')!!}
+			<h4>Imagen</h4>
+			{!! Form::file('imagen',['required'])!!}
 		</div>
 		<div class="form-group">
 			{!! Form::submit('Agregar articulo',['class' => 'btn btn-primary']) !!}
