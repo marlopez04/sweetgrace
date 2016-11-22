@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class CategoriaRequest extends Request
+class ListaPrecioRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class CategoriaRequest extends Request
     public function rules()
     {
         return [
-            'nombre'       => 'required|unique:categorias',
-            'image'       => 'required'
+            'nombre'       => 'required|unique:listasprecios',
+            'vigencia'       => 'required'
         ];
     }
 }

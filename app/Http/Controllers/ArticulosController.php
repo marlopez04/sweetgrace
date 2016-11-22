@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Categoria;
+use App\Articulo;
+use App\ListaPrecio;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -27,9 +29,11 @@ class ArticulosController extends Controller
     public function create()
     {
         $categorias = Categoria::orderBy('nombre', 'ASC')->lists('nombre', 'id');
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
 
         return view('admin.articulos.create')
-            ->with('categorias', $categorias);
+            ->with('categorias', $categorias)
+            ->with('listasprecios', $listasprecios);
     }
 
     /**
@@ -40,7 +44,24 @@ class ArticulosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        if ($request->file('imagen'))
+        {
+            $file = $request->file('imagen');
+            $nombre = 'articulo_' . time() .'.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/imagenes/articulos/';
+            $file->move($path, $nombre);     
+        }            
+
+        $articulo = new Articulo($request->all());
+        $articulo->user_id = \Auth::user()->id;
+        $articulo->imagen = $nombre;
+        $articulo->save();
+
+        Flash::success('Se ha creado el articulo '. $article->nombre . ' de forma satisfactoria!');
+
+        return redirect()->route('admin.articles.index');
+          
     }
 
     /**

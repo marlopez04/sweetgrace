@@ -81,6 +81,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.articulos.destroy'
 	]);
 
+	Route::resource('precios', 'ListaPreciosController');
+	Route::get('precios/{id}/destroy',[
+		'uses' => 'ListaPreciosController@destroy',
+		'as'   => 'admin.precios.destroy'
+	]);
 
 });
 

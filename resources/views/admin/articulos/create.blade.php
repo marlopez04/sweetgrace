@@ -12,6 +12,11 @@
 			<h4>Categoria</h4>
 			{!! Form::select('categoria_id', $categorias, null, ['class' => 'form-control select-category', 'required']) !!}
 		</div>
+				<div class="form-group">
+			<h4>Categoria</h4>
+			{!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'required']) !!}
+		</div>
+
 		<div class="form-group">
 			{!! Form::label('image', 'Imagen')!!}
 			{!! Form::file('image')!!}

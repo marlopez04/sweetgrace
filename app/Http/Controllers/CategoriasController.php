@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Categoria;
-use App\ImagenCategoria;
 use Laracasts\Flash\Flash;
 use App\Http\Request\CategoriaRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -64,7 +63,7 @@ class CategoriasController extends Controller
         }
 
         $categoria = new Categoria($request->all());
-        $categoria->imagen = $nombre
+        $categoria->imagen = $nombre;
         $categoria->save();
         
         Flash::success('La Categoria '.$categoria->nombre.' ha sido creada con exito');
@@ -116,25 +115,20 @@ class CategoriasController extends Controller
 //        dd($imagencategoria);
 
         $categoria = Categoria::find($id);
-        $categoria->fill($request->all());
-        $categoria->save();
 
         if ($request->file('imagen'))
         {
-            $imagen = ImagenCategoria::find($request->img_id);
             $path = public_path() . '/imagenes/categorias/';
-            unlink($path . $imagen->nombre);
-            $imagen->delete();
+            unlink($path . $categoria->imagen);
 
             $file = $request->file('imagen');
             $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
             $file->move($path, $nombre);     
         }
 
-        $imagen = new ImagenCategoria();
-        $imagen->nombre = $nombre;
-        $imagen->categoria()->associate($categoria);
-        $imagen->save();
+        $categoria->fill($request->all());
+        $categoria->imagen = $nombre;
+        $categoria->save();
 
         return redirect()->route('admin.categorias.index');
 

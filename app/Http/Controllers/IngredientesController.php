@@ -43,7 +43,7 @@ class IngredientesController extends Controller
         $ingrediente = new Ingrediente($request->all());
         $ingrediente->save();
         
-        Flash::warning('El ingrediente '. $ingrediente->name . ' ha sido creado con exito');
+        Flash::warning('El ingrediente '. $ingrediente->nombre . ' ha sido creado con exito');
         return redirect()->route('admin.ingredientes.index');
     }
 

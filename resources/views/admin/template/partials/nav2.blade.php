@@ -13,7 +13,19 @@
 											<li id="menu-academico-boletim" ><a href="{{ route('admin.pedidos.create')}}">Entregados</a></li>
 										  </ul>
 										</li>
-										 <li id="menu-academico" ><a href="sunglasses.html"><i class="fa fa-file-text-o"></i> <span>Sunglasses</span></a></li>
+										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Categorias</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.create')}}">Nueva</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Categorias</a></li>
+										  </ul>
+										</li>
+										 <li id="menu-academico" ><a href="sunglasses.html"><i class="fa fa-file-text-o"></i> <span>Lista de Precios</span></a></li>
+										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Articulos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.create')}}">Nuevo</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Articulos</a></li>
+										  </ul>
+										</li>
 									<li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
 									<li id="menu-academico" ><a href="catalog.html"><i class="fa fa-file-text-o"></i> <span>Catalog</span></a></li>
 									<li id="menu-academico" ><a href="shoes.html"><i class="lnr lnr-book"></i> <span>Shoes</span></a></li>

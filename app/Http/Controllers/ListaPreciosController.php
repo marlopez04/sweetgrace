@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\ListaPrecio;
 use App\Http\Requests;
+use Laracasts\Flash\Flash;
 use App\Http\Controllers\Controller;
+use App\Http\Request\ListaPrecioRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class ListaPreciosController extends Controller
 {
@@ -16,7 +19,8 @@ class ListaPreciosController extends Controller
      */
     public function index()
     {
-        //
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->paginate(5);
+        return view('admin.precios.index')->with('listasprecios', $listasprecios);
     }
 
     /**
@@ -26,7 +30,7 @@ class ListaPreciosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.precios.create');
     }
 
     /**
@@ -37,7 +41,11 @@ class ListaPreciosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $listaprecio = new ListaPrecio($request->all());
+        $listaprecio->save();
+
+        Flash::warning('La lista de precio '. $listaprecio->nombre . ' ha sido creada con exito');
+        return redirect()->route('admin.precios.index');        
     }
 
     /**
@@ -59,7 +67,9 @@ class ListaPreciosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $listaprecio = ListaPrecio::find($id);
+
+        return view('admin.precios.edit')->with('listaprecio', $listaprecio);
     }
 
     /**
@@ -71,7 +81,13 @@ class ListaPreciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $listaprecio = ListaPrecio::find($id);
+        $listaprecio->fill($request->all());
+        $listaprecio->save();
+
+        Flash::warning('La lista de precio'. $listaprecio->nombre . ' ha sido actualizada.');
+        return redirect()->route('admin.precios.index');
+
     }
 
     /**
@@ -82,6 +98,10 @@ class ListaPreciosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $listaprecio = ListaPrecio::find($id);
+        $listaprecio->delete();
+
+        Flash::error('La lista '. $listaprecio->nombre . ' ha sido borrada con exito.');
+        return redirect()->route('admin.precios.index');
     }
 }
