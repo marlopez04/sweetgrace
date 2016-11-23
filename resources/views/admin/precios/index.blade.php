@@ -17,14 +17,16 @@
 						<table class="table table-striped">
 							<thead>
 								<th>Nombre</th>
-								<th>Vigencia</th>
+								<th>Vigencia desde</th>
+								<th>Vigencia hasta</th>
 								<th>Editar</th>
 							</thead>
 							<tbody>
 								@foreach($listasprecios as $listaprecio)
 									<tr>
 										<td>{{ $listaprecio->nombre }}</td>
-										<td>{{ date("d-m-Y", strtotime($listaprecio->vigencia)) }}</td>
+										<td>{{ date("d-m-Y", strtotime($listaprecio->vigencia_desde)) }}</td>
+										<td>{{ date("d-m-Y", strtotime($listaprecio->vigencia_hasta)) }}</td>
 										<td>
 										<a href="{{ route('admin.precios.edit', $listaprecio->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

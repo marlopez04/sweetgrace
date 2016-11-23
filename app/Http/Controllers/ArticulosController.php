@@ -21,12 +21,14 @@ class ArticulosController extends Controller
     {
         $articulos = Articulo::orderBy('id', 'DESC')->paginate(8);
 //        $articulos = Articulo::all();
+        $articulos->load('categoria', 'user', 'listaprecio');
+/*        
         $articulos->each(function($articulos){
             $articulos->categoria;
             $articulos->listaprecio;
             $articulos->user;
         });
-
+*/
         dd($articulos);
 //        return view('admin.articulos.index')
 //            ->with('articulos', $articulos);

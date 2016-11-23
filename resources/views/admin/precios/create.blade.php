@@ -11,8 +11,10 @@
 		<div class="form-group">
 			<h4>Nombre</h4>
 			{!!	Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre ej: 08-2016', 'required'])!!}
-			<h4>Fecha de Vigencia</h4>
-			{!!	Form::date('vigencia',null,['class'=>'form-control', 'required'])!!}
+			<h4>Vigente desde</h4>
+			{!!	Form::date('vigencia_desde',null,['class'=>'form-control', 'required'])!!}
+			<h4>Vigente hasta</h4>
+			{!!	Form::date('vigencia_hasta',null,['class'=>'form-control', 'required'])!!}
 		</div>
 		<div class="form-group">
 			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}

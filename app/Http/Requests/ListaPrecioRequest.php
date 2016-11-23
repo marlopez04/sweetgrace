@@ -24,8 +24,9 @@ class ListaPrecioRequest extends Request
     public function rules()
     {
         return [
-            'nombre'       => 'required|unique:listasprecios',
-            'vigencia'       => 'required'
+            'nombre'               => 'required|unique:listasprecios',
+            'vigencia_desde'       => 'required',
+            'vigencia_hasta'       => 'required'
         ];
     }
 }
