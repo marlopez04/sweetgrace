@@ -20,9 +20,11 @@ class ArticulosController extends Controller
     public function index()
     {
         $articulos = Articulo::orderBy('id', 'DESC')->paginate(8);
+//        $articulos = Articulo::all();
         $articulos->each(function($articulos){
             $articulos->categoria;
             $articulos->listaprecio;
+            $articulos->user;
         });
 
         dd($articulos);
@@ -69,7 +71,7 @@ class ArticulosController extends Controller
 
         Flash::success('Se ha creado el articulo '. $articulo->nombre . ' de forma satisfactoria!');
 
-        return redirect()->route('admin.articles.index');
+        return redirect()->route('admin.articulos.index');
           
     }
 

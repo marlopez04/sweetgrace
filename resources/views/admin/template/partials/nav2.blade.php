@@ -19,11 +19,11 @@
 											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Categorias</a></li>
 										  </ul>
 										</li>
-										 <li id="menu-academico" ><a href="sunglasses.html"><i class="fa fa-file-text-o"></i> <span>Lista de Precios</span></a></li>
+										 <li id="menu-academico" ><a href="{{ route('admin.precios.index')}}"><i class="fa fa-file-text-o"></i> <span>Lista de Precios</span></a></li>
 										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Articulos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.create')}}">Nuevo</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Articulos</a></li>
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.create')}}">Nuevo</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.index')}}">Articulos</a></li>
 										  </ul>
 										</li>
 									<li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
