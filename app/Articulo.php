@@ -18,7 +18,7 @@ class Articulo extends Model
 
     public function listaprecio()
     {
-        return $this->belongsTo('App\ListaPrecio');
+        return $this->belongsTo('App\ListaPrecio', 'lista_id', 'id');
     }
 
     public function user()

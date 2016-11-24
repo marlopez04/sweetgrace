@@ -22,7 +22,7 @@
                       </a>
                      <div class="grid_1 simpleCart_shelfItem">
                       <h6> {{ $articulo->categoria->nombre}}</h6>
-                      <h6> Lista : 12-2016 </h6>
+                      <h6> Lista :{{ $articulo->listaprecio->nombre}}  </h6>
                       <h6>{{ $articulo->user->name}}</h6>
                      <div class="item_add"><span class="item_price">
                         <h6> ${{ $articulo->precio}}</h6>
@@ -56,9 +56,3 @@
 <!-- articulos de la categoria-->
 
 @endsection
-
-
-
-
-
-

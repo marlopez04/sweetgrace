@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Categoria;
+use App\Articulo;
+use App\ListaPrecio;
+use App\Pedido;
+use Laracasts\Flash\Flash;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +30,12 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        return view('admin.pedidos.index');
+        $articulos = Articulo::all();
+        $categorias = Categoria::all();
+        
+        return view('admin.pedidos.create')
+            ->with('articulos', $articulos)
+            ->with('categorias', $categorias);
     }
 
     /**

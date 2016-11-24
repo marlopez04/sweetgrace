@@ -29,9 +29,9 @@ class ArticulosController extends Controller
             $articulos->user;
         });
 */
-        dd($articulos);
-//        return view('admin.articulos.index')
-//            ->with('articulos', $articulos);
+//        dd($articulos);
+        return view('admin.articulos.index')
+            ->with('articulos', $articulos);
     }
 
     /**
