@@ -128,7 +128,9 @@
 				        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden;">
                         @foreach ($categorias as $categoria)
                             <div style="display: none;">
+                              <a href="#" class="categoria" data-id="{{ $categoria->id}}">
                                 <img data-u="image" src="{{asset('imagenes/categorias/' . $categoria->imagen)}}" />
+                                </a>
                             </div>
                         @endforeach
 				        </div>
@@ -194,7 +196,7 @@
                      </div>
                     <div class="item_add"><span class="item_price">
                       <a href="{{ route('admin.categorias.edit', $articulo->id) }}">Editar</a></span>
-                      <a href="{{ route('admin.categorias.destroy', $articulo->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger">Eliminar</a>
+                      <a href="{{ route('admin.categorias.destroy', $articulo->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger" id="prueba">Eliminar</a>
                     </div>
                      </div>
                 </div>
@@ -221,9 +223,43 @@
 
 <!-- articulos de la categoria-->
 
+
+{!! Form::open(['route' => ['admin.categorias.show', ':CATEGORIA_ID'], 'method' => 'POST' , 'id' => 'form-delete' ]) !!}
+{!! Form::close() !!}
+
+
 @endsection
 
+@section('js')
 
+<script>
+
+  $(document).ready(function(){
+
+      $('.categoria').click(function(){
+
+          var id_categoria = $(this).data('id'); 
+          var form = $('#form-delete');
+          var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
+          var data = form.serialize();
+
+          $.get(url, data, function(articulos){
+              
+              for(i=0;i<articulos.length;i++) {
+              console.log(articulos[i].nombre);
+              _html = '<h4>' + articulos[i].nombre + '</h4>'
+                      '<h4>' + articulos[i].precio + '</h4>'
+
+              $('.women').after(_html);
+              }
+
+          });
+      });
+  });
+
+</script>
+
+@endsection
 
 
 

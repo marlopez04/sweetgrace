@@ -80,7 +80,8 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
-        //
+        $categoria = Categoria::find($id)->articulos;
+        return $categoria;
     }
 
     /**
@@ -151,4 +152,5 @@ class CategoriasController extends Controller
         return redirect()->route('admin.categorias.index');
 
     }
+
 }
