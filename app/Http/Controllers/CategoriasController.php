@@ -80,12 +80,13 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::find($id)->articulos;
+        $articulos = Categoria::find($id)->articulos;
 
         $html = view('admin.pedidos.partials.articulos')
-            ->with('categoria', $categoria)->render();
+            ->with('articulos', $articulos);
 
-        return $html;
+//        dd($html);
+        var_export($html);
 
 //        return response->json(['html' => $html]);
     }
