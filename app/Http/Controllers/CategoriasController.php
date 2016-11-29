@@ -86,7 +86,8 @@ class CategoriasController extends Controller
             ->with('articulos', $articulos);
 
 //        dd($html);
-        var_export($html);
+//        var_export($html);
+            return $html;
 
 //        return response->json(['html' => $html]);
     }

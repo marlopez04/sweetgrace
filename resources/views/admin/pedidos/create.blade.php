@@ -8,7 +8,6 @@
     <script src="{{asset('plugins/carousel-slider/js/jssor.slider-21.1.6.mini.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-
             var jssor_1_options = {
               $AutoPlay: false,
               $AutoPlaySteps: 4,
@@ -26,9 +25,7 @@
                 $SpacingY: 1
               }
             };
-
             var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-
             /*responsive code begin*/
             /*you can remove responsive code if you don't want the slider scales while window resizing*/
             function ScaleSlider() {
@@ -77,7 +74,6 @@
         .jssorb03 div:hover, .jssorb03 .av:hover { background-position: -35px -4px; }
         .jssorb03 .av { background-position: -65px -4px; }
         .jssorb03 .dn, .jssorb03 .dn:hover { background-position: -95px -4px; }
-
         /* jssor slider arrow navigator skin 03 css */
         /*
         .jssora03l                  (normal)
@@ -111,21 +107,41 @@
 
 
 <div class="monthly-grid">
-	<div class="panel panel-widget">
-		<div class="panel-title">
-            <h4>Categorias</h4>
-		</div>
-			<div class="panel-body">
+  <div class="panel panel-widget">
+      <div class="panel-body">
+
                 <div class="row">
-				<!-- status -->
-				<div class="col-md-8">
-					    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden; visibility: hidden;">
-				        <!-- Loading Screen -->
-				        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
-				            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
-				            <div style="position:absolute;display:block;background:url('{{asset('plugins/carousel-slider/loading.gif')}}') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
-				        </div>
-				        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden;">
+        <!-- status -->
+        <div class="col-md-8">
+
+          <table class="table table-striped">
+              <thead>
+                <th>Cliente</th>
+                <th>Pedido</th>
+                <th>Entrega</th>
+                <th>Importe</th>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>juan</td>
+                    <td>12-12-2016</td>
+                    <td>20-12-2016</td>
+                    <td>$ 50</td>
+                  </tr>
+              </tbody>
+            </table>
+
+    <div class="panel-title">
+            <h4>Categorias</h4>
+    </div>
+
+              <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden; visibility: hidden;">
+                <!-- Loading Screen -->
+                <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+                    <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+                    <div style="position:absolute;display:block;background:url('{{asset('plugins/carousel-slider/loading.gif')}}') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+                </div>
+                <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden;">
                         @foreach ($categorias as $categoria)
                             <div style="display: none;">
                               <a href="#" class="categoria" data-id="{{ $categoria->id}}">
@@ -133,47 +149,35 @@
                                 </a>
                             </div>
                         @endforeach
-				        </div>
-				        <!-- Bullet Navigator -->
-				        <div data-u="navigator" class="jssorb03" style="bottom:10px;right:10px;">
-				            <!-- bullet navigator item prototype -->
-				            <div data-u="prototype" style="width:21px;height:21px;">
-				                <div data-u="numbertemplate"></div>
-				            </div>
-				        </div>
-				        <!-- Arrow Navigator -->
-				        <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
-				        <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
-				    </div>
+                </div>
+                <!-- Bullet Navigator -->
+                <div data-u="navigator" class="jssorb03" style="bottom:10px;right:10px;">
+                    <!-- bullet navigator item prototype -->
+                    <div data-u="prototype" style="width:21px;height:21px;">
+                        <div data-u="numbertemplate"></div>
+                    </div>
+                </div>
+                <!-- Arrow Navigator -->
+                <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
+                <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
+            </div>
             
-				</div>
+        </div>
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
             <div class="col-md-3 cart-total">
              <a class="continue" href="#">Pedido</a>
-             <div class="price-details">
-                 <h3>Articulos</h3>
-                 <span>Tarta Coco</span>
-                 <span class="total1">120.00</span>
-                 <span>Budin</span>
-                 <span class="total1">80.00</span>
-                 <span>Pan Dulce</span>
-                 <span class="total1">150.00</span>
-                 <div class="clearfix"></div>                
-             </div> 
-             <ul class="total_price">
-               <li class="last_price"> <h4>TOTAL</h4></li>  
-               <li class="last_price"><span>350.00</span></li>
-               <div class="clearfix"> </div>
-             </ul>
+             <div id="items">
+             <!-- contenido del carrito-->
+             </div>
             </div>
             <!-- carrito de compras -->
 
-			</div>
-			<!-- status -->
+      </div>
+      <!-- status -->
             </div>
-		</div>
-	</div>
+    </div>
+  </div>
 
           <!-- articulos de la categoria-->
 <div class="women_main">
@@ -191,7 +195,10 @@
 <!-- articulos de la categoria-->
 
 
-{!! Form::open(['route' => ['admin.categorias.show', ':CATEGORIA_ID'], 'method' => 'POST' , 'id' => 'form-delete' ]) !!}
+{!! Form::open(['route' => ['admin.categorias.show', ':CATEGORIA_ID'], 'method' => 'POST' , 'id' => 'form-categoria' ]) !!}
+{!! Form::close() !!}
+
+{!! Form::open(['route' => ['admin.pedidosarticulos.show', ':PEDIDO_ID'], 'method' => 'POST' , 'id' => 'form-articulo' ]) !!}
 {!! Form::close() !!}
 
 
@@ -200,28 +207,36 @@
 @section('js')
 
 <script>
-
   $(document).ready(function(){
-
-      $('.categoria').click(function(){
-
+      $('.categoria').click(function(e){
+          e.preventDefault();
           var id_categoria = $(this).data('id'); 
-          var form = $('#form-delete');
+          var form = $('#form-categoria');
           var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
           var data = form.serialize();
-
           $.get(url, data, function(data){
               
-                $('.w_content').html(data);              
-
+                $('.w_content').fadeOut().html(data).fadeIn();
           });
       });
-  });
 
+      $('.articulo').click(function(e){
+          e.preventDefault();
+          var id_pedido = $(this).data('id'); 
+          var form = $('#form-delete');
+          var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
+          var data = form.serialize();
+          $.get(url, data, function(data){
+              
+                $('#items').fadeOut().html(data).fadeIn();
+          });
+      });
+
+
+  });
 </script>
 
 @endsection
-
 
 
 

@@ -47,7 +47,7 @@ class PedidosArticulosController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.pedidos.partials.items');
     }
 
     /**
