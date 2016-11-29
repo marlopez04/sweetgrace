@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Articulo;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -47,7 +48,14 @@ class PedidosArticulosController extends Controller
      */
     public function show($id)
     {
-        return view('admin.pedidos.partials.items');
+      //  $articulo = Articulo::find($id);
+
+//        dd($articulo);
+
+         $html = view('admin.pedidos.partials.items');
+
+         return $html;
+        // return view('admin.pedidos.partials.items');
     }
 
     /**

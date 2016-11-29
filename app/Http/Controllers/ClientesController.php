@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Cliente;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class ClientesController extends Controller
 {
@@ -16,7 +17,8 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        //
+        $clientes = Cliente::orderBy('id','ASC')->paginate(5);
+        return view('admin.clientes.index')->with('clientes', $clientes);
     }
 
     /**
@@ -26,7 +28,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.clientes.create');
     }
 
     /**
@@ -37,7 +39,12 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cliente = new Cliente($request->all());
+        $cliente -> save();
+
+        Flash::success("Se ha registrado " . $cliente->nombre. " de forma exitosa.");
+        return redirect()->route('admin.clientes.index');
+
     }
 
     /**
@@ -59,7 +66,8 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        return view('admin.clientes.edit')->with('cliente', $cliente);
     }
 
     /**
@@ -71,7 +79,23 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $cliente = Cliente::find($id);
+
+        //esta linea de abajo reemplaza
+        $cliente ->fill($request->all());
+        /* todo lo que yo tengo escrito en comentarios
+            es una manera mas sencilla de tomar todo lo que trae
+            el request y ponerlo en el objeto user, para luego ser
+            guardado en la tabla
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->type = $request->type;
+        */
+        $cliente->save();
+
+        Flash::warning('El usuario '.$cliente->nombre.' ha sido editado con exito');
+        return redirect()->route('admin.clientes.index');
+
     }
 
     /**
@@ -82,6 +106,10 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+
+        Flash::error('El usuario '. $cliente->nombre .' a sido borrado de forma exitosa');
+        return redirect()->route('admin.clientes.index');
     }
 }

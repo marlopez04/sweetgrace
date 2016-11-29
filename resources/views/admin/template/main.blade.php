@@ -28,7 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </head> 
 <body>
-   <div class="page-container">
+   <div class="page-container sidebar-collapsed">
    <!--/content-inner-->
 	<div class="left-content">
 	   <div class="inner-content">

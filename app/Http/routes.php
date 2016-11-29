@@ -93,6 +93,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.pedidosarticulos.destroy'
 	]);
 
+	Route::resource('clientes', 'ClientesController');
+	Route::get('clientes/{id}/destroy',[
+		'uses' => 'ClientesController@destroy',
+		'as'   => 'admin.clientes.destroy'
+	]);
+
 });
 
 Route::get('admin/auth/login', [

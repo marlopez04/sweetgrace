@@ -139,7 +139,7 @@
                 <!-- Loading Screen -->
                 <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
                     <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
-                    <div style="position:absolute;display:block;background:url('{{asset('plugins/carousel-slider/loading.gif')}}') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+                    <div style="position:absolute;display:block;background:url('{{asset('plugins/carousel-slider/img/loading.gif')}}') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
                 </div>
                 <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden;">
                         @foreach ($categorias as $categoria)
@@ -166,7 +166,7 @@
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
             <div class="col-md-3 cart-total">
-             <a class="continue" href="#">Pedido</a>
+             <a class="continue" href="">Pedido</a>
              <div id="items">
              <!-- contenido del carrito-->
              </div>
@@ -208,27 +208,27 @@
 
 <script>
   $(document).ready(function(){
-      $('.categoria').click(function(e){
-          e.preventDefault();
+      $('.categoria').click(function(){
           var id_categoria = $(this).data('id'); 
           var form = $('#form-categoria');
           var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
           var data = form.serialize();
           $.get(url, data, function(data){
               
-                $('.w_content').fadeOut().html(data).fadeIn();
+//                $('.w_content').fadeOut().html(data).fadeIn();
+                $('.w_content').html(data);
           });
       });
 
-      $('.articulo').click(function(e){
-          e.preventDefault();
+      $('.articulo').click(function(){
           var id_pedido = $(this).data('id'); 
-          var form = $('#form-delete');
+          var form = $('#form-articulo');
           var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
           var data = form.serialize();
           $.get(url, data, function(data){
               
-                $('#items').fadeOut().html(data).fadeIn();
+//                $('#items').fadeOut().html(data).fadeIn();
+                  $('#items').html(data);
           });
       });
 

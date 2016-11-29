@@ -19,15 +19,29 @@
 											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Categorias</a></li>
 										  </ul>
 										</li>
-										 <li id="menu-academico" ><a href="{{ route('admin.precios.index')}}"><i class="fa fa-file-text-o"></i> <span>Lista de Precios</span></a></li>
+										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Lista de Precios</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.precios.index')}}">Nueva lista</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.precios.create')}}">Lista de Precios</a></li>
+										  </ul>
 										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Articulos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
 										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.create')}}">Nuevo</a></li>
 											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.index')}}">Articulos</a></li>
 										  </ul>
 										</li>
-									<li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
-									<li id="menu-academico" ><a href="catalog.html"><i class="fa fa-file-text-o"></i> <span>Catalog</span></a></li>
+										<li id="menu-academico" ><a href=""><i class="fa fa-table"></i> <span>Clientes</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.create')}}">Nuevo Cliente</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.clientes.index')}}">Clientes</a></li>
+										  </ul>
+										</li>
+									<li id="menu-academico" ><a href=""><i class="fa fa-table"></i> <span>Usuarios</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										   <ul id="menu-academico-sub" >
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.users.create')}}">Nuevo Usuario</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.users.index')}}">Usuarios</a></li>
+										  </ul>
+										</li>
 									<li id="menu-academico" ><a href="shoes.html"><i class="lnr lnr-book"></i> <span>Shoes</span></a></li>
 									 <li><a href="bags.html"><i class="lnr lnr-envelope"></i> <span>Bags</span></a></li>
 									<li><a href="products.html"><i class="lnr lnr-chart-bars"></i> <span>Watches</span></a></li>
@@ -50,7 +64,7 @@
 							  <div class="clearfix"></div>		
 							</div>
 							<script>
-							var toggle = true;
+							var toggle = false;
 										
 							$(".sidebar-icon").click(function() {                
 							  if (toggle)
