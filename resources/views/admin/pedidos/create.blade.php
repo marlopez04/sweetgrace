@@ -179,6 +179,7 @@
     </div>
   </div>
 
+<div class="clearfix"></div>
           <!-- articulos de la categoria-->
 <div class="women_main">
 
@@ -190,16 +191,18 @@
 
 
     </div>
-</div>
 
 <!-- articulos de la categoria-->
-
 
 {!! Form::open(['route' => ['admin.categorias.show', ':CATEGORIA_ID'], 'method' => 'POST' , 'id' => 'form-categoria' ]) !!}
 {!! Form::close() !!}
 
 {!! Form::open(['route' => ['admin.pedidosarticulos.show', ':PEDIDO_ID'], 'method' => 'POST' , 'id' => 'form-articulo' ]) !!}
 {!! Form::close() !!}
+
+
+<div class="clearfix"></div>
+
 
 
 @endsection
@@ -213,10 +216,10 @@
           var form = $('#form-categoria');
           var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
           var data = form.serialize();
-          $.get(url, data, function(data){
+          $.get(url, data, function(articulos){
               
 //                $('.w_content').fadeOut().html(data).fadeIn();
-                $('.w_content').html(data);
+                $('.w_content').html(articulos);
           });
       });
 
@@ -225,10 +228,10 @@
           var form = $('#form-articulo');
           var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
           var data = form.serialize();
-          $.get(url, data, function(data){
+          $.get(url, data, function(items){
               
 //                $('#items').fadeOut().html(data).fadeIn();
-                  $('#items').html(data);
+                  $('#items').html(items);
           });
       });
 

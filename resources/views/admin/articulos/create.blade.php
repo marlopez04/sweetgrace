@@ -3,6 +3,14 @@
 @section('title', 'Agregar articulo')
 
 @section('content')
+
+<div class="women_main">
+<div class="w_content">
+        <div class="women">
+            <h4>Articulos</h4>
+             <div class="clearfix"></div>   
+        </div>
+
 	{!! Form::open(['route' => 'admin.articulos.store', 'method' => 'POST', 'files' => true]) !!}
 		<div class="form-group">
 			<h4>Nombre</h4>
@@ -27,6 +35,10 @@
 			{!! Form::submit('Agregar articulo',['class' => 'btn btn-primary']) !!}
 		</div>
 	{!! Form::close() !!}
+
+</div>
+	
+</div>
 @endsection
 
 

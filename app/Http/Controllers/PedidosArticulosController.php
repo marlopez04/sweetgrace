@@ -16,7 +16,9 @@ class PedidosArticulosController extends Controller
      */
     public function index()
     {
-      //
+        $html = view('admin.pedidos.partials.items');
+
+        return $html;
     }
 
     /**
