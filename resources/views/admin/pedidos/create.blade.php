@@ -124,6 +124,7 @@
                 <th>Email</th>
                 <th>Telefono</th>
                 <th>Direccion</th>
+                <th>Nuevo Pedido</th>
               </thead>
               <tbody>
                 @foreach($clientes as $cliente)
@@ -133,9 +134,7 @@
                     <td>{{ $cliente->telefono }}</td>
                     <td>{{ $cliente->direccion }}</td>
                     <td>
-                    <a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-            
-                    <a href="{{ route('admin.clientes.destroy', $cliente->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    <a href="#" class="btn-warning" id="$cliente->id"> <span class="glyphicon glyphicon-wrench"></span></a>
                     </td>
                   </tr>
                 @endforeach
@@ -152,7 +151,7 @@
 <div class="clearfix"></div>
 
 
-<div class="monthly-grid">
+<div class="monthly-grid" id="pedidoinfo" hidden>
   <div class="panel panel-widget">
       <div class="panel-body">
 
@@ -160,22 +159,9 @@
         <!-- status -->
         <div class="col-md-8">
 
-          <table class="table table-striped">
-              <thead>
-                <th>Cliente</th>
-                <th>Pedido</th>
-                <th>Entrega</th>
-                <th>Importe</th>
-              </thead>
-              <tbody>
-                  <tr>
-                    <td>juan</td>
-                    <td>12-12-2016</td>
-                    <td>20-12-2016</td>
-                    <td>$ 50</td>
-                  </tr>
-              </tbody>
-            </table>
+        <div id="datospedido" >
+          <!-- Datos del pedido -->
+        </div>
 
     <div class="panel-title">
             <h4>Categorias</h4>
@@ -238,13 +224,27 @@
 
     </div>
 
-<!-- articulos de la categoria-->
+<!-- INICIO con el id del cliente crea un nuevo pedido-->
+
+{!! Form::open(['route' => ['admin.pedidos.show', ':CLIENTE_ID'], 'method' => 'POST' , 'id' => 'form-cliente' ]) !!}
+{!! Form::close() !!}
+
+<!-- FIN con el id del cliente crea un nuevo pedido-->
+
+<!-- INICIO trae los articulos de cada categoria-->
 
 {!! Form::open(['route' => ['admin.categorias.show', ':CATEGORIA_ID'], 'method' => 'POST' , 'id' => 'form-categoria' ]) !!}
 {!! Form::close() !!}
 
+<!-- FIN trae los articulos de cada categoria-->
+
+<!-- INICIO carga el articulo selccionado como item del pedido-->
+
 {!! Form::open(['route' => ['admin.pedidosarticulos.show', ':PEDIDO_ID'], 'method' => 'POST' , 'id' => 'form-articulo' ]) !!}
 {!! Form::close() !!}
+
+<!-- FIN carga el articulo selccionado como item del pedido-->
+
 
 
 <div class="clearfix"></div>
@@ -257,48 +257,70 @@
 
 <script>
 
-// funcion para los articulos
+
   $(document).ready(function(){
-      $('.categoria').click(function(){
-          var id_categoria = $(this).data('id'); 
-          var form = $('#form-categoria');
-          var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
+    //creacion de pedido nuevo
+    $('.btn-warning').click(function(){
+
+          var id_cliente = $(this).data('id'); 
+          var form = $('#form-cliente');
+          var url = form.attr('action').replace(':CLIENTE_ID', id_cliente);
           var data = form.serialize();
-          $.get(url, data, function(articulos){
+          console.log(data);
+          $.get(url, data, function(pedido){
               
-                $('#articulocontent').show();
-                $('.w_content').fadeOut().html(articulos).fadeIn();
+//                $('.left-content').scrollTop(300);
+                $('#pedidoinfo').show();
+                $('#datospedido').fadeOut().html(pedido).fadeIn();
+
+                //traer los articulos de cierta categoria
+                $('.categoria').click(function(){
+                    var id_categoria = $(this).data('id'); 
+                    var form = $('#form-categoria');
+                    var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
+                    var data = form.serialize();
+
+                    $.get(url, data, function(articulos){
+                        
+                          $('#articulocontent').show();
+                          $('.w_content').fadeOut().html(articulos).fadeIn();
 
 //                $('.w_content').html(articulos);
 
-//funcion para cargar los items al carrito de compra
-                     $('.articulo').click(function(){
-                          var id_pedido = $(this).data('id'); 
-//                          var id_articulo = $(this).data('id'); 
-                          var form = $('#form-articulo');
-                          var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
-//                          var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
-                          var token = form.serialize();
-                          data = {
-                            token: token,
-                            id_articulo: "1",
-                            id_pedido: "1"
-                          };
-                          console.log(data);
-                          $.get(url, data, function(items){
+//funcion agregar el articulo al carrito de compras
+                         $('.articulo').click(function(){
+                            var id_pedido = $(this).data('id'); 
+  //                          var id_articulo = $(this).data('id'); 
+                            var form = $('#form-articulo');
+                            var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
+  //                          var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
+                            var token = form.serialize();
+                            data = {
+                              token: token,
+                              id_articulo: "1",
+                              id_pedido: "1"
+                            };
+                            console.log(data);
+                            $.get(url, data, function(items){
 
-                                 $('#itemcontent').show();
-                                 $('#items').fadeOut().html(items).fadeIn();
-                         //         $('#items').html(items);
+                                   $('#itemcontent').show();
+                                   $('#items').fadeOut().html(items).fadeIn();
+                           //         $('#items').html(items);
+//fin de ajax carga de items
+           
                           });
+//fin de click articulos
                       });
-
+//fin de ok ajax categoria                 
           });
+//fin de click categoria
       });
+//fin de creacion del pedido
+});
 
- 
+}); 
 
-  });
+});
 </script>
 
 @endsection

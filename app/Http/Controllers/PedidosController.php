@@ -62,7 +62,10 @@ class PedidosController extends Controller
      */
     public function show($id)
     {
-        //
+        $html = view('admin.pedidos.partials.pedido');
+
+        return $html;
+
     }
 
     /**
