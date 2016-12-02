@@ -14,4 +14,10 @@ class Cliente extends Model
     	return $this->hasMany('App\Pedido');
     }
 
+    public function scopeSearch($query, $nombre)
+    {
+        return $query->where('nombre', 'LIKE', "%$nombre%");
+    }
+
+
 }

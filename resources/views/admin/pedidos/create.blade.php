@@ -109,6 +109,52 @@
 <div class="monthly-grid">
   <div class="panel panel-widget">
       <div class="panel-body">
+            <div class="panel-title">
+            <h4>Cliente</h4>
+            </div>
+                {!! Form::open(['route' => 'admin.pedidos.create', 'method' => 'GET', 'class' => 'navbar-form pull-left'])!!}
+                <div class="input-group">
+                  {!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Buscar cliente..', 'aria-describedby' => 'search'])!!}
+                  <span class="input-group-addon" id="search"><span class="glyphicon glyphicon-search" id="search" aria-hidden="true"></span></span>
+                </div>
+              {!! Form::close() !!}
+                          <table class="table table-striped">
+              <thead>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+              </thead>
+              <tbody>
+                @foreach($clientes as $cliente)
+                  <tr>
+                    <td>{{ $cliente->nombre }}</td>
+                    <td>{{ $cliente->email }}</td>
+                    <td>{{ $cliente->telefono }}</td>
+                    <td>{{ $cliente->direccion }}</td>
+                    <td>
+                    <a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+            
+                    <a href="{{ route('admin.clientes.destroy', $cliente->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+              <div class="text-center">
+                {!! $clientes->render()!!}
+              </div>
+
+      </div>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+
+<div class="monthly-grid">
+  <div class="panel panel-widget">
+      <div class="panel-body">
 
                 <div class="row">
         <!-- status -->
@@ -165,7 +211,7 @@
         </div>
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
-            <div class="col-md-3 cart-total">
+            <div class="col-md-3 cart-total" id="itemcontent" hidden>
              <a class="continue" href="">Pedido</a>
              <div id="items">
              <!-- contenido del carrito-->
@@ -181,7 +227,7 @@
 
 <div class="clearfix"></div>
           <!-- articulos de la categoria-->
-<div class="women_main">
+<div class="women_main"  id="articulocontent" hidden>
 
 <div class="w_content">
   <!-- principio de ajax -->
@@ -210,6 +256,8 @@
 @section('js')
 
 <script>
+
+// funcion para los articulos
   $(document).ready(function(){
       $('.categoria').click(function(){
           var id_categoria = $(this).data('id'); 
@@ -218,28 +266,39 @@
           var data = form.serialize();
           $.get(url, data, function(articulos){
               
-//                $('.w_content').fadeOut().html(data).fadeIn();
-                $('.w_content').html(articulos);
+                $('#articulocontent').show();
+                $('.w_content').fadeOut().html(articulos).fadeIn();
+
+//                $('.w_content').html(articulos);
+
+//funcion para cargar los items al carrito de compra
+                     $('.articulo').click(function(){
+                          var id_pedido = $(this).data('id'); 
+//                          var id_articulo = $(this).data('id'); 
+                          var form = $('#form-articulo');
+                          var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
+//                          var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
+                          var token = form.serialize();
+                          data = {
+                            token: token,
+                            id_articulo: "1",
+                            id_pedido: "1"
+                          };
+                          console.log(data);
+                          $.get(url, data, function(items){
+
+                                 $('#itemcontent').show();
+                                 $('#items').fadeOut().html(items).fadeIn();
+                         //         $('#items').html(items);
+                          });
+                      });
+
           });
       });
 
-      $('.articulo').click(function(){
-          var id_pedido = $(this).data('id'); 
-          var form = $('#form-articulo');
-          var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
-          var data = form.serialize();
-          $.get(url, data, function(items){
-              
-//                $('#items').fadeOut().html(data).fadeIn();
-                  $('#items').html(items);
-          });
-      });
-
+ 
 
   });
 </script>
 
 @endsection
-
-
-

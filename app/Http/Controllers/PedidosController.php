@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
 use App\Categoria;
 use App\Articulo;
 use App\ListaPrecio;
 use App\Pedido;
-use Laracasts\Flash\Flash;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Cliente;
 
 class PedidosController extends Controller
 {
@@ -20,7 +22,7 @@ class PedidosController extends Controller
      */
     public function index()
     {
-        return view('admin.pedidos.index');
+        //
     }
 
     /**
@@ -28,14 +30,17 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $clientes = Cliente::Search($request->nombre)->orderBy('id', 'DESC')->paginate(3);
         $articulos = Articulo::all();
         $categorias = Categoria::all();
+     //   $clientes = Cliente::orderBy('id','ASC')->paginate(5);
         
         return view('admin.pedidos.create')
             ->with('articulos', $articulos)
-            ->with('categorias', $categorias);
+            ->with('categorias', $categorias)
+            ->with('clientes', $clientes);
     }
 
     /**

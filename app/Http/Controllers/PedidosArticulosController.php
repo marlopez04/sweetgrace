@@ -53,7 +53,7 @@ class PedidosArticulosController extends Controller
       //  $articulo = Articulo::find($id);
 
 //        dd($articulo);
-
+     //     dd($_GET['algo']);
          $html = view('admin.pedidos.partials.items');
 
          return $html;
@@ -93,4 +93,5 @@ class PedidosArticulosController extends Controller
     {
         //
     }
+
 }
