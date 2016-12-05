@@ -1,11 +1,29 @@
 <div class="price-details">
                  <h3>Articulos</h3>
-                 <span>Tarta Coco</span>
-                 <span class="total1">120.00</span>
+          <table class="table table-striped">
+              <thead>
+                <th>articulo</th>
+                <th>cantidad</th>
+                <th>precio</th>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>{{ $pedidoarticulo->articulo_id}}</td>
+                    <td>$ {{ $pedidoarticulo->cantidad }}</td>
+                    <td>$ {{ $pedidoarticulo->precio }}</td>
+                  </tr>
+              </tbody>
+            </table>
+
+<!--
+
+                 <span>{{ $pedidoarticulo->articulo_id}}</span>
+                 <span class="total1">$ {{ $pedidoarticulo->precio }}</span>
                  <span>Budin</span>
                  <span class="total1">80.00</span>
                  <span>Pan Dulce</span>
                  <span class="total1">150.00</span>
+-->                 
                  <div class="clearfix"></div>                
              </div> 
              <ul class="total_price">

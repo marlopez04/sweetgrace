@@ -12,6 +12,7 @@ use App\Articulo;
 use App\ListaPrecio;
 use App\Pedido;
 use App\Cliente;
+use App\Stock;
 
 class PedidosController extends Controller
 {
@@ -62,7 +63,37 @@ class PedidosController extends Controller
      */
     public function show($id)
     {
-        $html = view('admin.pedidos.partials.pedido');
+
+        // 1° crear el stock
+        // 2° crear el pedido y asociar el stock creado
+        // 3° retornar datos del pedido
+
+        //recupera el clinete
+        $cliente = Cliente::find($id);
+
+        //1°
+        //arma una variable para grabar un stock nuevo
+        $nuevostock = new Stock();
+        $nuevostock->user_id = $_GET['user_id'];
+        $nuevostock->save();
+
+        //2°
+        //arma una variable para grabar un pedido nuevo
+        $nuevopedido = new Pedido();
+        $nuevopedido->entrega = $_GET['entrega'];
+        $nuevopedido->importe = $_GET['importe'];
+//        $nuevopedido->cliente_id = $cliente->nombre;
+        $nuevopedido->cliente_id = $cliente->id;
+//        $nuevopedido->cliente_id = $id;
+        $nuevopedido->estado = $_GET['estado'];
+        $nuevopedido->user_id = $_GET['user_id'];
+        $nuevopedido->stock_id = $nuevostock->id;
+        $nuevopedido->save();
+//        $nuevopedido->stock_id = $_GET['stock_id'];
+
+        //3°
+        $html = view('admin.pedidos.partials.pedido')
+            ->with('pedido', $nuevopedido);
 
         return $html;
 

@@ -6,6 +6,11 @@ use App\Articulo;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\PedidoArticulo;
+use App\Pedido;
+use App\Stock;
+use App\StockIngredientes;
+use App\StockInsumos;
 
 class PedidosArticulosController extends Controller
 {
@@ -50,11 +55,18 @@ class PedidosArticulosController extends Controller
      */
     public function show($id)
     {
-      //  $articulo = Articulo::find($id);
+        $articulo = Articulo::find($id);
 
 //        dd($articulo);
-     //     dd($_GET['algo']);
-         $html = view('admin.pedidos.partials.items');
+        $pedidoarticulo = new PedidoArticulo();
+        $pedidoarticulo->articulo_id = $articulo->id;
+        $pedidoarticulo->pedido_id = $_GET['id_pedido'];
+        $pedidoarticulo->cantidad = $_GET['cantidad'];
+        $pedidoarticulo->precio = $articulo->precio;
+
+        // dd($_GET['algo']);
+         $html = view('admin.pedidos.partials.items')
+                    ->with('pedidoarticulo', $pedidoarticulo);
 
          return $html;
         // return view('admin.pedidos.partials.items');

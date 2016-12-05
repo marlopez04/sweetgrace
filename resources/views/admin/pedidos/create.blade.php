@@ -121,6 +121,7 @@
                           <table class="table table-striped">
               <thead>
                 <th>Nombre</th>
+                <th>id</th>
                 <th>Email</th>
                 <th>Telefono</th>
                 <th>Direccion</th>
@@ -130,11 +131,12 @@
                 @foreach($clientes as $cliente)
                   <tr>
                     <td>{{ $cliente->nombre }}</td>
+                    <td>{{ $cliente->id }}</td>
                     <td>{{ $cliente->email }}</td>
                     <td>{{ $cliente->telefono }}</td>
                     <td>{{ $cliente->direccion }}</td>
                     <td>
-                    <a href="#" class="btn-warning" id="$cliente->id"> <span class="glyphicon glyphicon-wrench"></span></a>
+                    <a href="#" class="btn-warning" data-id="{{ $cliente->id}}"> <span class="glyphicon glyphicon-wrench"></span></a>
                     </td>
                   </tr>
                 @endforeach
@@ -240,7 +242,7 @@
 
 <!-- INICIO carga el articulo selccionado como item del pedido-->
 
-{!! Form::open(['route' => ['admin.pedidosarticulos.show', ':PEDIDO_ID'], 'method' => 'POST' , 'id' => 'form-articulo' ]) !!}
+{!! Form::open(['route' => ['admin.pedidosarticulos.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-articulo' ]) !!}
 {!! Form::close() !!}
 
 <!-- FIN carga el articulo selccionado como item del pedido-->
@@ -262,10 +264,21 @@
     //creacion de pedido nuevo
     $('.btn-warning').click(function(){
 
-          var id_cliente = $(this).data('id'); 
+          var id_cliente = $(this).data('id');
+          console.log(id_cliente);
           var form = $('#form-cliente');
           var url = form.attr('action').replace(':CLIENTE_ID', id_cliente);
-          var data = form.serialize();
+ //         var data = form.serialize();
+          var token = form.serialize();
+          data = {
+            token: token,
+            entrega: "sysdate",
+            importe: "0",
+            user_id: "{{ Auth::user()->id }}",
+            cliente_id: id_cliente,
+            estado: "0",
+            stock_id: "1"
+          };
           console.log(data);
           $.get(url, data, function(pedido){
               
@@ -285,20 +298,28 @@
                           $('#articulocontent').show();
                           $('.w_content').fadeOut().html(articulos).fadeIn();
 
+
+                               
+                               $("body").animate({ scrollTop: $(document).height()}, 1000);
+
 //                $('.w_content').html(articulos);
 
 //funcion agregar el articulo al carrito de compras
                          $('.articulo').click(function(){
-                            var id_pedido = $(this).data('id'); 
+                            var id_articulo = $(this).data('id');
+                            var id_pedido = $('.pedidoid').data('id');
+                            var id_stock = $('.stockid').data('id');
   //                          var id_articulo = $(this).data('id'); 
                             var form = $('#form-articulo');
-                            var url = form.attr('action').replace(':PEDIDO_ID', id_pedido);
+                            var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
   //                          var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
                             var token = form.serialize();
                             data = {
                               token: token,
-                              id_articulo: "1",
-                              id_pedido: "1"
+                              id_articulo: id_articulo,
+                              cantidad: "1",
+                              id_pedido: id_pedido,
+                              id_stock: id_stock
                             };
                             console.log(data);
                             $.get(url, data, function(items){
@@ -321,6 +342,7 @@
 }); 
 
 });
+
 </script>
 
 @endsection

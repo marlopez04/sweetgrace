@@ -9,9 +9,9 @@ class Stock extends Model
     protected $table = "stock";
     protected $fillable = ['user_id'];
 
-	public function stockinsumo()
+	public function stockingredientes()
     {
-    	return $this->hasMany('App\StockInsumo');
+    	return $this->hasMany('App\StockIngrediente');
     }
 
     public function stockinsumo()
@@ -22,6 +22,11 @@ class Stock extends Model
         public function users()
     {
     	return $this->belongsTo('App\User');
+    }
+
+        public function pedido()
+    {
+        return $this->hasOne('App\Pedido');
     }
 
 }
