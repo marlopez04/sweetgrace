@@ -14,6 +14,7 @@ class AddPedidoarticulosTable extends Migration
     {
         Schema::create('pedidoarticulos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descripcion');
             $table->integer('pedido_id')->unsigned();
             $table->foreign('pedido_id')->references('id')->on('pedidos');
             $table->integer('articulo_id')->unsigned();

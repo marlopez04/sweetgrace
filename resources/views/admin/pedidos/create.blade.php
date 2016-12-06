@@ -281,10 +281,13 @@
           };
           console.log(data);
           $.get(url, data, function(pedido){
-              
+
 //                $('.left-content').scrollTop(300);
                 $('#pedidoinfo').show();
                 $('#datospedido').fadeOut().html(pedido).fadeIn();
+
+                $("body").animate({ scrollTop: $(document).height()}, 1000);
+                $('.left-content').getNiceScroll().resize();
 
                 //traer los articulos de cierta categoria
                 $('.categoria').click(function(){
@@ -301,6 +304,7 @@
 
                                
                                $("body").animate({ scrollTop: $(document).height()}, 1000);
+                               $('.left-content').getNiceScroll().resize();
 
 //                $('.w_content').html(articulos);
 
@@ -326,6 +330,9 @@
 
                                    $('#itemcontent').show();
                                    $('#items').fadeOut().html(items).fadeIn();
+
+                                   $("body").animate({ scrollTop: $(document).height()}, 500);
+                                   $('.left-content').getNiceScroll().resize();
                            //         $('#items').html(items);
 //fin de ajax carga de items
            

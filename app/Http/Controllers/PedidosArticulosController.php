@@ -21,9 +21,7 @@ class PedidosArticulosController extends Controller
      */
     public function index()
     {
-        $html = view('admin.pedidos.partials.items');
-
-        return $html;
+        //
     }
 
     /**
@@ -60,13 +58,14 @@ class PedidosArticulosController extends Controller
 //        dd($articulo);
         $pedidoarticulo = new PedidoArticulo();
         $pedidoarticulo->articulo_id = $articulo->id;
+        $pedidoarticulo->descripcion = $articulo->nombre;
         $pedidoarticulo->pedido_id = $_GET['id_pedido'];
         $pedidoarticulo->cantidad = $_GET['cantidad'];
         $pedidoarticulo->precio = $articulo->precio;
 
         // dd($_GET['algo']);
-         $html = view('admin.pedidos.partials.items')
-                    ->with('pedidoarticulo', $pedidoarticulo);
+        $html = view('admin.pedidos.partials.items')
+                   ->with('pedidoarticulo', $pedidoarticulo);
 
          return $html;
         // return view('admin.pedidos.partials.items');

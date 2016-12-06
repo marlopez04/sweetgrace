@@ -2,14 +2,18 @@
                  <h3>Articulos</h3>
           <table class="table table-striped">
               <thead>
-                <th>articulo</th>
-                <th>cantidad</th>
-                <th>precio</th>
+                <th></th>
+                <th>Articulo</th>
+                <th>Cantidad</th>
+                <th>Importe</th>
               </thead>
               <tbody>
                   <tr>
-                    <td>{{ $pedidoarticulo->articulo_id}}</td>
-                    <td>$ {{ $pedidoarticulo->cantidad }}</td>
+                    <td>
+                    <a href="#" class="btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    </td>
+                    <td>{{ $pedidoarticulo->descripcion}}</td>
+                    <td>{{ $pedidoarticulo->cantidad }}</td>
                     <td>$ {{ $pedidoarticulo->precio }}</td>
                   </tr>
               </tbody>
