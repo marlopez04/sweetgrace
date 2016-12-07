@@ -8,14 +8,16 @@
                 <th>Importe</th>
               </thead>
               <tbody>
+                @foreach($pedido->pedidoarticulos as $pedidoarticulo)
                   <tr>
                     <td>
-                    <a href="#" class="btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    <a href="#" class="btn-danger" data-id="{{ $pedidoarticulo->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
                     </td>
                     <td>{{ $pedidoarticulo->descripcion}}</td>
                     <td>{{ $pedidoarticulo->cantidad }}</td>
                     <td>$ {{ $pedidoarticulo->precio }}</td>
                   </tr>
+                @endforeach
               </tbody>
             </table>
 
@@ -32,6 +34,6 @@
              </div> 
              <ul class="total_price">
                <li class="last_price"> <h4>TOTAL</h4></li>  
-               <li class="last_price"><span>350.00</span></li>
+               <li class="last_price"><span>{{ $pedido->pedidoarticulos->sum('precio') }}</span></li>
                <div class="clearfix"> </div>
              </ul>

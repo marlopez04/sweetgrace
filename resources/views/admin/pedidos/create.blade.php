@@ -106,7 +106,7 @@
     </style>
 
 
-<div class="monthly-grid">
+<div class="monthly-grid" id="datoscliente">
   <div class="panel panel-widget">
       <div class="panel-body">
             <div class="panel-title">
@@ -247,11 +247,20 @@
 
 <!-- FIN carga el articulo selccionado como item del pedido-->
 
+<!-- INICIO carga el articulo selccionado como item del pedido-->
+
+{!! Form::open(['route' => ['admin.pedidosarticulos.destroy', ':ITEM_ID'], 'method' => 'POST' , 'id' => 'form-deleteitem' ]) !!}
+{!! Form::close() !!}
+
+<!-- FIN carga el articulo selccionado como item del pedido-->
+
 
 
 <div class="clearfix"></div>
 
-
+<div id="correctorscroll">
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
 
 @endsection
 
@@ -261,7 +270,7 @@
 
 
   $(document).ready(function(){
-    //creacion de pedido nuevo
+//creacion de pedido nuevo
     $('.btn-warning').click(function(){
 
           var id_cliente = $(this).data('id');
@@ -282,14 +291,14 @@
           console.log(data);
           $.get(url, data, function(pedido){
 
-//                $('.left-content').scrollTop(300);
                 $('#pedidoinfo').show();
+                $('#datoscliente').hide();
+                $('#correctorscroll').hide();
                 $('#datospedido').fadeOut().html(pedido).fadeIn();
 
-                $("body").animate({ scrollTop: $(document).height()}, 1000);
-                $('.left-content').getNiceScroll().resize();
+                $("body").animate({ scrollTop: $(document).height()}, 500);
 
-                //traer los articulos de cierta categoria
+//traer los articulos de cierta categoria
                 $('.categoria').click(function(){
                     var id_categoria = $(this).data('id'); 
                     var form = $('#form-categoria');
@@ -300,11 +309,8 @@
                         
                           $('#articulocontent').show();
                           $('.w_content').fadeOut().html(articulos).fadeIn();
+                          $("body").animate({ scrollTop: $(document).height()}, 500);
 
-
-                               
-                               $("body").animate({ scrollTop: $(document).height()}, 1000);
-                               $('.left-content').getNiceScroll().resize();
 
 //                $('.w_content').html(articulos);
 
@@ -331,9 +337,30 @@
                                    $('#itemcontent').show();
                                    $('#items').fadeOut().html(items).fadeIn();
 
-                                   $("body").animate({ scrollTop: $(document).height()}, 500);
-                                   $('.left-content').getNiceScroll().resize();
-                           //         $('#items').html(items);
+                                   $("body").animate({ scrollTop: $(document).height()});
+
+//borrar un item del carrito
+                                    $('.btn-danger').click(function(){
+                                      var id_item = $(this).data('id');
+                                      var form = $('#form-deleteitem');
+                                      var url = form.attr('action').replace(':ITEM_ID', id_item);
+                                      var token = form.serialize();
+                                      data = {
+                                        token: token,
+                                        id_item: id_item
+                                      };
+                                      console.log(data);
+                                      $.get(url, data, function(items){
+
+                                             $('#itemcontent').show();
+                                             $('#items').fadeOut().html(items).fadeIn();
+
+                                             $("body").animate({ scrollTop: $(document).height()});
+
+                                             });
+
+                                      });
+
 //fin de ajax carga de items
            
                           });

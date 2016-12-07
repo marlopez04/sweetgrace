@@ -10,9 +10,9 @@ class Pedido extends Model
     protected $table = "pedidos";
     protected $fillable = ['entrega','importe','cliente_id','user_id','estado','stock_id'];
 
-	public function articulos()
+	public function pedidoarticulos()
     {
-    	return $this->hasMany('App\Articulo');
+    	return $this->hasMany('App\PedidoArticulo');
     }
 
     public function users()

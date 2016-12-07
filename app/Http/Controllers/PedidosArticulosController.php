@@ -62,10 +62,14 @@ class PedidosArticulosController extends Controller
         $pedidoarticulo->pedido_id = $_GET['id_pedido'];
         $pedidoarticulo->cantidad = $_GET['cantidad'];
         $pedidoarticulo->precio = $articulo->precio;
+        $pedidoarticulo->save();
+
+        $pedido = Pedido::find($pedidoarticulo->pedido_id);
+        $pedido->load('pedidoarticulos');
 
         // dd($_GET['algo']);
         $html = view('admin.pedidos.partials.items')
-                   ->with('pedidoarticulo', $pedidoarticulo);
+                   ->with('pedido', $pedido);
 
          return $html;
         // return view('admin.pedidos.partials.items');
@@ -102,7 +106,17 @@ class PedidosArticulosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pedidoarticulo = PedidoArticulo::find($id);
+        $pedidoarticulo->destroy();
+
+        $pedido = Pedido::find($pedidoarticulo->pedido_id);
+        $pedido->load('pedidoarticulos');
+
+        $html = view('admin.pedidos.partials.items')
+                   ->with('pedido', $pedido);
+
+         return $html;
+        // return view('admin.pedidos.partials.items');
     }
 
 }
