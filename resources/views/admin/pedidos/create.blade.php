@@ -352,7 +352,6 @@
                                       console.log(data);
                                       $.get(url, data, function(items){
 
-                                             $('#itemcontent').show();
                                              $('#items').fadeOut().html(items).fadeIn();
 
                                              $("body").animate({ scrollTop: $(document).height()});

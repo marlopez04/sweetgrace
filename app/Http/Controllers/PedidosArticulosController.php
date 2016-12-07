@@ -107,7 +107,7 @@ class PedidosArticulosController extends Controller
     public function destroy($id)
     {
         $pedidoarticulo = PedidoArticulo::find($id);
-        $pedidoarticulo->destroy();
+        $pedidoarticulo->delete();
 
         $pedido = Pedido::find($pedidoarticulo->pedido_id);
         $pedido->load('pedidoarticulos');
