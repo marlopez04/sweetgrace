@@ -11,7 +11,7 @@
                 @foreach($pedido->pedidoarticulos as $pedidoarticulo)
                   <tr>
                     <td>
-                    <a href="#" class="btn-danger" data-id="{{ $pedidoarticulo->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    <a href="javascript:void(0)" class="btn-danger" onclick='borraritem(this)' data-id="{{ $pedidoarticulo->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
                     </td>
                     <td>{{ $pedidoarticulo->descripcion}}</td>
                     <td>{{ $pedidoarticulo->cantidad }}</td>
@@ -37,3 +37,38 @@
                <li class="last_price"><span>{{ $pedido->pedidoarticulos->sum('precio') }}</span></li>
                <div class="clearfix"> </div>
              </ul>
+
+
+<script>
+
+//                                    $('.btn-danger').on('click', function(){
+                                      function borraritem(btn_danger){
+                                        console.log("llama a la funcion");
+                                        var id_item = $(btn_danger).data('id');
+                                        console.log(id_item);
+//                                        $('.btn-danger').on('click', function(){
+                                          var form = $('#form-deleteitem');
+                                          var url = form.attr('action').replace(':ITEM_ID', id_item);
+                                          var token = form.serialize();
+                                          data = {
+                                            token: token,
+                                            id_item: id_item
+                                          };
+                                          console.log(data);
+                                          $.get(url, data, function(items){
+
+                                                  $('#itemcontent').hide();                                          
+
+                                                 $('#items').fadeOut().html(items).fadeIn();
+
+                                                 $('#itemcontent').show();
+
+                                                 $("body").animate({ scrollTop: $(document).height()});
+
+                                                 });
+//                                        });
+                                        };
+
+
+
+</script>

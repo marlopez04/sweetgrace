@@ -340,25 +340,36 @@
                                    $("body").animate({ scrollTop: $(document).height()});
 
 //borrar un item del carrito
-                                    $('.btn-danger').click(function(){
-                                      var id_item = $(this).data('id');
-                                      var form = $('#form-deleteitem');
-                                      var url = form.attr('action').replace(':ITEM_ID', id_item);
-                                      var token = form.serialize();
-                                      data = {
-                                        token: token,
-                                        id_item: id_item
-                                      };
-                                      console.log(data);
-                                      $.get(url, data, function(items){
+/*
+                                    $('.btn-danger').on('click', function(){
+//                                      function borraritem(btn_danger){
+                                        console.log("llama a la funcion");
+                                        var id_item = $(btn_danger).data('id');
+                                        console.log(id_item);
+//                                        $('.btn-danger').on('click', function(){
+                                          var form = $('#form-deleteitem');
+                                          var url = form.attr('action').replace(':ITEM_ID', id_item);
+                                          var token = form.serialize();
+                                          data = {
+                                            token: token,
+                                            id_item: id_item
+                                          };
+                                          console.log(data);
+                                          $.get(url, data, function(items){
 
-                                             $('#items').fadeOut().html(items).fadeIn();
+                                                  $('#itemcontent').hide();                                          
 
-                                             $("body").animate({ scrollTop: $(document).height()});
+                                                 $('#items').fadeOut().html(items).fadeIn();
 
-                                             });
+                                                 $('#itemcontent').show();
 
-                                      });
+                                                 $("body").animate({ scrollTop: $(document).height()});
+
+                                                 });
+                                        });
+*/
+//                                      };
+
 
 //fin de ajax carga de items
            
