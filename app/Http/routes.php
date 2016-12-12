@@ -99,6 +99,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.clientes.destroy'
 	]);
 
+	Route::resource('recetas', 'RecetasController');
+	Route::get('recetas/{id}/destroy',[
+		'uses' => 'RecetasController@destroy',
+		'as'   => 'admin.recetas.destroy'
+	]);
+
 });
 
 Route::get('admin/auth/login', [

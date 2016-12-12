@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Articulo;
+use App\Receta;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class RecetasController extends Controller
 {
@@ -24,9 +26,12 @@ class RecetasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($articulo)
     {
-        //
+        dd($articulo);
+
+        return view('admin.recetas.create')
+        ->with('articulo', $articulo);
     }
 
     /**
@@ -59,7 +64,11 @@ class RecetasController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $receta = Receta::find($id);
+
+        return view('admin.recetas.edit')
+            ->with('receta', $receta);
     }
 
     /**

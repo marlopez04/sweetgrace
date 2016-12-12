@@ -80,10 +80,12 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
+        $categoria = Categoria::find($id);
         $articulos = Categoria::find($id)->articulos;
 
         $html = view('admin.pedidos.partials.articulos')
-            ->with('articulos', $articulos);
+            ->with('articulos', $articulos)
+            ->with('categoria', $categoria);
 
 //        dd($html);
 //        var_export($html);

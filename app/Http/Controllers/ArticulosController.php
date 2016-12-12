@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Categoria;
 use App\Articulo;
+use App\Receta;
 use App\ListaPrecio;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -71,10 +72,17 @@ class ArticulosController extends Controller
         $articulo->imagen = $nombre;
         $articulo->save();
 
-        Flash::success('Se ha creado el articulo '. $articulo->nombre . ' de forma satisfactoria!');
+        $receta = new Receta();
+        $receta->nombre = $articulo->nombre;
+        $receta->costo = '0';
+        $receta->articulo_id = $articulo->id;
+        $receta->save();
+        $id = $receta->id;
 
-        return redirect()->route('admin.articulos.index');
-          
+        Flash::success('Se ha creado el articulo '. $receta->nombre . ' de forma satisfactoria!');
+
+        return redirect()->route('admin.recetas.edit', $id);
+
     }
 
     /**

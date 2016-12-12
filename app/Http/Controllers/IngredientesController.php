@@ -55,7 +55,12 @@ class IngredientesController extends Controller
      */
     public function show($id)
     {
-        //
+        $ingredientes = Ingrediente::orderBy('id', 'DESC');
+
+        $html = view('admin.recetas.partials.ingrediente')
+            ->with('ingredientes', $ingredientes);
+
+            return $html;
     }
 
     /**

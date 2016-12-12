@@ -55,7 +55,12 @@ class InsumosController extends Controller
      */
     public function show($id)
     {
-        //
+        $insumos = Insumo::orderBy('id', 'DESC');
+
+        $html = view('admin.recetas.partials.insumos')
+            ->with('insumos', $insumos);
+
+            return $html;
     }
 
     /**
