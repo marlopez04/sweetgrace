@@ -19,4 +19,10 @@ class Ingrediente extends Model
     	return $this->hasMany('App\RecetaIngrediente');
     }
 
+    public function scopeSearch($query, $nombre)
+    {
+        return $query->where('nombre', 'LIKE', "%$nombre%");
+    }
+
+
 }

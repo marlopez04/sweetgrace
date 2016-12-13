@@ -7,7 +7,7 @@
 <div class="monthly-grid">
 	<div class="panel panel-widget">
 		<div class="panel-title">
-			Insumos	  
+			Ingredientes	  
 		</div>
 			<div class="panel-body">
 				<!-- status -->

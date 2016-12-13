@@ -55,7 +55,11 @@ class IngredientesController extends Controller
      */
     public function show($id)
     {
-        $ingredientes = Ingrediente::orderBy('id', 'DESC');
+        if ($id == "0"){
+            $ingredientes = Ingrediente::orderBy('id', 'DESC')->paginate(5);
+        }else{
+            $ingredientes = Ingrediente::Search($id)->orderBy('id', 'DESC')->paginate(5);
+        }
 
         $html = view('admin.recetas.partials.ingrediente')
             ->with('ingredientes', $ingredientes);

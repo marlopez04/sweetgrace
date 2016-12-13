@@ -55,9 +55,15 @@ class InsumosController extends Controller
      */
     public function show($id)
     {
-        $insumos = Insumo::orderBy('id', 'DESC');
-
-        $html = view('admin.recetas.partials.insumos')
+//        $insumos = Insumo::orderBy('id', 'DESC');
+        if ($id == "0"){
+            $insumos = Insumo::orderBy('id', 'DESC')->paginate(5);    
+        }else{
+            $insumos = Insumo::Search($id)->orderBy('id', 'DESC')->paginate(5);
+        }
+        
+        
+        $html = view('admin.recetas.partials.insumo')
             ->with('insumos', $insumos);
 
             return $html;

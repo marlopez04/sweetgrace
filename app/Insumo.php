@@ -19,4 +19,10 @@ class Insumo extends Model
     	return $this->hasMany('App\RecetaInsumo');
     }
 
+    public function scopeSearch($query, $nombre)
+    {
+        return $query->where('nombre', 'LIKE', "%$nombre%");
+    }
+
+
 }
