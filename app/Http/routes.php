@@ -105,6 +105,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.recetas.destroy'
 	]);
 
+	Route::resource('recetaingredientes', 'RecetaIngredientesController');
+	Route::get('recetaingredientes/{id}/destroy',[
+		'uses' => 'RecetaIngredientesController@destroy',
+		'as'   => 'admin.recetaingredientes.destroy'
+	]);
+
+	Route::resource('recetainsumos', 'RecetaInsumosController');
+	Route::get('recetainsumos/{id}/destroy',[
+		'uses' => 'RecetaInsumosController@destroy',
+		'as'   => 'admin.recetainsumos.destroy'
+	]);
+
 });
 
 Route::get('admin/auth/login', [

@@ -4,8 +4,12 @@
 
 @section('content')
 
+<!--
 <div class="monthly-grid">
 <div class="panel panel-widget">
+-->
+<div class="area">
+	<div class="col-md-6 chrt-two area">
 	<div class="panel-title">
 			Aregar Receta de {{ $receta->nombre }}
 	</div>
@@ -16,28 +20,41 @@
 
        	<button type="button" class="btn btn-danger" id="buscar">Buscar</button>
 
-       <div id="recetaingrediente" hidden></div>
-       <div id="recetainsumo" hidden></div>
-       <div id="insumos"></div>
-       <div id="ingredientes"></div>
+       <div id="ingrediente" hidden></div>
+       <div id="insumo" hidden></div>
 
-<!-- INICIO con el id del cliente crea un nuevo pedido-->
+<!-- INICIO trae los insumos para poder agregarlos a la receta-->
 
-{!! Form::open(['route' => ['admin.insumos.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
+{!! Form::open(['route' => ['admin.insumos.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-insumoshow' ]) !!}
 {!! Form::close() !!}
 
-<!-- FIN con el id del cliente crea un nuevo pedido-->
+<!-- FIN trae los insumos para poder agregarlos a la receta-->
 
-<!-- INICIO trae los articulos de cada categoria-->
+<!-- INICIO trae los ingredientes para poder agregarlos a la receta-->
 
-{!! Form::open(['route' => ['admin.ingredientes.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteadd' ]) !!}
+{!! Form::open(['route' => ['admin.ingredientes.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteshow' ]) !!}
 {!! Form::close() !!}
 
-<!-- FIN trae los articulos de cada categoria-->
+<!-- FIN trae los ingredientes para poder agregarlos a la receta-->
 
 </div>
+<!--
 </div>
+<div class="clearfix"></div>
 
+<div class="area">
+	<div class="col-md-6 chrt-two area">
+		<h3 class="sub-tittle">Ingredientes</h3>
+		<div id="recetaingredientes"></div>
+	</div>
+-->
+	<div class="col-md-6 chrt-three">
+		<h3 class="sub-tittle">Receta</h3>
+		<div id="recetainsumos"></div>
+		<div id="recetaingredientes"></div>
+	</div>
+
+</div>
 <div class="clearfix"></div>
 
 <div id="correctorscroll">
@@ -59,8 +76,8 @@
 //  			var seleccionado = $(this).val();
         	$( '#buscar' ).click(function() {
         		var item = 0;
-        	$('#recetainsumo').hide();
-        	$('#recetaingrediente').hide();
+        	$('#insumo').hide();
+        	$('#ingrediente').hide();
 
 //        	if ($(".item").value == null || $(".item").value.length == 0)
 //        	if ($(".item").text.length <> 0){ 
@@ -86,7 +103,7 @@
   				if (seleccionado == 1) {
 
 				    // 1 ingrediente
-		          var form = $('#form-ingredienteadd');
+		          var form = $('#form-ingredienteshow');
                   var url = form.attr('action').replace(':ARTICULO_ID', item);
 		          var token = form.serialize();
 		          data = {
@@ -97,8 +114,8 @@
 
 //		                $('#correctorscroll').hide();
 //						$('#recetainsumo').hide();
-						$('#recetaingrediente').show();
-		                $('#recetaingrediente').fadeOut().html(ingrediente).fadeIn();
+						$('#ingrediente').show();
+		                $('#ingrediente').fadeOut().html(ingrediente).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);
 				   });
 
@@ -107,7 +124,7 @@
 //				if (seleccionado == 2) {
 
 					// 2 insumo
-		          var form = $('#form-insumoadd');
+		          var form = $('#form-insumoshow');
                   var url = form.attr('action').replace(':ARTICULO_ID', item);
 		          var token = form.serialize();
 		          data = {
@@ -118,8 +135,8 @@
 
 //		                $('#correctorscroll').hide();
 //						$('#recetaingrediente').hide();
-						$('#recetainsumo').show();
-		                $('#recetainsumo').fadeOut().html(insumo).fadeIn();
+						$('#insumo').show();
+		                $('#insumo').fadeOut().html(insumo).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);
 				   });
 				    
