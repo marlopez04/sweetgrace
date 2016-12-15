@@ -41,33 +41,30 @@
 
 <script>
 
-//                                    $('.btn-danger').on('click', function(){
-                                      function borraritem(btn_danger){
-                                        console.log("llama a la funcion");
-                                        var id_item = $(btn_danger).data('id');
-                                        console.log(id_item);
-//                                        $('.btn-danger').on('click', function(){
-                                          var form = $('#form-deleteitem');
-                                          var url = form.attr('action').replace(':ITEM_ID', id_item);
-                                          var token = form.serialize();
-                                          data = {
-                                            token: token,
-                                            id_item: id_item
-                                          };
-                                          console.log(data);
-                                          $.get(url, data, function(items){
+function borraritem(btn_danger){
+  console.log("llama a la funcion");
+  var id_item = $(btn_danger).data('id');
+  console.log(id_item);
+    var form = $('#form-deleteitem');
+    var url = form.attr('action').replace(':ITEM_ID', id_item);
+    var token = form.serialize();
+    data = {
+      token: token,
+      id_item: id_item
+    };
+    console.log(data);
+    $.get(url, data, function(items){
 
-                                                  $('#itemcontent').hide();                                          
+            $('#itemcontent').hide();                                          
 
-                                                 $('#items').fadeOut().html(items).fadeIn();
+           $('#items').fadeOut().html(items).fadeIn();
 
-                                                 $('#itemcontent').show();
+           $('#itemcontent').show();
 
-                                                 $("body").animate({ scrollTop: $(document).height()});
+           $("body").animate({ scrollTop: $(document).height()});
 
-                                                 });
-//                                        });
-                                        };
+           });
+  };
 
 
 

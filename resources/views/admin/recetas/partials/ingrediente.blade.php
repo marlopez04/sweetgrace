@@ -18,6 +18,9 @@
     </table>
 
 <div id="cargaringrediente">
+  <h5>Harina</h5>
+  {!! Form::text('nombre',null,['class'=>'item-nombre','id'=>'item-nombre' , 'placeholder'=>'cantidad'])!!}
+<button type="button" class="btn btn-danger" id="agregaringrediente">cargar</button>
 </div>
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
@@ -29,26 +32,13 @@
 
 @section('js')
 
-<script type="text/javascript">
+<script>
 
 function mostrarcantidad(btn_danger){
     console.log("");
+    $('#cargaringrediente').show;
     var id_item = $(btn_danger).data('id');
     console.log(id_item);
-//   $('.btn-danger').on('click', function(){
-      var form = $('#form-deleteitem');
-      var url = form.attr('action').replace(':ITEM_ID', id_item);
-      var token = form.serialize();
-      data = {
-        token: token,
-        id_item: id_item
-      };
-      console.log(data);
-      $.get(url, data, function(recetaingr){
-                                    
-             $('#cargaringrediente').fadeOut().html(recetaingr).fadeIn();
-
-             });
 
 };
 
