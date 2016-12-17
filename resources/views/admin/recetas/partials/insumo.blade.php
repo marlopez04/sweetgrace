@@ -25,7 +25,7 @@
 
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
-{!! Form::open(['route' => ['admin.recetainsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteadd' ]) !!}
+{!! Form::open(['route' => ['admin.recetainsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
 {!! Form::close() !!}
 
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
@@ -39,15 +39,35 @@ function mostrarcantidad(btn_danger){
   var id_insumo = $(btn_danger).data('id');
   console.log(id_insumo);
   $('#cargarinsumo').show();
-  var nombre = $(btn_danger).closest('tr').find('td.nombre'). html()
+  var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
   $('#nombre').text(nombre);
 //cargar insumo en la receta  
   $('#cargar' ).click(function() {
     var cantidad = $('.insumocantidad').val();
+    var id_receta = $('.idreceta').data('id');
     console.log(id_insumo);
     console.log(nombre);
     console.log(cantidad);
+    console.log(id_receta);
+        
+    var form = $('#form-insumoadd');
+    var url = form.attr('action').replace(':INSUMO_ID', id_insumo);
+    var token = form.serialize();
+    data = {
+      token: token,
+      id_insumo: id_insumo,
+      cantidad: cantidad,
+      id_receta: id_receta,
+      nombre: nombre
+    };
+    $.get(url, data, function(recetainsumos){
+
+      $('#insumosingredientes').show();
+      $('#insumosingredientes').fadeOut().html(recetainsumos).fadeIn();
+
+    });
+
   });
 
 };

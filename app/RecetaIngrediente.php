@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class RecetaIngrediente extends Model
 {
     protected $table = "recetaingredientes";
-    protected $fillable = ['receta_id','ingrediente_id','precio'];
+    protected $fillable = ['receta_id','ingrediente_id', 'nombre' ,'precio', 'cantidad'];
 
 	public function ingrediente()
     {
     	return $this->belongsTo('App\Ingrediente');
     }
 
-	public function articulo()
+    public function receta()
     {
-    	return $this->belongsTo('App\Receta');
+        return $this->belongsTo('App\Receta', 'receta_id', 'id');
     }
 
 }

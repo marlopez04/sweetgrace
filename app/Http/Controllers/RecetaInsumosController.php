@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\RecetaInsumo;
+use App\Receta;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Iluminate\Support\Facedes\Redirect;
+use Laracasts\Flash\Flash;
 
 class RecetaInsumosController extends Controller
 {
@@ -48,7 +52,28 @@ class RecetaInsumosController extends Controller
      */
     public function show($id)
     {
-        //
+//        $articulo = Articulo::find($id);
+// ['receta_id','insumo_id', 'nombre' ,'precio', 'cantidad'];
+//        dd($articulo);
+        $recetainsumo = new RecetaInsumo();
+        $recetainsumo->receta_id = $_GET['id_receta'];
+        $recetainsumo->nombre = $_GET['nombre'];
+        $recetainsumo->insumo_id = $_GET['id_insumo'];
+        $recetainsumo->cantidad = $_GET['cantidad'];
+        $recetainsumo->precio = $_GET['cantidad'];
+        $recetainsumo->save();
+
+        $receta = Receta::find($recetainsumo->receta_id);
+        $receta->load('recetainsumos', 'recetaingredientes');
+
+
+//          dd($receta);
+
+
+        $html = view('admin.recetas.partials.insumosingredientes')
+                   ->with('receta', $receta);
+
+         return $html;
     }
 
     /**

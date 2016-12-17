@@ -12,6 +12,7 @@
 	<div class="col-md-6 chrt-two area">
 	<div class="panel-title">
 			Aregar Receta de {{ $receta->nombre }}
+			<h4 data-id="{{ $receta->id }}" class="idreceta" hidden></h4>
 	</div>
 	<h4>Ingrediente / Insumo</h4>
        	{!! Form::select('type', ['1' => 'Ingrediente', '2' => 'Insumo'], null, ['class'=> 'tipo'])!!}
@@ -50,8 +51,7 @@
 -->
 	<div class="col-md-6 chrt-three">
 		<h3 class="sub-tittle">Receta</h3>
-		<div id="recetainsumos"></div>
-		<div id="recetaingredientes"></div>
+		<div id="insumosingredientes"></div>
 	</div>
 
 </div>
@@ -74,7 +74,7 @@
 
 //        $( ".tipo" ).change(function() {
 //  			var seleccionado = $(this).val();
-        	$( '#buscar' ).click(function() {
+        	$('#buscar' ).click(function() {
         		var item = 0;
         	$('#insumo').hide();
         	$('#ingrediente').hide();
