@@ -7,20 +7,20 @@
               <tbody>
                 @foreach($ingredientes as $ingrediente)
                   <tr>
-                    <td>{{ $ingrediente->nombre }}</td>
+                    <td class="nombre">{{ $ingrediente->nombre }}</td>
                     <td>{{ $ingrediente->cantidad }}</td>
                     <td>
-                      <button type="button" class="btn-danger"  onclick="mostrarcantidad(this)" id="{{ $ingrediente->id}}">agregar</button>
+                      <a href="javascript:void(0)" class="btn btn-danger" onclick='mostrarcantidad(this)' data-id="{{ $ingrediente->id}}">Agregar
                     </td>
                   </tr>
                 @endforeach
               </tbody>
     </table>
 
-<div id="cargaringrediente">
-  <h5>Harina</h5>
-  {!! Form::text('nombre',null,['class'=>'item-nombre','id'=>'item-nombre' , 'placeholder'=>'cantidad'])!!}
-<button type="button" class="btn btn-danger" id="agregaringrediente">cargar</button>
+<div id="cargaringrediente" hidden>
+  <h4 id="nombre">Moño</h4>
+{!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
+<button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 </div>
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
@@ -30,19 +30,50 @@
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
 
-@section('js')
-
 <script>
 
+//muestra el div con el nombre del insumo y brinda un campo para cargar la cantidad
 function mostrarcantidad(btn_danger){
-    console.log("");
-    $('#cargaringrediente').show;
-    var id_item = $(btn_danger).data('id');
-    console.log(id_item);
+  console.log("llama a la funcion");
+  var id_ingrediente = $(btn_danger).data('id');
+  console.log(id_ingrediente);
+  $('#cargaringrediente').show();
+  var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
+  console.log(nombre);
+  $('#nombre').text(nombre);
+//cargar insumo en la receta  
+  $('#cargaring' ).click(function() {
+    var cantidad = $('.ingredientecantidad').val();
+    var id_receta = $('.idreceta').data('id');
+    console.log(id_ingrediente);
+    console.log(nombre);
+    console.log(cantidad);
+    console.log(id_receta);
+        
+    var form = $('#form-ingredienteadd');
+    var url = form.attr('action').replace(':INGREDIENTE_ID', id_ingrediente);
+    var token = form.serialize();
+    data = {
+      token: token,
+      id_ingrediente: id_ingrediente,
+      cantidad: cantidad,
+      id_receta: id_receta,
+      nombre: nombre
+    };
+    if (id_ingrediente != 0) {
+      $.get(url, data, function(receta){
+        $('#cargaringrediente').hide();
+        $('#insumosingredientes').show();
+        $('#insumosingredientes').fadeOut().html(receta).fadeIn();
+  //      $('#insumosingredientes').html(receta);
+        id_ingrediente = 0;
+
+      });
+
+    };
+
+  });
 
 };
 
-
 </script>
-
-@endsection

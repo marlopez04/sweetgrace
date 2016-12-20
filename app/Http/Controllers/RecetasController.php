@@ -53,7 +53,13 @@ class RecetasController extends Controller
      */
     public function show($id)
     {
-        //
+        $receta = Receta::find($id);
+        $receta->load('recetaingredientes', 'recetaingredientes');
+
+        $html = view('admin.recetas.partials.insumosingredientes')
+                     ->with('receta', $receta);
+
+         return $html;
     }
 
     /**

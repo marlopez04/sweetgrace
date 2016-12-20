@@ -24,6 +24,14 @@
        <div id="ingrediente" hidden></div>
        <div id="insumo" hidden></div>
 
+<!-- INICIO carga los insumos e ingredientes que ya tiene cargada la receta-->
+
+{!! Form::open(['route' => ['admin.recetas.show', ':RECETA_ID'], 'method' => 'POST' , 'id' => 'form-receta' ]) !!}
+{!! Form::close() !!}
+
+<!-- FIN carga los insumos e ingredientes que ya tiene cargada la receta-->
+
+
 <!-- INICIO trae los insumos para poder agregarlos a la receta-->
 
 {!! Form::open(['route' => ['admin.insumos.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-insumoshow' ]) !!}
@@ -71,6 +79,23 @@
 <script type="text/javascript">
 
 	$(document).ready(function () {
+
+// carga los insumos e ingredientes de la receta
+
+	  var form = $('#form-receta');
+	  var id_receta = $('.idreceta').data('id');
+	  var url = form.attr('action').replace(':RECETA_ID', id_receta);
+	  var token = form.serialize();
+	  data = {
+	    token: token
+	  };
+	  $.get(url, data, function(receta){
+		      $('#insumosingredientes').show();
+		      $('#insumosingredientes').fadeOut().html(receta).fadeIn();
+	   });
+
+
+// carga los insumos e ingredientes de la receta
 
 //        $( ".tipo" ).change(function() {
 //  			var seleccionado = $(this).val();

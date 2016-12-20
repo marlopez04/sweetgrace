@@ -52,9 +52,7 @@ class RecetaInsumosController extends Controller
      */
     public function show($id)
     {
-//        $articulo = Articulo::find($id);
-// ['receta_id','insumo_id', 'nombre' ,'precio', 'cantidad'];
-//        dd($articulo);
+        
         $recetainsumo = new RecetaInsumo();
         $recetainsumo->receta_id = $_GET['id_receta'];
         $recetainsumo->nombre = $_GET['nombre'];
@@ -65,10 +63,6 @@ class RecetaInsumosController extends Controller
 
         $receta = Receta::find($recetainsumo->receta_id);
         $receta->load('recetainsumos', 'recetaingredientes');
-
-
-//          dd($receta);
-
 
         $html = view('admin.recetas.partials.insumosingredientes')
                    ->with('receta', $receta);
@@ -107,6 +101,15 @@ class RecetaInsumosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $recetainsumo = RecetaInsumo::find($id);
+        $recetainsumo->delete();
+
+        $receta = Receta::find($recetainsumo->receta_id);
+        $receta->load('recetainsumos', 'recetaingredientes');
+
+        $html = view('admin.recetas.partials.insumosingredientes')
+                   ->with('receta', $receta);
+
+         return $html;
     }
 }
