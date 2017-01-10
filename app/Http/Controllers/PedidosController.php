@@ -14,6 +14,7 @@ use App\Pedido;
 use App\Cliente;
 use App\Stock;
 
+
 class PedidosController extends Controller
 {
     /**

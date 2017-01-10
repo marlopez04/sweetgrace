@@ -28,7 +28,7 @@ class RecetasController extends Controller
      */
     public function create($articulo)
     {
-        dd($articulo);
+//        dd($articulo);
 
         return view('admin.recetas.create')
         ->with('articulo', $articulo);
