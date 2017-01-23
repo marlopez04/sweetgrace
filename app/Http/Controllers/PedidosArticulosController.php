@@ -67,6 +67,22 @@ class PedidosArticulosController extends Controller
         $pedido = Pedido::find($pedidoarticulo->pedido_id);
         $pedido->load('pedidoarticulos');
 
+// inicio suma de los importes
+
+/*     NO FUNCIONA
+        foreach ($pedido->pedidoarticulos as $pedidoarticulo) {
+            $precio = $pedidoarticulo->precio;
+            $importepedido = $importepedido + $precio;
+        }
+
+        $pedido->importe = $precio;
+
+        $pedido->save();
+*/
+
+//fin suma de los importes
+
+
         // dd($_GET['algo']);
         $html = view('admin.pedidos.partials.items')
                    ->with('pedido', $pedido);

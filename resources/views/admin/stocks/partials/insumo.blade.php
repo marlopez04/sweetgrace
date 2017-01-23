@@ -26,12 +26,12 @@
 <button type="button" class="btn btn-danger" id="cargarins">cargar</button>
 </div>
 
-<!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
+<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
 
-{!! Form::open(['route' => ['admin.recetainsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
+{!! Form::open(['route' => ['admin.stockinsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
 {!! Form::close() !!}
 
-<!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
+<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
 
 
 <script>
@@ -46,14 +46,14 @@ function mostrarcantidad(btn_danger){
   var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
   $('#nombre').text(nombre);
-//cargar insumo en la receta  
+//cargar insumo en la stock  
   $('#cargarins' ).click(function() {
     var cantidad = $('.insumocantidad').val();
-    var id_receta = $('.idreceta').data('id');
+    var id_stock = $('.idstock').data('id');
     console.log(id_insumo);
     console.log(nombre);
     console.log(cantidad);
-    console.log(id_receta);
+    console.log(id_stock);
         
     var form = $('#form-insumoadd');
     var url = form.attr('action').replace(':INSUMO_ID', id_insumo);
@@ -62,14 +62,14 @@ function mostrarcantidad(btn_danger){
       token: token,
       id_insumo: id_insumo,
       cantidad: cantidad,
-      id_receta: id_receta,
+      id_stock: id_stock,
       nombre: nombre
     };
     if (id_insumo != 0) {
-      $.get(url, data, function(recetainsumos){
+      $.get(url, data, function(stockinsumos){
         $('#cargarinsumo').hide();
         $('#insumosingredientes').show();
-        $('#insumosingredientes').fadeOut().html(recetainsumos).fadeIn();
+        $('#insumosingredientes').fadeOut().html(stockinsumos).fadeIn();
         id_insumo = 0;
 
       });

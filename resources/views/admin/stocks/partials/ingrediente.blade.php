@@ -25,12 +25,12 @@
 {!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
 <button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 </div>
-<!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
+<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
 
-{!! Form::open(['route' => ['admin.recetaingredientes.show', ':INGREDIENTE_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteadd' ]) !!}
+{!! Form::open(['route' => ['admin.stockingredientes.show', ':INGREDIENTE_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteadd' ]) !!}
 {!! Form::close() !!}
 
-<!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
+<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
 
 
 <script>
@@ -44,14 +44,14 @@ function mostrarcantidad(btn_danger){
   var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
   $('#nombre').text(nombre);
-//cargar insumo en la receta  
+//cargar insumo en la stock  
   $('#cargaring' ).click(function() {
     var cantidad = $('.ingredientecantidad').val();
-    var id_receta = $('.idreceta').data('id');
+    var id_stock = $('.idstock').data('id');
     console.log(id_ingrediente);
     console.log(nombre);
     console.log(cantidad);
-    console.log(id_receta);
+    console.log(id_stock);
         
     var form = $('#form-ingredienteadd');
     var url = form.attr('action').replace(':INGREDIENTE_ID', id_ingrediente);
@@ -60,15 +60,15 @@ function mostrarcantidad(btn_danger){
       token: token,
       id_ingrediente: id_ingrediente,
       cantidad: cantidad,
-      id_receta: id_receta,
+      id_stock: id_stock,
       nombre: nombre
     };
     if (id_ingrediente != 0) {
-      $.get(url, data, function(receta){
+      $.get(url, data, function(stock){
         $('#cargaringrediente').hide();
         $('#insumosingredientes').show();
-        $('#insumosingredientes').fadeOut().html(receta).fadeIn();
-  //      $('#insumosingredientes').html(receta);
+        $('#insumosingredientes').fadeOut().html(stock).fadeIn();
+  //      $('#insumosingredientes').html(stock);
         id_ingrediente = 0;
 
       });

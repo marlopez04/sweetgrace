@@ -18,6 +18,8 @@ class AddStockingredientesTable extends Migration
             $table->double('cantidad', 10, 0);
             $table->integer('ingrediente_id')->unsigned();
             $table->foreign('ingrediente_id')->references('id')->on('ingredientes');
+            $table->integer('stock_id')->unsigned();
+            $table->foreign('stock_id')->references('id')->on('stock');
             $table->enum('estado',['pendiente', 'confirmado'])->default('pendiente');
             $table->enum('tipo',['ingreso', 'egreso'])->default('ingreso');
             $table->timestamps();

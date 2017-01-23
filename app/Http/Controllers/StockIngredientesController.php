@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Stock;
 use Illuminate\Http\Request;
 use App\StockIngrediente;
 use App\Http\Requests;
@@ -53,7 +53,21 @@ class StockIngredientesController extends Controller
      */
     public function show($id)
     {
-        //
+        $stockingrediente = new StockIngrediente();
+        $stockingrediente->stock_id = $_GET['id_stock'];
+        $stockingrediente->nombre = $_GET['nombre'];
+        $stockingrediente->ingrediente_id = $_GET['id_ingrediente'];
+        $stockingrediente->cantidad = $_GET['cantidad'];
+        $stockingrediente->precio = $_GET['cantidad'];
+        $stockingrediente->save();
+
+        $stock = Stock::find($stockingrediente->stock_id);
+        $stock->load('stockingredientes', 'stockinsumos');
+
+        $html = view('admin.stocks.partials.insumosingredientes')
+                   ->with('stock', $stock);
+
+         return $html;
     }
 
     /**
@@ -87,6 +101,16 @@ class StockIngredientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $stockingrediente = StockIngrediente::find($id);
+        $stockingrediente->delete();
+
+        $stock = Stock::find($stockingrediente->stock_id);
+        $stock->load('stockingredientes', 'stockingredientes');
+
+        $html = view('admin.stocks.partials.insumosingredientes')
+                   ->with('stock', $stock);
+
+         return $html;
+
     }
 }

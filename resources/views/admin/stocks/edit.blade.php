@@ -1,6 +1,6 @@
 @extends('admin.template.main')
 
-@section('title', 'Agregar Receta del Articulo')
+@section('title', 'Nuevo Stock')
 
 @section('content')
 
@@ -11,8 +11,8 @@
 <div class="area">
 	<div class="col-md-6 chrt-two area">
 	<div class="panel-title">
-			Aregar Receta de {{ $receta->nombre }}
-			<h4 data-id="{{ $receta->id }}" class="idreceta" hidden></h4>
+			Nuevo Stock
+			<h4 data-id="{{ $stock->id }}" class="idstock" hidden></h4>
 	</div>
 	<h4>Ingrediente / Insumo</h4>
        	{!! Form::select('type', ['1' => 'Ingrediente', '2' => 'Insumo'], null, ['class'=> 'tipo'])!!}
@@ -24,27 +24,27 @@
        <div id="ingrediente" hidden></div>
        <div id="insumo" hidden></div>
 
-<!-- INICIO carga los insumos e ingredientes que ya tiene cargada la receta-->
+<!-- INICIO carga los insumos e ingredientes que ya tiene cargada la stock-->
 
-{!! Form::open(['route' => ['admin.recetas.show', ':RECETA_ID'], 'method' => 'POST' , 'id' => 'form-receta' ]) !!}
+{!! Form::open(['route' => ['admin.stocks.show', ':STOCK_ID'], 'method' => 'POST' , 'id' => 'form-stock' ]) !!}
 {!! Form::close() !!}
 
-<!-- FIN carga los insumos e ingredientes que ya tiene cargada la receta-->
+<!-- FIN carga los insumos e ingredientes que ya tiene cargada la stock-->
 
 
-<!-- INICIO trae los insumos para poder agregarlos a la receta-->
+<!-- INICIO trae los insumos para poder agregarlos a la stock-->
 
 {!! Form::open(['route' => ['admin.insumos.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-insumoshow' ]) !!}
 {!! Form::close() !!}
 
-<!-- FIN trae los insumos para poder agregarlos a la receta-->
+<!-- FIN trae los insumos para poder agregarlos a la stock-->
 
-<!-- INICIO trae los ingredientes para poder agregarlos a la receta-->
+<!-- INICIO trae los ingredientes para poder agregarlos a la stock-->
 
 {!! Form::open(['route' => ['admin.ingredientes.show', ':ARTICULO_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteshow' ]) !!}
 {!! Form::close() !!}
 
-<!-- FIN trae los ingredientes para poder agregarlos a la receta-->
+<!-- FIN trae los ingredientes para poder agregarlos a la stock-->
 
 </div>
 <!--
@@ -54,11 +54,11 @@
 <div class="area">
 	<div class="col-md-6 chrt-two area">
 		<h3 class="sub-tittle">Ingredientes</h3>
-		<div id="recetaingredientes"></div>
+		<div id="stockingredientes"></div>
 	</div>
 -->
 	<div class="col-md-6 chrt-three">
-		<h3 class="sub-tittle">Receta</h3>
+		<h3 class="sub-tittle">Stock</h3>
 		<div id="insumosingredientes"></div>
 	</div>
 
@@ -80,22 +80,22 @@
 
 	$(document).ready(function () {
 
-// carga los insumos e ingredientes de la receta
+// carga los insumos e ingredientes de la stock
 
-	  var form = $('#form-receta');
-	  var id_receta = $('.idreceta').data('id');
-	  var url = form.attr('action').replace(':RECETA_ID', id_receta);
+	  var form = $('#form-stock');
+	  var id_stock = $('.idstock').data('id');
+	  var url = form.attr('action').replace(':STOCK_ID', id_stock);
 	  var token = form.serialize();
 	  data = {
 	    token: token
 	  };
-	  $.get(url, data, function(receta){
+	  $.get(url, data, function(stock){
 		      $('#insumosingredientes').show();
-		      $('#insumosingredientes').fadeOut().html(receta).fadeIn();
+		      $('#insumosingredientes').fadeOut().html(stock).fadeIn();
 	   });
 
 
-// carga los insumos e ingredientes de la receta
+// carga los insumos e ingredientes de la stock
 
 //        $( ".tipo" ).change(function() {
 //  			var seleccionado = $(this).val();
@@ -138,7 +138,7 @@
 		          $.get(url, data, function(ingrediente){
 
 //		                $('#correctorscroll').hide();
-//						$('#recetainsumo').hide();
+//						$('#stockinsumo').hide();
 						$('#ingrediente').show();
 		                $('#ingrediente').fadeOut().html(ingrediente).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);
@@ -159,7 +159,7 @@
 		          $.get(url, data, function(insumo){
 
 //		                $('#correctorscroll').hide();
-//						$('#recetaingrediente').hide();
+//						$('#stockingrediente').hide();
 						$('#insumo').show();
 		                $('#insumo').fadeOut().html(insumo).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);

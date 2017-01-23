@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Stock;
+use App\StockInsumo;
+use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -48,7 +50,21 @@ class StockInsumosController extends Controller
      */
     public function show($id)
     {
-        //
+        $stockinsumo = new StockInsumo();
+        $stockinsumo->stock_id = $_GET['id_stock'];
+        $stockinsumo->nombre = $_GET['nombre'];
+        $stockinsumo->insumo_id = $_GET['id_insumo'];
+        $stockinsumo->cantidad = $_GET['cantidad'];
+        $stockinsumo->precio = $_GET['cantidad'];
+        $stockinsumo->save();
+
+        $stock = Stock::find($stockinsumo->stock_id);
+        $stock->load('stockinsumos', 'stockingredientes');
+
+        $html = view('admin.stocks.partials.insumosingredientes')
+                   ->with('stock', $stock);
+
+         return $html;
     }
 
     /**
@@ -82,6 +98,15 @@ class StockInsumosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $stockinsumo = StockInsumo::find($id);
+        $stockinsumo->delete();
+
+        $stock = Stock::find($stockinsumo->stock_id);
+        $stock->load('stockinsumos', 'stockingredientes');
+
+        $html = view('admin.stocks.partials.insumosingredientes')
+                   ->with('stock', $stock);
+
+         return $html;
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Stock;
+use App\User;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +19,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::orderBy('id', 'DECS')->paginate(5);
+        return view('admin.stocks.index')->with('stocks', $stocks);
     }
 
     /**
@@ -26,7 +30,14 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+        $stock = new Stock();
+        $stock->user_id = 1;
+//        $stock->tipo = 1;
+//        $stock->estado = 1;
+        $stock->save();
+        $id = $stock->id;
+
+           return redirect()->route('admin.stocks.edit', $id);
     }
 
     /**
@@ -36,8 +47,8 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+      //
     }
 
     /**
@@ -48,7 +59,13 @@ class StockController extends Controller
      */
     public function show($id)
     {
-        //
+        $stock = Stock::find($id);
+        $stock->load('stockingredientes', 'stockingredientes');
+
+        $html = view('admin.stocks.partials.insumosingredientes')
+                     ->with('stock', $stock);
+
+         return $html;
     }
 
     /**
@@ -59,7 +76,10 @@ class StockController extends Controller
      */
     public function edit($id)
     {
-        //
+        $stock = Stock::find($id);
+
+        return view('admin.stocks.edit')
+            ->with('stock', $stock);
     }
 
     /**
