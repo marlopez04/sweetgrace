@@ -53,7 +53,7 @@ class ArticuloSeeder extends Seeder
 
         DB::table('articulos')->insert([
 			'nombre'     => 'tarta',
-			'descripcion'     => 'pandulce',
+			'descripcion'     => 'tarta',
 			'imagen'    => 'tarta.jpg',
 			'precio'     => '90',
 			'lista_id'     => '1',
@@ -63,7 +63,7 @@ class ArticuloSeeder extends Seeder
 
         DB::table('articulos')->insert([
 			'nombre'     => 'galletas',
-			'descripcion'     => 'pandulce',
+			'descripcion'     => 'galletas',
 			'imagen'    => 'galletas.jpg',
 			'precio'     => '60',
 			'lista_id'     => '1',
@@ -73,7 +73,7 @@ class ArticuloSeeder extends Seeder
 
         DB::table('articulos')->insert([
 			'nombre'     => 'budin',
-			'descripcion'     => 'pandulce',
+			'descripcion'     => 'budin',
 			'imagen'    => 'budin.jpg',
 			'precio'     => '60',
 			'lista_id'     => '1',

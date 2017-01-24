@@ -14,17 +14,17 @@ class Stock extends Model
     	return $this->hasMany('App\StockIngrediente');
     }
 
-    public function stockinsumo()
+    public function stockinsumos()
     {
     	return $this->hasMany('App\StockInsumo');
     }
 
-        public function users()
+    public function users()
     {
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-        public function pedido()
+    public function pedido()
     {
         return $this->hasOne('App\Pedido');
     }

@@ -53,7 +53,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Pedido');
     }
 
-    public function stock()
+    public function stocks()
     {
         return $this->hasMany('App\Stock');
     }

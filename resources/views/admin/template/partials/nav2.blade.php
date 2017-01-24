@@ -13,21 +13,14 @@
 											<li id="menu-academico-boletim" ><a href="{{ route('admin.pedidos.create')}}">Entregados</a></li>
 										  </ul>
 										</li>
-										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Categorias</span> <span class="fa fa-angle-right" style="float: right"></span></a>
-										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.create')}}">Nueva</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Categorias</a></li>
-										  </ul>
-										</li>
-										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Lista de Precios</span> <span class="fa fa-angle-right" style="float: right"></span></a>
-										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.precios.index')}}">Nueva lista</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.precios.create')}}">Lista de Precios</a></li>
-										  </ul>
 										 <li id="menu-academico" ><a href="#"><i class="fa fa-table"></i> <span>Articulos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.create')}}">Nuevo</a></li>
 											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.articulos.index')}}">Articulos</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.categorias.index')}}">Categorias</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.precios.index')}}">Lista de Precios</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.insumos.index')}}">Insumos</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.ingredientes.index')}}">Ingredientes</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.stocks.index')}}">Stock</a></li>
 										  </ul>
 										</li>
 										<li id="menu-academico" ><a href=""><i class="fa fa-table"></i> <span>Clientes</span> <span class="fa fa-angle-right" style="float: right"></span></a>
