@@ -34,7 +34,7 @@ class StockController extends Controller
     public function create()
     {
         $stock = new Stock();
-        $stock->user_id = 1;
+        $stock->user_id = \Auth::user()->id;
 //        $stock->tipo = 1;
 //        $stock->estado = 1;
         $stock->save();

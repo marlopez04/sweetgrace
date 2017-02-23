@@ -55,16 +55,34 @@ class IngredientesController extends Controller
      */
     public function show($id)
     {
+        
         if ($id == "0"){
             $ingredientes = Ingrediente::orderBy('id', 'DESC')->paginate(5);
         }else{
             $ingredientes = Ingrediente::Search($id)->orderBy('id', 'DESC')->paginate(5);
         }
 
-        $html = view('admin.recetas.partials.ingrediente')
-            ->with('ingredientes', $ingredientes);
+        $tipo = $_GET['tipo'];
 
-            return $html;
+//recupera el tipo ( 0 = receta , 1 stock) para saber a donde enviar los datos y que vista usar
+
+        if ($tipo == "0"){
+
+            $html = view('admin.recetas.partials.ingrediente')
+                ->with('ingredientes', $ingredientes);
+
+                return $html;
+
+        }else{
+
+            $html = view('admin.stocks.partials.ingrediente')
+                ->with('ingredientes', $ingredientes);
+
+                return $html;
+
+        }
+        
+
     }
 
     /**

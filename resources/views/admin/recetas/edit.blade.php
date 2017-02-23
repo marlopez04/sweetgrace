@@ -131,8 +131,10 @@
 		          var form = $('#form-ingredienteshow');
                   var url = form.attr('action').replace(':ARTICULO_ID', item);
 		          var token = form.serialize();
+		          var tipo = 0;
 		          data = {
-		            token: token
+		            token: token,
+		            tipo: tipo
 		          };
 		          
 		          $.get(url, data, function(ingrediente){
@@ -152,8 +154,10 @@
 		          var form = $('#form-insumoshow');
                   var url = form.attr('action').replace(':ARTICULO_ID', item);
 		          var token = form.serialize();
+		          var tipo = 0;
 		          data = {
-		            token: token
+		            token: token,
+		            tipo: tipo
 		          };
 		          
 		          $.get(url, data, function(insumo){

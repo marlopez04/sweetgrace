@@ -61,12 +61,26 @@ class InsumosController extends Controller
         }else{
             $insumos = Insumo::Search($id)->orderBy('id', 'DESC')->paginate(5);
         }
-        
-        
-        $html = view('admin.recetas.partials.insumo')
+
+        $tipo = $_GET['tipo'];
+
+        if ($tipo == "0"){
+
+            $html = view('admin.recetas.partials.insumo')
             ->with('insumos', $insumos);
 
             return $html;
+
+        }else{
+
+            $html = view('admin.stocks.partials.insumo')
+            ->with('insumos', $insumos);
+
+            return $html;
+
+        }
+        
+
     }
 
     /**

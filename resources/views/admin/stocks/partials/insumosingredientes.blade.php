@@ -5,6 +5,10 @@
                 <th></th>
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
+                <th>Costo</th>
+                <th>Unidad</th>
+                <th>Costo/U</th>
+
               </thead>
               <tbody>
                 @foreach($stock->stockingredientes as $stockingrediente)
@@ -14,6 +18,19 @@
                     </td>
                     <td>{{ $stockingrediente->nombre }}</td>
                     <td>{{ $stockingrediente->cantidad }}</td>
+                    <td>{{ $stockingrediente->costo }}</td>
+                    
+                    @if ($stockingrediente->cantidad > 1000)
+                      <td>1</td>
+                      <td>{{ $stockingrediente->cantidad / $stockingrediente->costo }}</td>
+                    @else
+                      <td>100</td>
+                      <td>{{ ($stockingrediente->costo * 100 ) / $stockingrediente->cantidad }}</td>
+                    @endif
+
+
+
+
                   </tr>
                 @endforeach
               </tbody>

@@ -21,8 +21,9 @@
 </div>
 
 <div id="cargaringrediente" hidden>
-  <h4 id="nombre">Moño</h4>
+  <h4 id="nombre"></h4>
 {!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
+{!! Form::number('costo',null,['class'=>'ingrediecosto', 'id'=>'ingredientecosto' , 'placeholder'=>'costo'])!!}
 <button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 </div>
 <!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
@@ -47,6 +48,7 @@ function mostrarcantidad(btn_danger){
 //cargar insumo en la stock  
   $('#cargaring' ).click(function() {
     var cantidad = $('.ingredientecantidad').val();
+    var costo = $('.ingredientecosto').val();
     var id_stock = $('.idstock').data('id');
     console.log(id_ingrediente);
     console.log(nombre);
@@ -60,6 +62,7 @@ function mostrarcantidad(btn_danger){
       token: token,
       id_ingrediente: id_ingrediente,
       cantidad: cantidad,
+      costo: costo,
       id_stock: id_stock,
       nombre: nombre
     };

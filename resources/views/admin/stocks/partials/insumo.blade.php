@@ -23,6 +23,7 @@
 <div id="cargarinsumo" hidden>
   <h4 id="nombre">Moño</h4>
 {!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
+{!! Form::number('costo',null,['class'=>'insumocosto', 'id'=>'insumocosto' , 'placeholder'=>'costo'])!!}
 <button type="button" class="btn btn-danger" id="cargarins">cargar</button>
 </div>
 
@@ -49,6 +50,7 @@ function mostrarcantidad(btn_danger){
 //cargar insumo en la stock  
   $('#cargarins' ).click(function() {
     var cantidad = $('.insumocantidad').val();
+    var costo = $('.insumocosto').val();
     var id_stock = $('.idstock').data('id');
     console.log(id_insumo);
     console.log(nombre);
@@ -62,6 +64,7 @@ function mostrarcantidad(btn_danger){
       token: token,
       id_insumo: id_insumo,
       cantidad: cantidad,
+      costo: costo,
       id_stock: id_stock,
       nombre: nombre
     };

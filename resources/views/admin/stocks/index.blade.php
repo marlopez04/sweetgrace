@@ -19,14 +19,16 @@
 								<th>usuario</th>
 								<th>tipo</th>
 								<th>estado</th>
+								<th>Fecha</th>
 								<th>Editar</th>
 							</thead>
 							<tbody>
 								@foreach($stocks as $stock)
 									<tr>
 										<td>{{ $stock->user->name }}</td>
-										<td>{{ date("d-m-Y", strtotime($stock->tipo)) }}</td>
-										<td>{{ date("d-m-Y", strtotime($stock->estado)) }}</td>
+										<td>{{ $stock->tipo }}</td>
+										<td>{{ $stock->estado }}</td>
+										<td>{{ date("d-m-Y", strtotime($stock->created_at)) }}</td>
 										<td>
 										<a href="{{ route('admin.stocks.edit', $stock->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

@@ -19,7 +19,7 @@ class Stock extends Model
     	return $this->hasMany('App\StockInsumo');
     }
 
-    public function users()
+    public function user()
     {
     	return $this->belongsTo('App\User', 'user_id', 'id');
     }
