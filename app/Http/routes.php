@@ -63,6 +63,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.stockingredientes.destroy'
 	]);
 
+	Route::resource('stockinsumos', 'StockInsumosController');
+	Route::get('stockinsumos/{id}/destroy',[
+		'uses' => 'StockInsumosController@destroy',
+		'as'   => 'admin.stockinsumos.destroy'
+	]);
+
 	Route::resource('pedidos', 'PedidosController');
 	Route::get('pedidos/{id}/destroy',[
 		'uses' => 'PedidosController@destroy',

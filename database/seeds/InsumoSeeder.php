@@ -12,24 +12,27 @@ class InsumoSeeder extends Seeder
     public function run()
     {
         DB::table('insumos')->insert([
-			'nombre'     => 'tartera baja',
-			'costo'     => '120',
+			'nombre'       => 'tartera baja',
 			'cantidad'     => '100',
-			'stockcritico'     => '30'
+			'stockcritico' => '30',
+			'unidad'       => '1',
+			'costo_u'      => '1.2'
 			]);
 
         DB::table('insumos')->insert([
-			'nombre'     => 'tartera baja',
-			'costo'     => '120',
+			'nombre'       => 'moños',
 			'cantidad'     => '100',
-			'stockcritico'     => '30'
+			'stockcritico' => '30',
+			'unidad'       => '1',
+			'costo_u'      => '1.5'
 			]);
 
         DB::table('insumos')->insert([
-			'nombre'     => 'tartera baja',
-			'costo'     => '120',
+			'nombre'       => 'bolsa camiseta',
 			'cantidad'     => '100',
-			'stockcritico'     => '30'
+			'stockcritico' => '30',
+			'unidad'       => '1',
+			'costo_u'      => '1.6'
 			]);
     }
 }

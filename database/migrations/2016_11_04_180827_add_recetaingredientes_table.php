@@ -21,6 +21,8 @@ class AddRecetaingredientesTable extends Migration
             $table->integer('ingrediente_id')->unsigned();
             $table->foreign('ingrediente_id')->references('id')->on('ingredientes');
             $table->double('precio', 10, 0);
+            $table->double('unidad', 4, 0);
+            $table->double('costo_u', 10, 2);
             $table->timestamps();
         });
     }

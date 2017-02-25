@@ -15,9 +15,10 @@ class AddInsumosTable extends Migration
         Schema::create('insumos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->double('costo', 10, 2);
             $table->double('cantidad', 10, 0);
             $table->double('stockcritico', 10, 0);
+            $table->double('unidad', 4, 0);
+            $table->double('costo_u', 10, 2);
             $table->timestamps();
         });
     }

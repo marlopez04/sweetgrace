@@ -21,6 +21,8 @@ class AddRecetainsumosTable extends Migration
             $table->integer('insumo_id')->unsigned();
             $table->foreign('insumo_id')->references('id')->on('insumos');
             $table->double('precio', 10, 0);
+            $table->double('unidad', 4, 0);
+            $table->double('costo_u', 10, 2);
             $table->timestamps();
         });
     }

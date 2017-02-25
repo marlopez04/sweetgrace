@@ -26,9 +26,10 @@
 								@foreach($insumos as $insumo)
 									<tr>
 										<td>{{ $insumo->nombre }}</td>
-										<td>{{ $insumo->costo }}</td>
 										<td>{{ $insumo->cantidad }}</td>
 										<td>{{ $insumo->stockcritico }}</td>
+										<td>{{ $insumo->unidad }}</td>
+										<td>{{ $insumo->costo_u }}</td>
 										<td>
 										<a href="{{ route('admin.insumos.edit', $insumo->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

@@ -12,24 +12,27 @@ class IngredienteSeeder extends Seeder
     public function run()
     {
         DB::table('ingredientes')->insert([
-			'nombre'     => 'harina',
-			'costo'     => '60',
+			'nombre'       => 'harina',
 			'cantidad'     => '3000',
-			'stockcritico'     => '600'
+			'stockcritico' => '600',
+			'unidad'       => '100',
+			'costo_u'      => '0.5'
 			]);
 
         DB::table('ingredientes')->insert([
-			'nombre'     => 'huevo',
-			'costo'     => '20',
+			'nombre'       => 'huevo',
 			'cantidad'     => '60',
-			'stockcritico'     => '20'
+			'stockcritico' => '20',
+			'unidad'       => '1',
+			'costo_u'      => '0.3'
 			]);
 
         DB::table('ingredientes')->insert([
 			'nombre'     => 'azucar',
-			'costo'     => '20',
 			'cantidad'     => '3000',
-			'stockcritico'     => '600'
+			'stockcritico'     => '600',
+			'unidad'       => '100',
+			'costo_u'      => '0.3'
 			]);
 	}
 }

@@ -11,8 +11,6 @@
 		<div class="form-group">
 			<h4>Nombre</h4>
 			{!!	Form::text('nombre',$insumo->nombre,['class'=>'form-control', 'required'])!!}
-			<h4>Costo</h4>
-			{!!	Form::number('costo',$insumo->costo,['class'=>'form-control', 'required'])!!}
 			<h4>Cantidad</h4>
 			{!!	Form::number('cantidad',$insumo->cantidad,['class'=>'form-control', 'required'])!!}
 			<h4>StockCritico</h4>

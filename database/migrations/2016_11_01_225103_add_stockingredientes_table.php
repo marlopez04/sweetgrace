@@ -22,6 +22,8 @@ class AddStockingredientesTable extends Migration
             $table->foreign('stock_id')->references('id')->on('stock');
             $table->enum('estado',['pendiente', 'confirmado'])->default('pendiente');
             $table->enum('tipo',['ingreso', 'egreso'])->default('ingreso');
+            $table->double('unidad', 4, 0);
+            $table->double('costo_u', 10, 2);
             $table->timestamps();
         });
     }

@@ -17,7 +17,6 @@
 						<table class="table table-striped">
 							<thead>
 								<th>Nombre</th>
-								<th>Costo</th>
 								<th>Cantidad</th>
 								<th>StockCritico</th>
 								<th>Editar</th>
@@ -26,9 +25,10 @@
 								@foreach($ingredientes as $ingrediente)
 									<tr>
 										<td>{{ $ingrediente->nombre }}</td>
-										<td>{{ $ingrediente->costo }}</td>
 										<td>{{ $ingrediente->cantidad }}</td>
 										<td>{{ $ingrediente->stockcritico }}</td>
+										<td>{{ $ingrediente->unidad }}</td>
+										<td>{{ $ingrediente->custo_u }}</td>
 										<td>
 										<a href="{{ route('admin.ingredientes.edit', $ingrediente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

@@ -120,7 +120,22 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+// selecciono transforma las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, cantidad)
+        $data = \DB::select('select ri.ingrediente_id as ingrediente_id, sum(ri.cantidad) as cantidad
+                            from recetas r
+                            inner join recetaingredientes ri on ri.receta_id = r.id
+                            where articulo_id in
+                            (SELECT articulo_id
+                            FROM pedidoarticulos
+                            WHERE pedido_id = "$id")
+                            group by ri.ingrediente_id');
+
+        return $data;
+
+
+        
     }
 
     /**
