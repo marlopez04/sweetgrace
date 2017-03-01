@@ -6,7 +6,7 @@
               <tr><td align="center " colspan="6"><h3><strong>Ingredientes</strong></h3></td></tr>
               </thead>
               <thead>
-                <th>Delete</th>
+                <th>Borrar</th>
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
                 <th>Costo</th>
@@ -22,16 +22,20 @@
                     <td>{{ $stockingrediente->nombre }}</td>
                     <td>{{ $stockingrediente->cantidad }}</td>
                     <td>{{ $stockingrediente->costo }}</td>
+                    <td>{{ $stockingrediente->unidad }}</td>
+                    <td>{{ $stockingrediente->costo_u }}</td>
                   </tr>
                 @endforeach
               </tbody>
             </table>
 
 <!-- INSUMOS       -->
-                 <h4>Insumos</h4>
           <table class="table table-striped">
               <thead>
-                <th></th>
+              <tr><td align="center " colspan="6"><h3><strong>Insumos</strong></h3></td></tr>
+              </thead>
+              <thead>
+                <th>Borrar</th>
                 <th>Insumo</th>
                 <th>Cantidad</th>
                 <th>Costo</th>
@@ -46,6 +50,9 @@
                     </td>
                     <td>{{ $stockinsumo->nombre }}</td>
                     <td>{{ $stockinsumo->cantidad }}</td>
+                    <td>{{ $stockinsumo->costo }}</td>
+                    <td>{{ $stockinsumo->unidad }}</td>
+                    <td>{{ $stockinsumo->costo_u }}</td>
                   </tr>
                 @endforeach
               </tbody>

@@ -52,10 +52,19 @@ class StockInsumosController extends Controller
     {
         $stockinsumo = new StockInsumo();
         $stockinsumo->stock_id = $_GET['id_stock'];
-        $stockinsumo->nombre = $_GET['nombre'];
         $stockinsumo->insumo_id = $_GET['id_insumo'];
+        $stockinsumo->nombre = $_GET['nombre'];
         $stockinsumo->cantidad = $_GET['cantidad'];
-        $stockinsumo->precio = $_GET['cantidad'];
+        $stockinsumo->costo = $_GET['costo'];
+
+        if ($stockinsumo->cantidad >= 500){
+            $stockinsumo->unidad = 100;
+            $stockinsumo->costo_u = $stockinsumo->costo * 100 / $stockinsumo->cantidad;
+        }else{
+            $stockinsumo->unidad = 1;
+            $stockinsumo->costo_u = $stockinsumo->costo / $stockinsumo->cantidad;
+        }
+
         $stockinsumo->save();
 
         $stock = Stock::find($stockinsumo->stock_id);

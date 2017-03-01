@@ -22,6 +22,7 @@
 
 <div id="cargarinsumo" hidden>
   <h4 id="nombre">Moño</h4>
+{!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
 {!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
 {!! Form::number('costo',null,['class'=>'insumocosto', 'id'=>'insumocosto' , 'placeholder'=>'costo'])!!}
 <button type="button" class="btn btn-danger" id="cargarins">cargar</button>
@@ -51,11 +52,14 @@ function mostrarcantidad(btn_danger){
   $('#cargarins' ).click(function() {
     var cantidad = $('.insumocantidad').val();
     var costo = $('.insumocosto').val();
+    var tipo = $('.tipo').val();
     var id_stock = $('.idstock').data('id');
     console.log(id_insumo);
     console.log(nombre);
     console.log(cantidad);
+    console.log(costo);
     console.log(id_stock);
+    console.log(tipo);
         
     var form = $('#form-insumoadd');
     var url = form.attr('action').replace(':INSUMO_ID', id_insumo);
@@ -65,6 +69,7 @@ function mostrarcantidad(btn_danger){
       id_insumo: id_insumo,
       cantidad: cantidad,
       costo: costo,
+      tipo: tipo,
       id_stock: id_stock,
       nombre: nombre
     };

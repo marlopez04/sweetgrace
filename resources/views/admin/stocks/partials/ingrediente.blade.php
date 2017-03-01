@@ -22,8 +22,9 @@
 
 <div id="cargaringrediente" hidden>
   <h4 id="nombre"></h4>
+{!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
 {!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
-{!! Form::number('costo',null,['class'=>'ingrediecosto', 'id'=>'ingredientecosto' , 'placeholder'=>'costo'])!!}
+{!! Form::number('costo',null,['class'=>'ingredientecosto', 'id'=>'ingredientecosto' , 'placeholder'=>'costo'])!!}
 <button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 </div>
 <!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
@@ -49,11 +50,14 @@ function mostrarcantidad(btn_danger){
   $('#cargaring' ).click(function() {
     var cantidad = $('.ingredientecantidad').val();
     var costo = $('.ingredientecosto').val();
+    var tipo = $('.tipo').val();
     var id_stock = $('.idstock').data('id');
     console.log(id_ingrediente);
     console.log(nombre);
     console.log(cantidad);
+    console.log(costo);
     console.log(id_stock);
+    console.log(tipo);
         
     var form = $('#form-ingredienteadd');
     var url = form.attr('action').replace(':INGREDIENTE_ID', id_ingrediente);
@@ -63,6 +67,7 @@ function mostrarcantidad(btn_danger){
       id_ingrediente: id_ingrediente,
       cantidad: cantidad,
       costo: costo,
+      tipo:tipo,
       id_stock: id_stock,
       nombre: nombre
     };

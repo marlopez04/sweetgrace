@@ -59,6 +59,7 @@
 -->
 	<div class="col-md-6 chrt-three">
 		<h3 class="sub-tittle">Stock</h3>
+		<a href="{{ route('admin.stocks.update') }}" class="btn btn-info">Confirmar Stock</a><hr>
 		<div id="insumosingredientes"></div>
 	</div>
 

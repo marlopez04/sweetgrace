@@ -58,7 +58,16 @@ class StockIngredientesController extends Controller
         $stockingrediente->nombre = $_GET['nombre'];
         $stockingrediente->ingrediente_id = $_GET['id_ingrediente'];
         $stockingrediente->cantidad = $_GET['cantidad'];
-        $stockingrediente->precio = $_GET['cantidad'];
+        $stockingrediente->costo = $_GET['costo'];
+
+        if ($stockingrediente->cantidad >= 500) {
+            $stockingrediente->unidad = 100;
+            $stockingrediente->costo_u = $stockingrediente->costo * 100 / $stockingrediente->cantidad;
+        }else{
+            $stockingrediente->unidad = 1;
+            $stockingrediente->costo_u = $stockingrediente->costo / $stockingrediente->cantidad;
+        }
+
         $stockingrediente->save();
 
         $stock = Stock::find($stockingrediente->stock_id);

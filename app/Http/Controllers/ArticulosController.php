@@ -104,7 +104,15 @@ class ArticulosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $articulo = Articulo::find($id);
+        $articulos->load('categoria', 'user', 'listaprecio');
+        $categorias = Categoria::orderBy('nombre', 'ASC')->lists('nombre', 'id');
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
+
+        return view('admin.articulos.create')
+            ->with('articulo', $articulo)
+            ->with('categorias', $categorias)
+            ->with('listasprecios', $listasprecios);
     }
 
     /**
@@ -116,7 +124,23 @@ class ArticulosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find($id);
+
+        if ($request->file('imagen'))
+        {
+            $path = public_path() . '/imagenes/categorias/';
+            unlink($path . $categoria->imagen);
+
+            $file = $request->file('imagen');
+            $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
+            $file->move($path, $nombre);     
+        }
+
+        $categoria->fill($request->all());
+        $categoria->imagen = $nombre;
+        $categoria->save();
+
+        return redirect()->route('admin.categorias.index');
     }
 
     /**
