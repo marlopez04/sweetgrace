@@ -9,8 +9,9 @@
 <div class="w_content">
         <div class="women">
             <h4>Articulos</h4>
-            <a href="{{ route('admin.articulos.create') }}" class="btn btn-info">Registrar nuevo Articulo</a><hr>
-             <div class="clearfix"></div>   
+             <p>
+              <a href="{{ route('admin.articulos.create') }}" class="btn btn-info">Registrar nuevo Articulo</a><hr>
+             <div class="clearfix"></div>
         </div>
         <!-- grids_of_4 -->
         <div class="grids_of_4">

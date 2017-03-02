@@ -58,11 +58,13 @@ class RecetaInsumosController extends Controller
         $recetainsumo->nombre = $_GET['nombre'];
         $recetainsumo->insumo_id = $_GET['id_insumo'];
         $recetainsumo->cantidad = $_GET['cantidad'];
-        $recetainsumo->precio = $_GET['cantidad'];
         $recetainsumo->save();
 
         $receta = Receta::find($recetainsumo->receta_id);
         $receta->load('recetainsumos', 'recetaingredientes');
+
+        $receta->recetainsumos->load('insumo');
+        $receta->recetaingredientes->load('insumo');
 
         $html = view('admin.recetas.partials.insumosingredientes')
                    ->with('receta', $receta);

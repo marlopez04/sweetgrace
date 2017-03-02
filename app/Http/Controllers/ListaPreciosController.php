@@ -56,7 +56,25 @@ class ListaPreciosController extends Controller
      */
     public function show($id)
     {
-        //
+
+        if ($tipo = 1) {
+            //trae lista vieja
+            //con un select que traiga articulos con sus costos de cada receta
+
+        }else{
+            //trae lista nueva con porcentaje
+            //con un select que traiga articulos con sus costos de cada receta + el porcentaje de aumento en el precio
+        }
+
+        $data = \DB::select('select ri.ingrediente_id as ingrediente_id, sum(ri.cantidad) as cantidad
+                            from recetas r
+                            inner join recetaingredientes ri on ri.receta_id = r.id
+                            where articulo_id in
+                            (SELECT articulo_id
+                            FROM pedidoarticulos
+                            WHERE pedido_id = "$id")
+                            group by ri.ingrediente_id');
+
     }
 
     /**
@@ -68,8 +86,11 @@ class ListaPreciosController extends Controller
     public function edit($id)
     {
         $listaprecio = ListaPrecio::find($id);
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
 
-        return view('admin.precios.edit')->with('listaprecio', $listaprecio);
+        return view('admin.precios.edit')
+            ->with('listaprecio', $listaprecio)
+            ->with('listasprecios', $listasprecios);
     }
 
     /**

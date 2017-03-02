@@ -56,7 +56,7 @@ class RecetaIngredientesController extends Controller
         $recetaingrediente->nombre = $_GET['nombre'];
         $recetaingrediente->ingrediente_id = $_GET['id_ingrediente'];
         $recetaingrediente->cantidad = $_GET['cantidad'];
-        $recetaingrediente->precio = $_GET['cantidad'];
+        $recetaingrediente->costo = $_GET['cantidad'];
         $recetaingrediente->save();
 
         $receta = Receta::find($recetaingrediente->receta_id);

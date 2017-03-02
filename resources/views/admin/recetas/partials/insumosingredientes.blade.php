@@ -5,6 +5,8 @@
                 <th></th>
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
+                <th>Costo_u</th>
+                <th>Costo</th>
               </thead>
               <tbody>
                 @foreach($receta->recetaingredientes as $recetaingrediente)
@@ -14,6 +16,8 @@
                     </td>
                     <td>{{ $recetaingrediente->nombre }}</td>
                     <td>{{ $recetaingrediente->cantidad }}</td>
+                    <td>${{ $recetaingrediente->ingrediente->costo_u }}</td>
+                    <td>${{ ($recetaingrediente->cantidad / $recetaingrediente->ingrediente->unidad) * $recetaingrediente->ingrediente->costo_u }}</td>
                   </tr>
                 @endforeach
               </tbody>

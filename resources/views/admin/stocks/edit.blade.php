@@ -59,7 +59,15 @@
 -->
 	<div class="col-md-6 chrt-three">
 		<h3 class="sub-tittle">Stock</h3>
+		@if ($stock->esstado == 'pendiente')
+			{!! Form::open(['route' =>['admin.stocks.update', $stock], 'method' => 'PUT', 'files' => true]) !!}
+			{!!	Form::submit('Confirmar Stock',['class' =>'btn btn-primary']) !!}
+			{!! Form::close() !!}
+		@endif
+<!--
 		<a href="{{ route('admin.stocks.update') }}" class="btn btn-info">Confirmar Stock</a><hr>
+        <a href="{{ route('admin.stocks.update', $stock) }}" onclick="return confirm('¿Desea confirmar el stock, al precionar aceptar no permite correcciones?')" class="btn btn-danger">Confirmar Stock</a>
+-->
 		<div id="insumosingredientes"></div>
 	</div>
 
