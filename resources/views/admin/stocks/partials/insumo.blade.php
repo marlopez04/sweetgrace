@@ -21,7 +21,7 @@
 </div>
 
 <div id="cargarinsumo" hidden>
-  <h4 id="nombre">Moño</h4>
+  <h4 id="nombrei"></h4>
 {!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
 {!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
 {!! Form::number('costo',null,['class'=>'insumocosto', 'id'=>'insumocosto' , 'placeholder'=>'costo'])!!}
@@ -47,7 +47,7 @@ function mostrarcantidad(btn_danger){
   $('#cargarinsumo').show();
   var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
-  $('#nombre').text(nombre);
+  $('#nombrei').text(nombre);
 //cargar insumo en la stock  
   $('#cargarins' ).click(function() {
     var cantidad = $('.insumocantidad').val();

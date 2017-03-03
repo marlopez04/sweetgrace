@@ -59,7 +59,7 @@
 -->
 	<div class="col-md-6 chrt-three">
 		<h3 class="sub-tittle">Stock</h3>
-		@if ($stock->esstado == 'pendiente')
+		@if ($stock->estado == 'pendiente')
 			{!! Form::open(['route' =>['admin.stocks.update', $stock], 'method' => 'PUT', 'files' => true]) !!}
 			{!!	Form::submit('Confirmar Stock',['class' =>'btn btn-primary']) !!}
 			{!! Form::close() !!}

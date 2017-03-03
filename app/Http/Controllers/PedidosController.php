@@ -128,7 +128,7 @@ class PedidosController extends Controller
                             where articulo_id in
                             (SELECT articulo_id
                             FROM pedidoarticulos
-                            WHERE pedido_id = "$id")
+                            WHERE pedido_id = '$id')
                             group by ri.ingrediente_id');
 
         return $data;

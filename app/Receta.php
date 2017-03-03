@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Receta extends Model
 {
     protected $table = "recetas";
-    protected $fillable = ['nombre','costo', 'articulo_id'];
+    protected $fillable = ['nombre','costo'];
 
 	public function recetaingredientes()
     {
@@ -21,7 +21,7 @@ class Receta extends Model
 
 	public function articulo()
     {
-    	return $this->belongsTo('App\Articulo');
+    	return $this->hasMany('App\Articulo');
     }
 
 }

@@ -22,7 +22,7 @@ class ArticulosController extends Controller
     {
         $articulos = Articulo::orderBy('id', 'DESC')->paginate(8);
 //        $articulos = Articulo::all();
-        $articulos->load('categoria', 'user', 'listaprecio');
+        $articulos->load('categoria', 'user', 'listaprecio', 'receta');
 /*        
         $articulos->each(function($articulos){
             $articulos->categoria;

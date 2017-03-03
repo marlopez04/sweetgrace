@@ -16,8 +16,6 @@ class AddRecetasTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->double('costo', 10, 2);
-            $table->integer('articulo_id')->unsigned();
-            $table->foreign('articulo_id')->references('id')->on('articulos');
             $table->timestamps();
         });
     }

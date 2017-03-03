@@ -9,10 +9,11 @@
 <div class="w_content">
         <div class="women">
             <h4>Articulos</h4>
-             <p>
-              <a href="{{ route('admin.articulos.create') }}" class="btn btn-info">Registrar nuevo Articulo</a><hr>
-             <div class="clearfix"></div>
+            <br>
+            <br>
+              <a href="{{ route('admin.articulos.create') }}" class="btn btn-info">Nuevo Articulo</a><hr>
         </div>
+             <div class="clearfix"></div>
         <!-- grids_of_4 -->
         <div class="grids_of_4">
           <?php $cantidad =0; ?>
@@ -27,7 +28,7 @@
                       <h6> Lista :{{ $articulo->listaprecio->nombre}}  </h6>
                       <h6>{{ $articulo->user->name}}</h6>
                      <div class="item_add"><span class="item_price">
-                        <h6> ${{ $articulo->precio}}</h6>
+                        <h6> Precio ${{ $articulo->precio}} Costo $ {{ $articulo->receta->costo}}</h6>
                      </div>
                     <div class="item_add"><span class="item_price">
                       <a href="{{ route('admin.articulos.edit', $articulo->id) }}">Editar</a></span>

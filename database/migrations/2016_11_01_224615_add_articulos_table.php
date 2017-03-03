@@ -20,6 +20,8 @@ class AddArticulosTable extends Migration
             $table->double('precio', 10, 2);
             $table->integer('lista_id')->unsigned();
             $table->foreign('lista_id')->references('id')->on('listaprecios');
+            $table->integer('receta_id')->unsigned();
+            $table->foreign('receta_id')->references('id')->on('recetas');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('categoria_id')->unsigned();
