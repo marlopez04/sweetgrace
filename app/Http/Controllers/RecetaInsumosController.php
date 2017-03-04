@@ -64,7 +64,7 @@ class RecetaInsumosController extends Controller
         $receta->load('recetainsumos', 'recetaingredientes');
 
         $receta->recetainsumos->load('insumo');
-        $receta->recetaingredientes->load('insumo');
+        $receta->recetaingredientes->load('ingrediente');
 
         $html = view('admin.recetas.partials.insumosingredientes')
                    ->with('receta', $receta);

@@ -1,17 +1,17 @@
           <table class="table table-striped">
               <thead>
-                <th></th>
-                <th>Ingrediente</th>
-                <th>Cantidad</th>
+                <th>Articulo</th>
+                <th>Precio</th>
+                <th>Costo</th>
+                <th>Diferencia</th>
               </thead>
               <tbody>
-                @foreach($receta->recetaingredientes as $recetaingrediente)
+                @foreach($listasprecios->articulos as $articulo)
                   <tr>
-                    <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" onclick='borraringrdiente(this)' data-id="{{ $recetaingrediente->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
-                    </td>
-                    <td>{{ $recetaingrediente->nombre }}</td>
-                    <td>{{ $recetaingrediente->cantidad }}</td>
+                    <td>{{ $articulo->nombre }}</td>
+                    <td>{{ $articulo->precio }}</td>
+                    <td>{{ $articulo->receta->costo }}</td>
+                    <td>{{ $articulo->precio - $articulo->receta->costo }}</td>
                   </tr>
                 @endforeach
               </tbody>

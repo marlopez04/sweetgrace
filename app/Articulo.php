@@ -11,7 +11,7 @@ class Articulo extends Model
     protected $table = "articulos";
     protected $fillable = ['nombre','descripcion','precio','lista_id','user_id','categoria_id', 'imagen', 'receta_id'];
 
-    public function recetas()
+    public function receta()
     {
     	return $this->belongsTo('App\Receta', 'receta_id', 'id');
     }

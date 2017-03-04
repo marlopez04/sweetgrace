@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CategoriaSeeder::class);
         $this->call(ListaSeeder::class);
+        $this->call(RecetaSeeder::class);
         $this->call(ArticuloSeeder::class);
         $this->call(ClienteSeeder::class);
         $this->call(IngredienteSeeder::class);
         $this->call(InsumoSeeder::class);
-        $this->call(RecetaSeeder::class);
         $this->call(RecetaIngredienteSeeder::class);
         $this->call(RecetaInsumoSeeder::class);
 

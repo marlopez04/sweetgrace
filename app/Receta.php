@@ -19,7 +19,7 @@ class Receta extends Model
         return $this->hasMany('App\RecetaInsumo');
     }
 
-	public function articulo()
+	public function articulos()
     {
     	return $this->hasMany('App\Articulo');
     }

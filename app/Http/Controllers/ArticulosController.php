@@ -58,6 +58,10 @@ class ArticulosController extends Controller
      */
     public function store(Request $request)
     {
+        $receta = new Receta();
+        $receta->nombre = $request->nombre;
+        $receta->costo = '0';
+        $receta->save();
 
         if ($request->file('imagen'))
         {
@@ -72,11 +76,6 @@ class ArticulosController extends Controller
         $articulo->imagen = $nombre;
         $articulo->save();
 
-        $receta = new Receta();
-        $receta->nombre = $articulo->nombre;
-        $receta->costo = '0';
-        $receta->articulo_id = $articulo->id;
-        $receta->save();
         $id = $receta->id;
 
         Flash::success('Se ha creado el articulo '. $receta->nombre . ' de forma satisfactoria!');
