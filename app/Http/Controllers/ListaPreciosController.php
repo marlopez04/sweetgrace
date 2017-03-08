@@ -11,6 +11,7 @@ use Laracasts\Flash\Flash;
 use App\Http\Controllers\Controller;
 use App\Http\Request\ListaPrecioRequest;
 use Illuminate\Support\Facades\Redirect;
+use Barryvdh\DomPDF\Facade;
 
 class ListaPreciosController extends Controller
 {
@@ -128,6 +129,28 @@ class ListaPreciosController extends Controller
         Flash::warning('La lista de precio'. $listaprecio->nombre . ' ha sido actualizada.');
         return redirect()->route('admin.precios.index');
 
+    }
+
+    public function imprimir($id)
+    {
+
+        $listaprecios = ListaPrecio::find($id);
+        $listaprecios->load('articulos');
+        $listaprecios->articulos->load('receta');
+
+
+        $html = view('admin.precios.partials.listavieja')
+                    ->with('listaprecios', $listaprecios);
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHTML($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream('listaprecio');
+/*
+        $pdf = PDF::loadHTML($html);
+
+*/
     }
 
     /**

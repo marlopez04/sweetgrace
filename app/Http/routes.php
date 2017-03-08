@@ -93,6 +93,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.precios.destroy'
 	]);
 
+	Route::get('precios/{id}/imprimir',[
+		'uses' => 'ListaPreciosController@imprimir',
+		'as'   => 'admin.precios.imprimir'
+	]);
+
 	Route::resource('pedidosarticulos', 'PedidosArticulosController');
 	Route::get('pedidosarticulos/{id}/destroy',[
 		'uses' => 'PedidosArticulosController@destroy',
@@ -149,7 +154,7 @@ Route::get('admin/auth/logout', [
 Route::get('pdf', function (){
 	$users = App\User::all();
 
-	$pdf = PDF::loadView('welcome', ['users' => $users]);
+	$pdf = PDF::loadView('welcome', $users);
 	return $pdf->download('archivo.pdf');
 
 });
