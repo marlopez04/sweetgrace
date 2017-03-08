@@ -11,6 +11,6 @@ class ListaPrecio extends Model
 
     public function articulos()
     {
-        return $this->hasMany('App\Articulo');
+    	return $this->hasMany('App\Articulo');
     }
 }

@@ -6,7 +6,7 @@
                 <th>Diferencia</th>
               </thead>
               <tbody>
-                @foreach($listasprecios->articulos as $articulo)
+                @foreach($listaprecios->articulos as $articulo)
                   <tr>
                     <td>{{ $articulo->nombre }}</td>
                     <td>{{ $articulo->precio }}</td>

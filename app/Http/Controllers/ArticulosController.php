@@ -45,8 +45,12 @@ class ArticulosController extends Controller
         $categorias = Categoria::orderBy('nombre', 'ASC')->lists('nombre', 'id');
         $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
 
+        $receta = new Receta();
+        $receta->save();
+
         return view('admin.articulos.create')
             ->with('categorias', $categorias)
+            ->with('receta', $receta)
             ->with('listasprecios', $listasprecios);
     }
 
@@ -58,7 +62,8 @@ class ArticulosController extends Controller
      */
     public function store(Request $request)
     {
-        $receta = new Receta();
+
+        $receta = Receta::find($request->receta_id);
         $receta->nombre = $request->nombre;
         $receta->costo = '0';
         $receta->save();

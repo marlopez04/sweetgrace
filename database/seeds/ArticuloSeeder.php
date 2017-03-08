@@ -16,7 +16,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'bombones rellenos',
 			'imagen'    => 'bombones1.jpg',
 			'precio'     => '60',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '1',
 			'user_id'     => '1',
 			'categoria_id'     => '1'
@@ -27,7 +27,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'bombones rellenos',
 			'imagen'    => 'bombones2.jpg',
 			'precio'     => '60',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '2',
 			'user_id'     => '1',
 			'categoria_id'     => '1'
@@ -38,7 +38,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'pandulce',
 			'imagen'    => 'pandulce.jpg',
 			'precio'     => '100',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '3',
 			'user_id'     => '1',
 			'categoria_id'     => '3'
@@ -49,7 +49,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'pandulce',
 			'imagen'    => 'pandulce2.jpg',
 			'precio'     => '120',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '4',
 			'user_id'     => '1',
 			'categoria_id'     => '3'
@@ -60,7 +60,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'tarta',
 			'imagen'    => 'tarta.jpg',
 			'precio'     => '90',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '5',
 			'user_id'     => '1',
 			'categoria_id'     => '2'
@@ -71,7 +71,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'galletas',
 			'imagen'    => 'galletas.jpg',
 			'precio'     => '60',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '6',
 			'user_id'     => '1',
 			'categoria_id'     => '4'
@@ -82,7 +82,7 @@ class ArticuloSeeder extends Seeder
 			'descripcion'     => 'budin',
 			'imagen'    => 'budin.jpg',
 			'precio'     => '60',
-			'lista_id'     => '1',
+			'lista_precio_id'     => '1',
 			'receta_id'     => '7',
 			'user_id'     => '1',
 			'categoria_id'     => '5'

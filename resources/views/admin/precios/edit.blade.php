@@ -11,7 +11,6 @@
 <div class="panel panel-widget">
 	<div class="panel-title">
 			Editar {{ $listaprecio->nombre }}
-			<h4 data-id="{{ $listaprecio->id }}" class="idlista" hidden></h4>
 	</div>
 	{!! Form::open(['route' =>['admin.precios.update', $listaprecio], 'method' => 'PUT']) !!}
 		<div class="form-group">
@@ -41,7 +40,7 @@
 					<th></th>
 				</thead>
 		<tr>
-			<td>{!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'required']) !!}</td>
+			<td>{!! Form::select('lista_id', $listasprecios, null, ['class' => 'idlista', 'required']) !!}</td>
 			<td>{!!	Form::number('porcentaje',null,['class'=>'porcentaje'])!!}
 			</td>
 			<td><button type="button" class="btn btn-danger" id="cargar">Cargar</button></td>
@@ -64,7 +63,7 @@
 
 	<h4>Lista de precio anterior</h4>
 
-       <div id="listavieja" hidden></div>
+       <div id="listavieja"></div>
 
 <!-- INICIO muestra la lista de precio seleccionada -->
 
@@ -99,107 +98,46 @@
 
 <script type="text/javascript">
 
-	$(document).ready(function () {
-
-// carga los insumos e ingredientes de la receta
+$(document).ready(function () {
+	//cargo las listas de precios
+	$('#cargar').click(function() {
 
 	  var form = $('#form-lista');
-	  var id_receta = $('.idlista').data('id');
-	  var url = form.attr('action').replace(':LISTA_ID', id_receta);
+	  var id_lista = $(".idlista").val();
+//	  var id_lista = $('.idlista').data('id');
+	  var url = form.attr('action').replace(':LISTA_ID', id_lista);
+	  var porcentaje = $('.porcentaje').val();
 	  var token = form.serialize();
+	  console.log(porcentaje);
+	  console.log(id_lista);
+	  var tipo = 1;
+//recupero lista vieja
 	  data = {
-	    token: token
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
 	  };
-	  $.get(url, data, function(receta){
-		      $('#insumosingredientes').show();
-		      $('#insumosingredientes').fadeOut().html(receta).fadeIn();
+	  $.get(url, data, function(listavieja){
+		      $('#listavieja').show();
+		      $('#listavieja').fadeOut().html(listavieja).fadeIn();
 	   });
+	  console.log(listavieja);
+//recupero lista vieja con el porcentaje de aumento
+	  tipo = 2;
+ 	  data = {
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
+	  $.get(url, data, function(listanueva){
+		      $('#listanueva').show();
+		      $('#listanueva').fadeOut().html(listanueva).fadeIn();
+	   });
+	  	console.log(listanueva);
 
-
-// carga los insumos e ingredientes de la receta
-
-//        $( ".tipo" ).change(function() {
-//  			var seleccionado = $(this).val();
-        	$('#cargar' ).click(function() {
-        		var item = 0;
-        	$('#listavieja').hide();
-        	$('#listanueva').hide();
-
-//        	if ($(".item").value == null || $(".item").value.length == 0)
-//        	if ($(".item").text.length <> 0){ 
-
-//			var item = $(".item-nombre").val();
-			 console.log(item);
-
-//        	if ($(".item-nombre").empty() ) {
-			if($('#item-nombre').val().trim()){ 
-//        		item = "0";
-//        		console.log("vacio");
-//        	}else{
-        		console.log("contenido");
-        		item = $('#item-nombre').val();	
-        	}
-  			
-  			var seleccionado = $(".tipo").val();
-  			console.log(item);
-  			console.log(seleccionado);
-  				// 1 ingrediente
-  				// 2 insumo
-
-  				if (seleccionado == 1) {
-
-				    // 1 ingrediente
-		          var form = $('#form-ingredienteshow');
-                  var url = form.attr('action').replace(':ARTICULO_ID', item);
-		          var token = form.serialize();
-		          var tipo = 0;
-		          data = {
-		            token: token,
-		            tipo: tipo
-		          };
-		          
-		          $.get(url, data, function(ingrediente){
-
-//		                $('#correctorscroll').hide();
-//						$('#recetainsumo').hide();
-						$('#ingrediente').show();
-		                $('#ingrediente').fadeOut().html(ingrediente).fadeIn();
-//		                $("body").animate({ scrollTop: $(document).height()}, 500);
-				   });
-
-
-				} else{ 
-//				if (seleccionado == 2) {
-
-					// 2 insumo
-		          var form = $('#form-insumoshow');
-                  var url = form.attr('action').replace(':ARTICULO_ID', item);
-		          var token = form.serialize();
-		          var tipo = 0;
-		          data = {
-		            token: token,
-		            tipo: tipo
-		          };
-		          
-		          $.get(url, data, function(insumo){
-
-//		                $('#correctorscroll').hide();
-//						$('#recetaingrediente').hide();
-						$('#insumo').show();
-		                $('#insumo').fadeOut().html(insumo).fadeIn();
-//		                $("body").animate({ scrollTop: $(document).height()}, 500);
-				   });
-				    
-				}
-
-//boton buscar  				
-			});
-
-//cambio en la seleccion
-//		});
-
-// dom ready           
 	});
+});
 
 </script>
 
+@endsection

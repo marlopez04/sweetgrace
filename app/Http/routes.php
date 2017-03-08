@@ -145,3 +145,11 @@ Route::get('admin/auth/logout', [
 	'uses' => 'Auth\AuthController@getLogout',
 	'as'   => 'admin.auth.logout'
 	]);
+
+Route::get('pdf', function (){
+	$users = App\User::all();
+
+	$pdf = PDF::loadView('welcome', ['users' => $users]);
+	return $pdf->download('archivo.pdf');
+
+});

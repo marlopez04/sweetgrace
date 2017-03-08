@@ -11,6 +11,8 @@
              <div class="clearfix"></div>   
         </div>
 
+        
+
 	{!! Form::open(['route' => 'admin.articulos.store', 'method' => 'POST', 'files' => true]) !!}
 		<div class="form-group">
 			<h4>Nombre</h4>
@@ -22,7 +24,7 @@
 		</div>
 				<div class="form-group">
 			<h4>Lista de Precio</h4>
-			{!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'required']) !!}
+			{!! Form::select('lista_precio_id', $listasprecios, null, ['class' => 'form-control select-category', 'required']) !!}
 		</div>
 		<h4>Precio</h4>
 			{!!	Form::number('precio',null,['class'=>'form-control', 'required'])!!}
@@ -31,6 +33,7 @@
 			<h4>Imagen</h4>
 			{!! Form::file('imagen',['required'])!!}
 		</div>
+	    {!!	Form::hidden('receta_id',$receta->id,['class'=>'form-control', 'hidden'])!!}
 		<div class="form-group">
 			{!! Form::submit('Agregar articulo',['class' => 'btn btn-primary']) !!}
 		</div>

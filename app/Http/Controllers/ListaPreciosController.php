@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ListaPrecio;
+use App\Articulo;
+use App\Receta;
 use App\Http\Requests;
 use Laracasts\Flash\Flash;
 use App\Http\Controllers\Controller;
@@ -56,12 +58,20 @@ class ListaPreciosController extends Controller
      */
     public function show($id)
     {
-        $listaprecios = listaprecio::find($id);
-        $listaprecios->load('articulos');
 
+        $listaprecios = ListaPrecio::find($id);
+        $listaprecios->load('articulos');
         $listaprecios->articulos->load('receta');
 
-        if ($tipo = 1) {
+        $tipo = $_GET['tipo'];
+        $porcentaje = $_GET['porcentaje'];
+
+/*
+        $tipo = 1;
+        $porcentaje = 10;
+*/
+
+        if ($tipo == 1) {
             //trae lista vieja
             //con un select que traiga articulos con sus costos de cada receta
 
@@ -69,18 +79,19 @@ class ListaPreciosController extends Controller
                    ->with('listaprecios', $listaprecios);
 
              return $html;
-
-
         }else{
             //trae lista nueva con porcentaje
             //con un select que traiga articulos con sus costos de cada receta + el porcentaje de aumento en el precio
+            foreach($listaprecios->articulos as $articulo){
+
+                $articulo->precio = $articulo->precio * (($porcentaje / 100) + 1);
+
+            }
 
             $html = view('admin.precios.partials.listanueva')
                    ->with('listaprecios', $listaprecios);
 
              return $html;
-
-
         }
 
     }
