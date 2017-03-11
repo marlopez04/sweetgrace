@@ -138,18 +138,52 @@ class ListaPreciosController extends Controller
         $listaprecios->load('articulos');
         $listaprecios->articulos->load('receta');
 
+/*
+        $tipo = $_POST['tipo'];
+        $porcentaje = $_POST['porcentaje'];
+*/
 
-        $html = view('admin.precios.partials.listavieja')
-                    ->with('listaprecios', $listaprecios);
+        $tipo = 1;
+        $porcentaje = 10;
+
+        if ($tipo == 1) {
+// Opcion (1) La lista de precio sin modificaciones
+            
+            //trae lista vieja
+            //con un select que traiga articulos con sus costos de cada receta
+
+             $html = view('admin.precios.partials.imprimir')
+                   ->with('listaprecios', $listaprecios);
+
+        }else{
+// Opcion (2) La lista con el porcentaje de aumento indicado
+
+            //trae lista nueva con porcentaje
+            //con un select que traiga articulos con sus costos de cada receta + el porcentaje de aumento en el precio
+            foreach($listaprecios->articulos as $articulo){
+
+                $articulo->precio = $articulo->precio * (($porcentaje / 100) + 1);
+
+            }
+
+            $html = view('admin.precios.partials.imprimir')
+                   ->with('listaprecios', $listaprecios);
+
+        }
+
+
+
 
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->loadHTML($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream('listaprecio');
-/*
-        $pdf = PDF::loadHTML($html);
 
+return \PDF::loadFile('http://www.github.com')->stream('github.pdf'); 
+/*
+
+        return ($html);
 */
     }
 

@@ -27,7 +27,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				  <div class="form">
 					<h2>Iniciar Sesión</h2>
 					{!! Form::open(['route'=>'admin.auth.login', 'method' => 'POST']) !!}
-					  {!! Form::email('email', null,['class' => 'form-control', 'placeholder' => 'example@mail.com'])!!}
+					  {!! Form::text('username', null,['class' => 'form-control', 'placeholder' => 'nombre de usuario'])!!}
 					  {!! Form::password('password', ['class' =>'form-control', 'placeholder' => '*********'])!!}
 					  {!! Form::submit('Acceder', ['class' => 'btn btn-primary'])!!}
 					{!! Form::close()!!}
