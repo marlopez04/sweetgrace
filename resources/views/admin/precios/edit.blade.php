@@ -64,24 +64,51 @@
 	<h4>Lista de precio anterior</h4>
 	<td><button type="button" class="btn btn-danger" id="pdfvieja">Cargar</button></td>
 
-       <div id="listavieja"></div>
+{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', '1', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir1' ]) !!}
+<!--
+{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
+{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
+-->
+{!!	Form::submit('Imprimir',['class' =>'btn btn-primary']) !!}
+
+<a href="#" id = 'imprimir1'>Editar</a>
+
+{!! Form::close() !!}
+     <div id="listavieja"></div>
+
+
 
 <!-- INICIO muestra la lista de precio seleccionada -->
 
 {!! Form::open(['route' => ['admin.precios.show', ':LISTA_ID'], 'method' => 'POST' , 'id' => 'form-lista' ]) !!}
 {!! Form::close() !!}
 
-{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
-{!! Form::close() !!}
-
 <!-- FIN muestra la lista de precio seleccionada-->
+
+<!--
+{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', ':TIPO', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
+{!! Form::close() !!}
+-->
 
 	</div>
 
 	<div class="col-md-6 chrt-three">
 		<h4>Lista Con aumento</h4>
 		<td><button type="button" class="btn btn-danger" id="pdfnueva">Cargar</button></td>
+		{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', '2', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
+		<!--
+		{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
+		{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
+		-->
+		{!!	Form::submit('Imprimir',['class' =>'btn btn-primary']) !!}
+		{!! Form::close() !!}
+
+		<a href="{{ route('admin.precios.imprimir') }}" id = 'imprimir2'>Editar222</a>
+
 		<div id="listanueva"></div>
+
+
+	
 	</div>
 
 </div>
@@ -105,13 +132,16 @@
 
 $(document).ready(function () {
 	//cargo las listas de precios
+
 	$('#cargar').click(function() {
 
 	  var form = $('#form-lista');
+
 	  var id_lista = $(".idlista").val();
-//	  var id_lista = $('.idlista').data('id');
-	  var url = form.attr('action').replace(':LISTA_ID', id_lista);
 	  var porcentaje = $('.porcentaje').val();
+
+	  var url = form.attr('action').replace(':LISTA_ID', id_lista);
+//para imprimir form2 lista vieja, form3 lista nueva
 	  var token = form.serialize();
 	  console.log(porcentaje);
 	  console.log(id_lista);
@@ -142,75 +172,25 @@ $(document).ready(function () {
 
 	});
 
-	$('#pdfvieja').click(function() {
-
-	  var form = $('#form-imprimir');
+	$('#imprimir2').click(function() {
 	  var id_lista = $(".idlista").val();
 //	  var id_lista = $('.idlista').data('id');
-	  var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
 	  var porcentaje = $('.porcentaje').val();
-	  var token = form.serialize();
 	  console.log(porcentaje);
 	  console.log(id_lista);
 	  var tipo = 1;
 //recupero lista vieja
-	  data = {
-	    token: token,
-	    porcentaje: porcentaje,
-	    tipo: tipo
-	  };
 
-    var imprimir = $.ajax({
-         type: "POST", // define the type of HTTP verb we want to use (POST for our form)
-         url: url, // the url where we want to POST
-         data: data, // the url where we want to POST, set in variable above
-         dataType: "json", // what type of data do we expect back from the server
-         encode          : true
+       $.ajax({url:'PrecioController/imprimir',
+       	data:{id: id_lista,
+       		  tipo: tipo,
+       		  porcentaje: porcentaje
+       		  }}).success(function(response){alert(response);
+         });
+
+
+
     });
-
-
-	  imprimir.done(function(data){
-	  		console.log(data);
-		      Location.href = 'print';
-	   });
-
-	  console.log(listavieja);
-	});
-
-	$('#pdfnueva').click(function() {
-//recupero lista vieja con el porcentaje de aumento
-
-	  var form = $('#form-imprimir');
-	  var id_lista = $(".idlista").val();
-//	  var id_lista = $('.idlista').data('id');
-	  var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
-	  var porcentaje = $('.porcentaje').val();
-	  var token = form.serialize();
-	  var tipo = 2;
-	  console.log(porcentaje);
-	  console.log(id_lista);
- 	  data = {
-	    token: token,
-	    porcentaje: porcentaje,
-	    tipo: tipo
-	  };
-
-    var imprimir = $.ajax({
-         type: "POST", // define the type of HTTP verb we want to use (POST for our form)
-         url: url, // the url where we want to POST
-         data: data, // the url where we want to POST, set in variable above
-         dataType: "json", // what type of data do we expect back from the server
-         encode          : true
-    });
-
-
-	  imprimir.done(function(data){
-	  		console.log(data);
-		      Location.href = 'print';
-	   });
-
-	  	console.log(listanueva);
-	});
 
 });
 

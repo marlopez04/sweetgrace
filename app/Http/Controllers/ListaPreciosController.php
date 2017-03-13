@@ -131,7 +131,7 @@ class ListaPreciosController extends Controller
 
     }
 
-    public function imprimir($id)
+    public function imprimir($id, $tipo, $porcentaje)
     {
 
         $listaprecios = ListaPrecio::find($id);
@@ -141,10 +141,10 @@ class ListaPreciosController extends Controller
 /*
         $tipo = $_POST['tipo'];
         $porcentaje = $_POST['porcentaje'];
-*/
 
         $tipo = 1;
         $porcentaje = 10;
+*/
 
         if ($tipo == 1) {
 // Opcion (1) La lista de precio sin modificaciones
@@ -180,7 +180,7 @@ class ListaPreciosController extends Controller
         $dompdf->render();
         $dompdf->stream('listaprecio');
 
-return \PDF::loadFile('http://www.github.com')->stream('github.pdf'); 
+//return \PDF::loadFile('http://www.github.com')->stream('github.pdf'); 
 /*
 
         return ($html);

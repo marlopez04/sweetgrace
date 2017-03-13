@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.precios.destroy'
 	]);
 
-	Route::get('precios/{id}/imprimir',[
+	Route::get('precios/{id}/{tipo}/{porcentaje}/imprimir',[
 		'uses' => 'ListaPreciosController@imprimir',
 		'as'   => 'admin.precios.imprimir'
 	]);
