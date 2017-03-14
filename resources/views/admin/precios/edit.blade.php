@@ -103,7 +103,7 @@
 		{!!	Form::submit('Imprimir',['class' =>'btn btn-primary']) !!}
 		{!! Form::close() !!}
 
-		<a href="{{ route('admin.precios.imprimir') }}" id = 'imprimir2'>Editar222</a>
+		<a href="#" id = 'imprimir2'>Editar222</a>
 
 		<div id="listanueva"></div>
 
@@ -181,13 +181,27 @@ $(document).ready(function () {
 	  var tipo = 1;
 //recupero lista vieja
 
+       var url = "precios/"+id_lista+"/"+tipo+"/"+porcentaje+"/imprimir";
+
+		console.log(url);
+/*
+ 	  data = {
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
+*/
+       $.ajax(url).success(function(response){alert(response)});
+
+/*
+
        $.ajax({url:'PrecioController/imprimir',
-       	data:{id: id_lista,
-       		  tipo: tipo,
-       		  porcentaje: porcentaje
+       	data:{'id': $id_lista,
+       		  'tipo': $tipo,
+       		  'porcentaje': $porcentaje
        		  }}).success(function(response){alert(response);
          });
-
+*/
 
 
     });
