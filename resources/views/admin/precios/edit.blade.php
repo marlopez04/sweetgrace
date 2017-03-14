@@ -95,7 +95,7 @@
 	<div class="col-md-6 chrt-three">
 		<h4>Lista Con aumento</h4>
 		<td><button type="button" class="btn btn-danger" id="pdfnueva">Cargar</button></td>
-		{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', '2', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
+		{!! Form::open(['route' => ['admin.precios.imprimir', ':ID_IMPRIMRI', 2 , ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
 		<!--
 		{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
 		{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
@@ -181,7 +181,17 @@ $(document).ready(function () {
 	  var tipo = 1;
 //recupero lista vieja
 
-       var url = "precios/"+id_lista+"/"+tipo+"/"+porcentaje+"/imprimir";
+	   var form = $('#form-imprimir2');
+
+//       var parametros = "/"+id_lista+"/"+tipo+"/"+porcentaje+"";
+
+//	   form.attr('action').replace(':PORCENTAJE', porcentaje);
+//	   var url = form.attr('action').replace(':PARAMETROS', id_lista);
+	   var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
+
+//       var url = "/precio/"+id_lista+"/"+tipo+"/"+porcentaje+"";
+       
+         location.href = url
 
 		console.log(url);
 /*
@@ -191,7 +201,7 @@ $(document).ready(function () {
 	    tipo: tipo
 	  };
 */
-       $.ajax(url).success(function(response){alert(response)});
+       $.ajax(url).success(function(response){console.log("OK")});
 
 /*
 
