@@ -12,6 +12,7 @@
 	<div class="panel-title">
 			Editar {{ $listaprecio->nombre }}
 	</div>
+	{!!	Form::hidden('id',$listaprecio->id,['class'=>'id_lista_actual'])!!}
 	{!! Form::open(['route' =>['admin.precios.update', $listaprecio], 'method' => 'PUT']) !!}
 		<div class="form-group">
 			<table class="table table-striped">
@@ -33,6 +34,38 @@
 	{!!Form::close()!!}
 
 <hr>
+	@if ($listaprecio->articulos->count() <> 0 )
+
+		<div id='listaactual'>
+		          <table class="table table-striped">
+		              <thead>
+		                <th>Articulo</th>
+		                <th>Precio</th>
+		                <th>Costo</th>
+		                <th>Diferencia</th>
+		              </thead>
+		              <tbody>
+		                @foreach($listaprecio->articulos as $articulo)
+		                  <tr>
+		                    <td>{{ $articulo->nombre }}</td>
+		                    <td>{{ $articulo->precio }}</td>
+		                    <td>{{ $articulo->receta->costo }}</td>
+		                    <td>{{ $articulo->precio - $articulo->receta->costo }}</td>
+		                  </tr>
+		                @endforeach
+		              </tbody>
+		            </table>
+		</div>
+
+	@else
+	
+<div class="area" id="listaconf">
+	<div class="panel panel-widget">
+		<div id="listaconfirmada"></div>
+	</div>
+
+</div>
+		<div id="carga">
 			<table class="table table-striped">
 				<thead>
 					<th>Lista</th>
@@ -46,37 +79,36 @@
 			<td><button type="button" class="btn btn-danger" id="cargar">Cargar</button></td>
     		<td><button type="button" class="btn btn-danger" id="confirmar">Confirmar</button></td>
 		</tr>
-	</table>
+		</table>
 
 <hr>
-</div>
 
 </div>
 
+
+</div>
+
+</div>
 
 <div class="clearfix"></div>
 
 <!-- lista de precio actual fin -->
 
-<div class="area">
+<div class="area" id="listasdecarga">
 	<div class="col-md-6 chrt-two area">
+		<h4>Lista de precio anterior</h4>
+		<td><button type="button" class="btn btn-danger" id="imprimir1">Imprimir</button></td>
+		<div id="listavieja"></div>
+	</div>
 
-	<h4>Lista de precio anterior</h4>
-	<td><button type="button" class="btn btn-danger" id="pdfvieja">Cargar</button></td>
+	<div class="col-md-6 chrt-three">
+		<h4>Lista Con aumento</h4>
+		<td><button type="button" class="btn btn-danger" id="imprimir2">Imprimir</button></td>
+		<div id="listanueva"></div>
+	</div>
 
-{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', '1', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir1' ]) !!}
-<!--
-{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
-{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
--->
-{!!	Form::submit('Imprimir',['class' =>'btn btn-primary']) !!}
-
-<a href="#" id = 'imprimir1'>Editar</a>
-
+{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
 {!! Form::close() !!}
-     <div id="listavieja"></div>
-
-
 
 <!-- INICIO muestra la lista de precio seleccionada -->
 
@@ -85,35 +117,7 @@
 
 <!-- FIN muestra la lista de precio seleccionada-->
 
-<!--
-{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID', ':TIPO', ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
-{!! Form::close() !!}
--->
-
-	</div>
-
-	<div class="col-md-6 chrt-three">
-		<h4>Lista Con aumento</h4>
-		<td><button type="button" class="btn btn-danger" id="pdfnueva">Cargar</button></td>
-		{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
-		<!--
-		{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
-		{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
-		-->
-		{!!	Form::submit('Imprimir',['class' =>'btn btn-primary']) !!}
-		{!! Form::close() !!}
-
-		<a href="#" id = 'imprimir2'>Editar222</a>
-
-		<div id="listanueva"></div>
-
-
-	
-	</div>
-
 </div>
-
-<div class="clearfix"></div>
 
 <div id="correctorscroll">
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -121,6 +125,12 @@
 </div>
 
 </div>
+
+@endif
+
+
+<div class="clearfix"></div>
+
 
 
 @endsection
@@ -139,28 +149,31 @@ $(document).ready(function () {
 
 	  var id_lista = $(".idlista").val();
 	  var porcentaje = $('.porcentaje').val();
+	  var id_lista_actual = $(".id_lista_actual").val();
 
 	  var url = form.attr('action').replace(':LISTA_ID', id_lista);
 //para imprimir form2 lista vieja, form3 lista nueva
 	  var token = form.serialize();
+	  console.log(id_lista_actual);
 	  console.log(porcentaje);
 	  console.log(id_lista);
 	  var tipo = 1;
 //recupero lista vieja
 	  data = {
 	    token: token,
+	    lista_id: id_lista_actual,
 	    porcentaje: porcentaje,
 	    tipo: tipo
 	  };
 	  $.get(url, data, function(listavieja){
-		      $('#listavieja').show();
-		      $('#listavieja').fadeOut().html(listavieja).fadeIn();
+		      $('#listavieja').show().fadeOut().html(listavieja).fadeIn();
 	   });
 	  console.log(listavieja);
 //recupero lista vieja con el porcentaje de aumento
 	  tipo = 2;
  	  data = {
 	    token: token,
+	    lista_id: id_lista_actual,
 	    porcentaje: porcentaje,
 	    tipo: tipo
 	  };
@@ -171,31 +184,17 @@ $(document).ready(function () {
 
 	});
 
-	$('#imprimir2').click(function() {
+	$('#imprimir1').click(function() {
 	  var id_lista = $(".idlista").val();
 //	  var id_lista = $('.idlista').data('id');
 	  var porcentaje = $('.porcentaje').val();
 	  var tipo = 1;
 //recupero lista vieja
 
-	  var form = $('#form-imprimir2');
+	  var form = $('#form-imprimir');
 	  var token = form.serialize();
-/*
- 	  data = {
-	    token: token,
-	    porcentaje: porcentaje,
-	    tipo: tipo
-	  };
-*/	  
-//       var parametros = "/"+id_lista+"/"+tipo+"/"+porcentaje+"";
 
-//	   form.attr('action').replace(':PORCENTAJE', porcentaje);
-//	   var url = form.attr('action').replace(':PARAMETROS', id_lista);
-	   var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
-
-//       var url = "/precio/"+id_lista+"/"+tipo+"/"+porcentaje+"";
-       
-//         location.href = url
+   var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
 
  	  var form_data = {
 	    token: token,
@@ -203,21 +202,66 @@ $(document).ready(function () {
 	    tipo: tipo
 	  };
 
-      // $.ajax(url).success(function(response){console.log("OK")});
+       $.get(url, form_data, function(res){
+       		window.open(res,'_blank');
+       });
+
+    });
+
+    $('#imprimir2').click(function() {
+	  var id_lista = $(".idlista").val();
+//	  var id_lista = $('.idlista').data('id');
+	  var porcentaje = $('.porcentaje').val();
+	  var tipo = 2;
+//recupero lista vieja
+
+	  var form = $('#form-imprimir');
+	  var token = form.serialize();
+
+   var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
+
+ 	  var form_data = {
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
 
        $.get(url, form_data, function(res){
-       		location.href = res;
+       		window.open(res,'_blank');
        });
-/*
 
-       $.ajax({url:'PrecioController/imprimir',
-       	data:{'id': $id_lista,
-       		  'tipo': $tipo,
-       		  'porcentaje': $porcentaje
-       		  }}).success(function(response){alert(response);
-         });
-**/
     });
+
+
+    $('#confirmar').click(function() {
+	  var form = $('#form-lista');
+	  var id_lista_actual = $(".id_lista_actual").val();
+	  var id_lista = $(".idlista").val();
+	  var porcentaje = $('.porcentaje').val();
+
+	  var url = form.attr('action').replace(':LISTA_ID', id_lista);
+//para imprimir form2 lista vieja, form3 lista nueva
+	  var token = form.serialize();
+	  console.log(porcentaje);
+	  console.log(id_lista_actual);
+	  console.log(id_lista);
+	  var tipo = 3;
+//recupero lista vieja
+	  data = {
+	    token: token,
+	    lista_id: id_lista_actual,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
+	  $.get(url, data, function(listaconfirmada){
+		      $('#carga').hide();
+		      $('#listasdecarga').hide();		      
+		      $('#listaconfirmada').show().fadeOut().html(listaconfirmada).fadeIn();
+
+	   });
+
+    });
+
 
 });
 

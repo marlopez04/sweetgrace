@@ -75,6 +75,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.pedidos.destroy'
 	]);
 
+	Route::get('pedidos/{id}/imprimir',[
+		'uses' => 'PedidosController@imprimir',
+		'as'   => 'admin.pedidos.imprimir'
+	]);
+
 	Route::resource('categorias', 'CategoriasController');
 	Route::get('categorias/{id}/destroy',[
 		'uses' => 'CategoriasController@destroy',

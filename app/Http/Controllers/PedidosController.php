@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade;
 use App\Categoria;
 use App\Articulo;
 use App\ListaPrecio;
@@ -135,6 +136,22 @@ class PedidosController extends Controller
         return $data;
 */      
     }
+
+    public function imprimir($id)
+    {
+
+        
+
+        $html = view('admin.precios.partials.imprimir')
+                   ->with('listaprecios', $listaprecios);
+
+       $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHTML($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream('listaprecio');
+    }
+
 
     /**
      * Remove the specified resource from storage.

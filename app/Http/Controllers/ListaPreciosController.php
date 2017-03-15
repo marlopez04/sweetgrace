@@ -60,13 +60,13 @@ class ListaPreciosController extends Controller
      */
     public function show($id)
     {
-
-  
+ 
         $listaprecios = ListaPrecio::find($id);
         $listaprecios->load('articulos');
         $listaprecios->articulos->load('receta');
 
 
+        $id_lista_actual = $_GET['lista_id'];
         $tipo = $_GET['tipo'];
         $porcentaje = $_GET['porcentaje'];
 /*
@@ -74,6 +74,61 @@ class ListaPreciosController extends Controller
         $tipo = 1;
         $porcentaje = 10;
 */
+
+
+        switch($tipo){
+            case '1';
+            
+                $html = view('admin.precios.partials.listavieja')
+                   ->with('listaprecios', $listaprecios);
+
+                 return $html;
+
+            break;
+            
+            case '2';
+                foreach($listaprecios->articulos as $articulo){
+
+                    $articulo->precio = $articulo->precio * (($porcentaje / 100) + 1);
+
+                }
+
+                $html = view('admin.precios.partials.listanueva')
+                       ->with('listaprecios', $listaprecios);
+
+                 return $html;
+
+                break;
+
+            case '3';
+                foreach($listaprecios->articulos as $articulo){
+
+                    $articulonuevo = new Articulo();
+                    $articulonuevo->nombre = $articulo->nombre;
+                    $articulonuevo->descripcion = $articulo->descripcion;
+                    $articulonuevo->precio = $articulo->precio * (($porcentaje / 100) + 1);
+                    $articulonuevo->lista_precio_id = $id_lista_actual;
+                    $articulonuevo->user_id = \Auth::user()->id;
+                    $articulonuevo->categoria_id = $articulo->categoria_id;
+                    $articulonuevo->imagen = $articulo->imagen;
+                    $articulonuevo->receta_id = $articulo->receta_id;
+
+                    $articulonuevo->save();
+                }
+
+                $listaconfirmada = ListaPrecio::find($id_lista_actual);
+                $listaconfirmada->load('articulos');
+                $listaconfirmada->articulos->load('receta');
+
+                $html2 = view('admin.precios.partials.listaconfirmada')
+                       ->with('listaconfirmada', $listaconfirmada);
+
+                 return $html2;
+
+            break;
+       }
+
+/*
 
         if ($tipo == 1) 
         {
@@ -100,6 +155,7 @@ class ListaPreciosController extends Controller
 
              return $html;
         }
+*/
 
     }
 
@@ -113,6 +169,9 @@ class ListaPreciosController extends Controller
     {
         $listaprecio = ListaPrecio::find($id);
         $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
+        $listaprecio->load('articulos');
+        $listaprecio->articulos->load('receta');
+
 
         return view('admin.precios.edit')
             ->with('listaprecio', $listaprecio)
@@ -179,9 +238,6 @@ class ListaPreciosController extends Controller
         $dompdf->render();
         $output = $dompdf->output();
 
-        //header('Content-type: application/pdf');
-        //header('Content-Disposition: attachment; filename="downloaded.pdf"');
-        //$dompdf->stream('listaprecio_'. date('Y-m-d_His'),array('Attachment' => 1));
         $archivos_dir = public_path() . "/archivos/";
         $pdf_file = 'lista-precio_'.date('Y-m-d_His') .'.pdf';
 
@@ -204,16 +260,8 @@ class ListaPreciosController extends Controller
 
         file_put_contents($archivos_dir . $pdf_file,$output);
 
-       // header('Content-type: application/pdf');
-        //header('Content-Disposition: attachment; filename="downloaded.pdf"');
         echo url("/archivos/{$pdf_file}");
 
-
-//return \PDF::loadFile('http://www.github.com')->stream('github.pdf'); 
-/*
-
-        return ($html);
-*/
     }
 
     /**
