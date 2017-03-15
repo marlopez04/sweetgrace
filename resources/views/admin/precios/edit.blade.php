@@ -95,7 +95,7 @@
 	<div class="col-md-6 chrt-three">
 		<h4>Lista Con aumento</h4>
 		<td><button type="button" class="btn btn-danger" id="pdfnueva">Cargar</button></td>
-		{!! Form::open(['route' => ['admin.precios.imprimir', ':ID_IMPRIMRI', 2 , ':PORCENTAJE'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
+		{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir2' ]) !!}
 		<!--
 		{!!	Form::hidden('tipo','',['class'=>'form-control', 'id' => 'tipo-vieja'])!!}
 		{!!	Form::hidden('porcentaje',null,['class'=>'form-control', 'id' => 'tipo-nueva'])!!}
@@ -165,8 +165,7 @@ $(document).ready(function () {
 	    tipo: tipo
 	  };
 	  $.get(url, data, function(listanueva){
-		      $('#listanueva').show();
-		      $('#listanueva').fadeOut().html(listanueva).fadeIn();
+		      $('#listanueva').show().fadeOut().html(listanueva).fadeIn();
 	   });
 	  	console.log(listanueva);
 
@@ -176,13 +175,18 @@ $(document).ready(function () {
 	  var id_lista = $(".idlista").val();
 //	  var id_lista = $('.idlista').data('id');
 	  var porcentaje = $('.porcentaje').val();
-	  console.log(porcentaje);
-	  console.log(id_lista);
 	  var tipo = 1;
 //recupero lista vieja
 
-	   var form = $('#form-imprimir2');
-
+	  var form = $('#form-imprimir2');
+	  var token = form.serialize();
+/*
+ 	  data = {
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
+*/	  
 //       var parametros = "/"+id_lista+"/"+tipo+"/"+porcentaje+"";
 
 //	   form.attr('action').replace(':PORCENTAJE', porcentaje);
@@ -191,18 +195,19 @@ $(document).ready(function () {
 
 //       var url = "/precio/"+id_lista+"/"+tipo+"/"+porcentaje+"";
        
-         location.href = url
+//         location.href = url
 
-		console.log(url);
-/*
- 	  data = {
+ 	  var form_data = {
 	    token: token,
 	    porcentaje: porcentaje,
 	    tipo: tipo
 	  };
-*/
-       $.ajax(url).success(function(response){console.log("OK")});
 
+      // $.ajax(url).success(function(response){console.log("OK")});
+
+       $.get(url, form_data, function(res){
+       		location.href = res;
+       });
 /*
 
        $.ajax({url:'PrecioController/imprimir',
@@ -211,13 +216,18 @@ $(document).ready(function () {
        		  'porcentaje': $porcentaje
        		  }}).success(function(response){alert(response);
          });
-*/
-
-
+**/
     });
 
 });
 
+function downloadURL(url) {
+    if( $('#idown').length ){
+        $('#idown').attr('src',url);
+    }else{
+        $('<iframe>', { id:'idown', src:url,'style':'height:50px;overflow:scroll' }).hide().appendTo('body');
+    }
+}
 </script>
 
 @endsection

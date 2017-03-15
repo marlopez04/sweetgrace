@@ -20,6 +20,7 @@ class ListaPreciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $listasprecios = ListaPrecio::orderBy('id', 'DECS')->paginate(5);
@@ -60,19 +61,22 @@ class ListaPreciosController extends Controller
     public function show($id)
     {
 
+  
         $listaprecios = ListaPrecio::find($id);
         $listaprecios->load('articulos');
         $listaprecios->articulos->load('receta');
 
+
         $tipo = $_GET['tipo'];
         $porcentaje = $_GET['porcentaje'];
-
 /*
+
         $tipo = 1;
         $porcentaje = 10;
 */
 
-        if ($tipo == 1) {
+        if ($tipo == 1) 
+        {
             //trae lista vieja
             //con un select que traiga articulos con sus costos de cada receta
 
@@ -80,7 +84,9 @@ class ListaPreciosController extends Controller
                    ->with('listaprecios', $listaprecios);
 
              return $html;
-        }else{
+        }
+        else
+        {
             //trae lista nueva con porcentaje
             //con un select que traiga articulos con sus costos de cada receta + el porcentaje de aumento en el precio
             foreach($listaprecios->articulos as $articulo){
@@ -131,20 +137,16 @@ class ListaPreciosController extends Controller
 
     }
 
-    public function imprimir($id, $tipo, $porcentaje)
+    public function imprimir($id)
     {
-
         $listaprecios = ListaPrecio::find($id);
         $listaprecios->load('articulos');
         $listaprecios->articulos->load('receta');
 
-/*
-        $tipo = $_POST['tipo'];
-        $porcentaje = $_POST['porcentaje'];
+        //var_export($_REQUEST);
 
-        $tipo = 1;
-        $porcentaje = 10;
-*/
+        $tipo = $_GET['tipo'];
+        $porcentaje = $_GET['porcentaje'];
 
         if ($tipo == 1) {
 // Opcion (1) La lista de precio sin modificaciones
@@ -171,14 +173,41 @@ class ListaPreciosController extends Controller
 
         }
 
-
-
-
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->loadHTML($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream('listaprecio');
+        $output = $dompdf->output();
+
+        //header('Content-type: application/pdf');
+        //header('Content-Disposition: attachment; filename="downloaded.pdf"');
+        //$dompdf->stream('listaprecio_'. date('Y-m-d_His'),array('Attachment' => 1));
+        $archivos_dir = public_path() . "/archivos/";
+        $pdf_file = 'lista-precio_'.date('Y-m-d_His') .'.pdf';
+
+        if(!is_dir($archivos_dir))
+        {
+            mkdir($archivos_dir);
+        }
+
+        $pdf_files = array_diff( scandir($archivos_dir), array('.','..') );
+        if($pdf_files)
+        {
+            foreach ($pdf_files as $file)
+            {
+                if(preg_match("#\.pdf#", $file))
+                {
+                    @ unlink($archivos_dir . $file);
+                }
+            }
+        }
+
+        file_put_contents($archivos_dir . $pdf_file,$output);
+
+       // header('Content-type: application/pdf');
+        //header('Content-Disposition: attachment; filename="downloaded.pdf"');
+        echo url("/archivos/{$pdf_file}");
+
 
 //return \PDF::loadFile('http://www.github.com')->stream('github.pdf'); 
 /*
