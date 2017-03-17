@@ -80,6 +80,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.pedidos.imprimir'
 	]);
 
+	Route::get('pedidos/{id}/nuevo',[
+		'uses' => 'PedidosController@nuevo',
+		'as'   => 'admin.pedidos.nuevo'
+	]);
+
 	Route::resource('categorias', 'CategoriasController');
 	Route::get('categorias/{id}/destroy',[
 		'uses' => 'CategoriasController@destroy',

@@ -151,7 +151,7 @@ footer {
   </head>
   <body>
     <header class="clearfix">
-      <h1>Lista de precios</h1>
+      <h1>Lista de precios {{$listaprecios->nombre}}</h1>
     </header>
     <main>
       <table>

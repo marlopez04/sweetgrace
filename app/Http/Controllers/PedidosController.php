@@ -91,6 +91,10 @@ class PedidosController extends Controller
         $nuevopedido->user_id = $_GET['user_id'];
         $nuevopedido->stock_id = $nuevostock->id;
         $nuevopedido->save();
+
+        
+        $nuevopedido->load('cliente');
+        $nuevopedido->load('user');
 //        $nuevopedido->stock_id = $_GET['stock_id'];
 
         //3°
@@ -109,7 +113,15 @@ class PedidosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pedido = Pedido::find($id);
+        $categorias = Categoria::all();
+
+        $pedido->load('cliente');
+        $pedido->load('user');
+
+        return view('admin.pedidos.edit')
+            ->with('pedido', $pedido)
+            ->with('categorias', $categorias);        
     }
 
     /**
@@ -139,9 +151,6 @@ class PedidosController extends Controller
 
     public function imprimir($id)
     {
-
-        
-
         $html = view('admin.precios.partials.imprimir')
                    ->with('listaprecios', $listaprecios);
 
@@ -150,6 +159,47 @@ class PedidosController extends Controller
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream('listaprecio');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function nuevo($id)
+    {
+        $cliente = Cliente::find($id);
+        $categorias = Categoria::all();
+
+        //1°
+        //arma una variable para grabar un stock nuevo
+        $nuevostock = new Stock();
+        $nuevostock->user_id = \Auth::user()->id;
+        $nuevostock->save();
+
+        //2°
+        //arma una variable para grabar un pedido nuevo
+        $nuevopedido = new Pedido();
+        $nuevopedido->entrega = date('Y-m-d_His');
+        $nuevopedido->importe = 0;
+//        $nuevopedido->cliente_id = $cliente->nombre;
+        $nuevopedido->cliente_id = $cliente->id;
+//        $nuevopedido->cliente_id = $id;
+        $nuevopedido->estado = 'pendiente';
+        $nuevopedido->user_id = \Auth::user()->id;
+        $nuevopedido->stock_id = $nuevostock->id;
+        $nuevopedido->save();
+
+//        $nuevopedido->stock_id = $_GET['stock_id'];
+        $idnuevo = $nuevopedido->id;
+
+        //3°
+        return redirect()->route('admin.pedidos.edit', $idnuevo);
+//        return redirect()->route('admin.recetas.edit', $id);
+//            ->with('pedido', $nuevopedido)
+//            ->with('categorias', $categorias);
     }
 
 

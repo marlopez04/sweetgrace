@@ -1,7 +1,3 @@
-        <div class="women">
-            <h4>{{ $categoria->nombre }}</h4>
-             <div class="clearfix"></div>   
-        </div>
         <!-- grids_of_4 -->
    <?php $cantidad =0; ?>
           @foreach($articulos as $articulo)
@@ -14,6 +10,7 @@
                      <div class="grid_1 simpleCart_shelfItem">
                      <div class="item_add"><span class="item_price">
                         <h6> ${{ $articulo->precio}}</h6>
+                        <h6> Lista: {{ $articulo->listaprecio->nombre}}</h6>
                      </div>
                     <div class="item_add"><span class="item_price">
                     </div>

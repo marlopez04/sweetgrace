@@ -82,6 +82,7 @@ class CategoriasController extends Controller
     {
         $categoria = Categoria::find($id);
         $articulos = Categoria::find($id)->articulos;
+        $articulos->load('listaprecio');
 
         $html = view('admin.pedidos.partials.articulos')
             ->with('articulos', $articulos)

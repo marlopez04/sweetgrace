@@ -137,6 +137,7 @@
                     <td>{{ $cliente->direccion }}</td>
                     <td>
                     <a href="#" class="btn-warning" data-id="{{ $cliente->id}}"> <span class="glyphicon glyphicon-wrench"></span></a>
+                    <a href="{{ route('admin.pedidos.nuevo', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
                     </td>
                   </tr>
                 @endforeach
@@ -200,7 +201,7 @@
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
             <div class="col-md-3 cart-total" id="itemcontent" hidden>
-             <a class="continue" href="">Pedido</a>
+             <H6 class="continue">Pedido</H6>
              <div id="items">
              <!-- contenido del carrito-->
              </div>
@@ -296,7 +297,7 @@
                 $('#correctorscroll').hide();
                 $('#datospedido').fadeOut().html(pedido).fadeIn();
 
-                $("body").animate({ scrollTop: $(document).height()}, 500);
+//                $("body").animate({ scrollTop: $(document).height()}, 500);
 
 //traer los articulos de cierta categoria
                 $('.categoria').click(function(){
@@ -309,7 +310,7 @@
                         
                           $('#articulocontent').show();
                           $('.w_content').fadeOut().html(articulos).fadeIn();
-                          $("body").animate({ scrollTop: $(document).height()}, 500);
+//                          $("body").animate({ scrollTop: $(document).height()}, 500);
 
 
 //                $('.w_content').html(articulos);
@@ -317,8 +318,8 @@
 //funcion agregar el articulo al carrito de compras
                          $('.articulo').click(function(){
                             var id_articulo = $(this).data('id');
-                            var id_pedido = $('.pedidoid').data('id');
-                            var id_stock = $('.stockid').data('id');
+                            var id_pedido = $('.pedidoid').val();
+                            var id_stock = $('.stockid').val();
   //                          var id_articulo = $(this).data('id'); 
                             var form = $('#form-articulo');
                             var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
@@ -337,7 +338,7 @@
                                    $('#itemcontent').show();
                                    $('#items').fadeOut().html(items).fadeIn();
 
-                                   $("body").animate({ scrollTop: $(document).height()});
+//                                   $("body").animate({ scrollTop: $(document).height()});
 
 //borrar un item del carrito
 /*

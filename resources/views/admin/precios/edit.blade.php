@@ -37,6 +37,7 @@
 	@if ($listaprecio->articulos->count() <> 0 )
 
 		<div id='listaactual'>
+			<td><button type="button" class="btn btn-danger" id="imprimir3">Imprimir</button></td>
 		          <table class="table table-striped">
 		              <thead>
 		                <th>Articulo</th>
@@ -107,15 +108,6 @@
 		<div id="listanueva"></div>
 	</div>
 
-{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
-{!! Form::close() !!}
-
-<!-- INICIO muestra la lista de precio seleccionada -->
-
-{!! Form::open(['route' => ['admin.precios.show', ':LISTA_ID'], 'method' => 'POST' , 'id' => 'form-lista' ]) !!}
-{!! Form::close() !!}
-
-<!-- FIN muestra la lista de precio seleccionada-->
 
 </div>
 
@@ -127,6 +119,16 @@
 </div>
 
 @endif
+
+{!! Form::open(['route' => ['admin.precios.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
+{!! Form::close() !!}
+
+<!-- INICIO muestra la lista de precio seleccionada -->
+
+{!! Form::open(['route' => ['admin.precios.show', ':LISTA_ID'], 'method' => 'POST' , 'id' => 'form-lista' ]) !!}
+{!! Form::close() !!}
+
+<!-- FIN muestra la lista de precio seleccionada-->
 
 
 <div class="clearfix"></div>
@@ -219,6 +221,32 @@ $(document).ready(function () {
 	  var token = form.serialize();
 
    var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista);
+
+ 	  var form_data = {
+	    token: token,
+	    porcentaje: porcentaje,
+	    tipo: tipo
+	  };
+
+       $.get(url, form_data, function(res){
+       		window.open(res,'_blank');
+       });
+
+    });
+
+
+    $('#imprimir3').click(function() {
+      var id_lista_actual = $(".id_lista_actual").val();
+//	  var id_lista = $(".idlista").val();
+//	  var id_lista = $('.idlista').data('id');
+	  var porcentaje = 0;
+	  var tipo = 1;
+//recupero lista vieja
+
+	  var form = $('#form-imprimir');
+	  var token = form.serialize();
+
+      var url = form.attr('action').replace(':IMPRIMIR_ID', id_lista_actual);
 
  	  var form_data = {
 	    token: token,

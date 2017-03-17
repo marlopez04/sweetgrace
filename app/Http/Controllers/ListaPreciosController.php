@@ -219,6 +219,7 @@ class ListaPreciosController extends Controller
         }else{
 // Opcion (2) La lista con el porcentaje de aumento indicado
 
+            $listaprecios->nombre = $listaprecios->nombre . " con " . $porcentaje  . "% +";
             //trae lista nueva con porcentaje
             //con un select que traiga articulos con sus costos de cada receta + el porcentaje de aumento en el precio
             foreach($listaprecios->articulos as $articulo){
