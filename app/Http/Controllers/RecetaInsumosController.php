@@ -61,8 +61,30 @@ class RecetaInsumosController extends Controller
         $recetainsumo->save();
 
         $receta = Receta::find($recetainsumo->receta_id);
-        $receta->load('recetainsumos', 'recetaingredientes');
+        $recetaid = $receta->id;
+//recupero los ingredientes
+        $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
+                                FROM recetaingredientes rin
+                                INNER JOIN ingredientes ing on ing.id = rin.ingrediente_id
+                                WHERE rin.receta_id = "{$recetaid}"
+                                GROUP BY rin.receta_id');
 
+//        $costoingredientes = \DB::select($consulta);
+
+//recupero los insumos
+        $costoinsumos = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
+                                            FROM recetainsumos rin
+                                            INNER JOIN insumos ins on ins.id = rin.insumo_id
+                                            WHERE rin.receta_id = "{$recetaid}"
+                                            GROUP BY rin.receta_id');
+
+//sumno los dos para sacar el costo total y grabarlo en la receta
+
+        $receta->costo = $costoingredientes->costo + $costoinsumos->costo;
+        $receta->save();
+
+
+        $receta->load('recetainsumos', 'recetaingredientes');
         $receta->recetainsumos->load('insumo');
         $receta->recetaingredientes->load('ingrediente');
 
@@ -107,7 +129,34 @@ class RecetaInsumosController extends Controller
         $recetainsumo->delete();
 
         $receta = Receta::find($recetainsumo->receta_id);
+
+        $recetaid = $receta->id;
+//recupero los ingredientes
+        $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
+                                FROM recetaingredientes rin
+                                INNER JOIN ingredientes ing on ing.id = rin.ingrediente_id
+                                WHERE rin.receta_id = "{$recetaid}"
+                                GROUP BY rin.receta_id');
+
+//        $costoingredientes = \DB::select($consulta);
+
+//recupero los insumos
+        $costoinsumos = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
+                                            FROM recetainsumos rin
+                                            INNER JOIN insumos ins on ins.id = rin.insumo_id
+                                            WHERE rin.receta_id = "{$recetaid}"
+                                            GROUP BY rin.receta_id');
+
+//sumno los dos para sacar el costo total y grabarlo en la receta
+
+        $receta->costo = $costoingredientes->costo + $costoinsumos->costo;
+        $receta->save();
+
+
         $receta->load('recetainsumos', 'recetaingredientes');
+        $receta->recetainsumos->load('insumo');
+        $receta->recetaingredientes->load('ingrediente');
+
 
         $html = view('admin.recetas.partials.insumosingredientes')
                    ->with('receta', $receta);

@@ -1,4 +1,5 @@
 <!-- INGREDIENTES       -->
+<h4> COSTO TOTAL $ {{$receta->costo}}</h4>
                  <h4>Ingredientes</h4>
           <table class="table table-striped">
               <thead>
@@ -30,6 +31,8 @@
                 <th></th>
                 <th>Insumo</th>
                 <th>Cantidad</th>
+                <th>Costo_u</th>
+                <th>Costo</th>
               </thead>
               <tbody>
                 @foreach($receta->recetainsumos as $recetainsumo)
@@ -39,10 +42,13 @@
                     </td>
                     <td>{{ $recetainsumo->nombre }}</td>
                     <td>{{ $recetainsumo->cantidad }}</td>
+                    <td>${{ $recetainsumo->insumo->costo_u }}</td>
+                    <td>${{ ($recetainsumo->cantidad / $recetainsumo->insumo->unidad) * $recetainsumo->insumo->costo_u }}</td>
                   </tr>
                 @endforeach
               </tbody>
             </table>
+
 
             <div class="clearfix"></div>                
 
