@@ -21,7 +21,7 @@
 </div>
 
 <div id="cargaringrediente" hidden>
-  <h4 id="nombre">Moño</h4>
+  <h4 id="nombreing"></h4>
 {!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
 <button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 </div>
@@ -38,12 +38,13 @@
 //muestra el div con el nombre del insumo y brinda un campo para cargar la cantidad
 function mostrarcantidad(btn_danger){
   console.log("llama a la funcion");
-  var id_ingrediente = $(btn_danger).data('id');
+  var id_ingrediente = 0
+  id_ingrediente = $(btn_danger).data('id');
   console.log(id_ingrediente);
   $('#cargaringrediente').show();
   var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
-  $('#nombre').text(nombre);
+  $('#nombreing').text(nombre);
 //cargar insumo en la receta  
   $('#cargaring' ).click(function() {
     var cantidad = $('.ingredientecantidad').val();

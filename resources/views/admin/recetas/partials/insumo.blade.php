@@ -21,15 +21,21 @@
 </div>
 
 <div id="cargarinsumo" hidden>
-  <h4 id="nombre">Moño</h4>
+
+  <h4 id="nombreinsu"></h4>
 {!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
+{!! Form::number('id_insumo',null,['class'=>'id_insumo', 'id'=>'id_insumo'])!!}
 <button type="button" class="btn btn-danger" id="cargarins">cargar</button>
+{!! Form::open(['route' => ['admin.recetainsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
+{!! Form::close() !!}
+
 </div>
 
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
-{!! Form::open(['route' => ['admin.recetainsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
+{!! Form::open(['route' => ['admin.recetainsumos.mostrar', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
 {!! Form::close() !!}
+
 
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
@@ -39,20 +45,26 @@
 //muestra el div con el nombre del insumo y brinda un campo para cargar la cantidad
 function mostrarcantidad(btn_danger){
   console.log("llama a la funcion");
-  var id_insumo = 0;
-  id_insumo = $(btn_danger).data('id');
-  console.log(id_insumo);
+  $('#id_insumo').val("");
+  $('#id_insumo').val($(btn_danger).data('id'));
+  $('.insumocantidad').val("");
   $('#cargarinsumo').show();
+  var cantidadant = 0;
   var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
   console.log(nombre);
-  $('#nombre').text(nombre);
+  $('#nombreinsu').text(nombre);
 //cargar insumo en la receta  
   $('#cargarins' ).click(function() {
     var cantidad = $('.insumocantidad').val();
+  if (cantidad != cantidadant ) {
+    var id_insumo = $('#id_insumo').val();
     var id_receta = $('.idreceta').data('id');
+    console.log("insumo id");
     console.log(id_insumo);
     console.log(nombre);
+    console.log("cantidad");
     console.log(cantidad);
+    console.log("id_receta");
     console.log(id_receta);
         
     var form = $('#form-insumoadd');
@@ -72,9 +84,14 @@ function mostrarcantidad(btn_danger){
         $('#insumosingredientes').fadeOut().html(recetainsumos).fadeIn();
         id_insumo = 0;
 
+        cantidadant = cantidad;
+
+
       });
 
     };
+
+  };
 
   });
 

@@ -141,6 +141,8 @@
 
 //		                $('#correctorscroll').hide();
 //						$('#recetainsumo').hide();
+						$('#insumo').hide();
+						$('#ingrediente').hide();
 						$('#ingrediente').show();
 		                $('#ingrediente').fadeOut().html(ingrediente).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);
@@ -164,6 +166,8 @@
 
 //		                $('#correctorscroll').hide();
 //						$('#recetaingrediente').hide();
+						$('#insumo').hide();
+						$('#ingrediente').hide();
 						$('#insumo').show();
 		                $('#insumo').fadeOut().html(insumo).fadeIn();
 //		                $("body").animate({ scrollTop: $(document).height()}, 500);

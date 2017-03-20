@@ -50,6 +50,19 @@ class RecetaInsumosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function mostrar(Request $id)
+    {
+        //
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         
@@ -61,7 +74,25 @@ class RecetaInsumosController extends Controller
         $recetainsumo->save();
 
         $receta = Receta::find($recetainsumo->receta_id);
+        $receta->load('recetaingredientes', 'recetainsumos');
+        
+        $receta->recetainsumos->load('insumo');
+        $receta->recetaingredientes->load('ingrediente');
         $recetaid = $receta->id;
+        $costoingredientes = 0;
+        $costoinsumos = 0;
+
+        foreach($receta->recetaingredientes as $recetaingrediente){
+            $costoingredientes += ($recetaingrediente->cantidad/$recetaingrediente->ingrediente->unidad) * $recetaingrediente->ingrediente->costo_u;
+
+        }
+        foreach($receta->recetainsumos as $recetainsumo){
+            $costoinsumos += ($recetainsumo->cantidad/$recetainsumo->insumo->unidad) * $recetainsumo->insumo->costo_u;
+
+        }
+
+        $recetaid = $receta->id;
+/*
 //recupero los ingredientes
         $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
                                 FROM recetaingredientes rin
@@ -80,7 +111,9 @@ class RecetaInsumosController extends Controller
 
 //sumno los dos para sacar el costo total y grabarlo en la receta
 
-        $receta->costo = $costoingredientes->costo + $costoinsumos->costo;
+*/
+
+        $receta->costo = $costoingredientes + $costoinsumos;
         $receta->save();
 
 
@@ -129,8 +162,25 @@ class RecetaInsumosController extends Controller
         $recetainsumo->delete();
 
         $receta = Receta::find($recetainsumo->receta_id);
+        $receta->load('recetaingredientes', 'recetainsumos');
 
+        $receta->recetainsumos->load('insumo');
+        $receta->recetaingredientes->load('ingrediente');
         $recetaid = $receta->id;
+        $costoingredientes = 0;
+        $costoinsumos = 0;
+
+        foreach($receta->recetaingredientes as $recetaingrediente){
+            $costoingredientes += ($recetaingrediente->cantidad/$recetaingrediente->ingrediente->unidad) * $recetaingrediente->ingrediente->costo_u;
+
+        }
+        foreach($receta->recetainsumos as $recetainsumo){
+            $costoinsumos += ($recetainsumo->cantidad/$recetainsumo->insumo->unidad) * $recetainsumo->insumo->costo_u;
+
+        }
+/*
+
+
 //recupero los ingredientes
         $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
                                 FROM recetaingredientes rin
@@ -149,14 +199,14 @@ class RecetaInsumosController extends Controller
 
 //sumno los dos para sacar el costo total y grabarlo en la receta
 
-        $receta->costo = $costoingredientes->costo + $costoinsumos->costo;
-        $receta->save();
-
-
         $receta->load('recetainsumos', 'recetaingredientes');
         $receta->recetainsumos->load('insumo');
         $receta->recetaingredientes->load('ingrediente');
 
+*/
+
+        $receta->costo = $costoingredientes + $costoinsumos;
+        $receta->save();
 
         $html = view('admin.recetas.partials.insumosingredientes')
                    ->with('receta', $receta);
