@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\RecetaInsumo;
 use App\Receta;
+use App\Insumo;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Iluminate\Support\Facedes\Redirect;
@@ -51,9 +52,19 @@ class RecetaInsumosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function mostrar(Request $id)
+    public function mostrar($id)
     {
-        //
+        $receta_id = $_GET['id_receta'];
+        $insumo_id = $_GET['id_insumo'];
+        $receta = Receta::find($receta_id);
+        $insumo = Insumo::find($insumo_id);
+
+        $html = view('admin.recetas.partials.cargarinsumos')
+                  ->with('receta', $receta)
+                  ->with('insumo',$insumo);
+
+        return $html;
+
     }
 
 
