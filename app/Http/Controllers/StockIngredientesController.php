@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Stock;
 use Illuminate\Http\Request;
 use App\StockIngrediente;
+use App\Ingrediente;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
@@ -72,6 +73,16 @@ class StockIngredientesController extends Controller
 
         $stock = Stock::find($stockingrediente->stock_id);
         $stock->load('stockingredientes', 'stockinsumos');
+        $stock->stockinsumos->load('insumo');
+        $stock->stockingredientes->load('ingrediente');
+        $stockid = $stock->id;
+        $costoingredientes = 0;
+        $costoinsumos = 0;
+
+        $stock->costo += $stockingrediente->costo;
+        $stock->save();
+
+
 
         $html = view('admin.stocks.partials.insumosingredientes')
                    ->with('stock', $stock);
@@ -100,6 +111,28 @@ class StockIngredientesController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function mostrar($id)
+    {
+        $stock_id = $_GET['id_stock'];
+        $ingrediente_id = $_GET['id_ingrediente'];
+        $stock = Stock::find($stock_id);
+        $ingrediente = Ingrediente::find($ingrediente_id);
+
+        $html = view('admin.stocks.partials.cargaringredientes')
+                  ->with('stock', $stock)
+                  ->with('ingrediente',$ingrediente);
+
+        return $html;
+
     }
 
     /**

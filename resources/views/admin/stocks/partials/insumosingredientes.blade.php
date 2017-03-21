@@ -1,7 +1,6 @@
 <!-- INGREDIENTES       -->
-
+<h4> COSTO TOTAL $ {{$stock->costo}}</h4>
           <table class="table table-striped">
-
               <thead>
               <tr><td align="center " colspan="6"><h3><strong>Ingredientes</strong></h3></td></tr>
               </thead>

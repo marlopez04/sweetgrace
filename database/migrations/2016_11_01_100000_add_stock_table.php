@@ -16,6 +16,7 @@ class AddStockTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->double('costo', 10, 2);
             $table->enum('tipo',['positivo', 'negativo'])->default('positivo');
             $table->enum('estado',['pendiente', 'confirmado'])->default('pendiente');
             $table->timestamps();

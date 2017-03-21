@@ -6,6 +6,7 @@
                 <th></th>
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
+                <th>Unidad</th>
                 <th>Costo_u</th>
                 <th>Costo</th>
               </thead>
@@ -17,6 +18,7 @@
                     </td>
                     <td>{{ $recetaingrediente->nombre }}</td>
                     <td>{{ $recetaingrediente->cantidad }}</td>
+                    <td>{{ $recetaingrediente->ingrediente->unidad }}</td>
                     <td>${{ $recetaingrediente->ingrediente->costo_u }}</td>
                     <td>${{ ($recetaingrediente->cantidad / $recetaingrediente->ingrediente->unidad) * $recetaingrediente->ingrediente->costo_u }}</td>
                   </tr>
@@ -31,6 +33,7 @@
                 <th></th>
                 <th>Insumo</th>
                 <th>Cantidad</th>
+                <th>Unidad</th>
                 <th>Costo_u</th>
                 <th>Costo</th>
               </thead>
@@ -42,6 +45,7 @@
                     </td>
                     <td>{{ $recetainsumo->nombre }}</td>
                     <td>{{ $recetainsumo->cantidad }}</td>
+                    <td>{{ $recetainsumo->insumo->unidad }}</td>
                     <td>${{ $recetainsumo->insumo->costo_u }}</td>
                     <td>${{ ($recetainsumo->cantidad / $recetainsumo->insumo->unidad) * $recetainsumo->insumo->costo_u }}</td>
                   </tr>

@@ -63,10 +63,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.stockingredientes.destroy'
 	]);
 
+	Route::get('stockingredientes/{id}/mostrar',[
+		'uses' => 'StockIngredientesController@mostrar',
+		'as'   => 'admin.stockingredientes.mostrar'
+	]);
+
+
 	Route::resource('stockinsumos', 'StockInsumosController');
 	Route::get('stockinsumos/{id}/destroy',[
 		'uses' => 'StockInsumosController@destroy',
 		'as'   => 'admin.stockinsumos.destroy'
+	]);
+
+	Route::get('stockinsumos/{id}/mostrar',[
+		'uses' => 'StockInsumosController@mostrar',
+		'as'   => 'admin.stockinsumos.mostrar'
 	]);
 
 	Route::resource('pedidos', 'PedidosController');
@@ -130,6 +141,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 	Route::get('recetaingredientes/{id}/destroy',[
 		'uses' => 'RecetaIngredientesController@destroy',
 		'as'   => 'admin.recetaingredientes.destroy'
+	]);
+
+	Route::get('recetaingredientes/{id}/mostrar',[
+		'uses' => 'RecetaIngredientesController@mostrar',
+		'as'   => 'admin.recetaingredientes.mostrar'
 	]);
 
 	Route::resource('recetainsumos', 'RecetaInsumosController');

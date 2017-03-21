@@ -16,75 +16,41 @@
               @endforeach
             </tbody>
 </table>
-<div class="text-center">
-  {!! $insumos->render()!!}
-</div>
 
 <div id="cargarinsumo" hidden>
-  <h4 id="nombrei"></h4>
-{!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
-{!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
-{!! Form::number('costo',null,['class'=>'insumocosto', 'id'=>'insumocosto' , 'placeholder'=>'costo'])!!}
-<button type="button" class="btn btn-danger" id="cargarins">cargar</button>
+
 </div>
 
-<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
+<!-- INICIO agrega insumo a la stock y muestra los insumos cargados-->
 
-{!! Form::open(['route' => ['admin.stockinsumos.show', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
+{!! Form::open(['route' => ['admin.stockinsumos.mostrar', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-mostrarinsu' ]) !!}
 {!! Form::close() !!}
 
-<!-- INICIO agrega ingrediente a la stock y muestra los ingredientes cargados-->
+
+<!-- INICIO agrega insumo a la stock y muestra los insumos cargados-->
 
 
 <script>
 
 //muestra el div con el nombre del insumo y brinda un campo para cargar la cantidad
 function mostrarcantidad(btn_danger){
-  console.log("llama a la funcion");
-  var id_insumo = 0;
-  id_insumo = $(btn_danger).data('id');
-  console.log(id_insumo);
-  $('#cargarinsumo').show();
-  var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
-  console.log(nombre);
-  $('#nombrei').text(nombre);
-//cargar insumo en la stock  
-  $('#cargarins' ).click(function() {
-    var cantidad = $('.insumocantidad').val();
-    var costo = $('.insumocosto').val();
-    var tipo = $('.tipo').val();
-    var id_stock = $('.idstock').data('id');
-    console.log(id_insumo);
-    console.log(nombre);
-    console.log(cantidad);
-    console.log(costo);
-    console.log(id_stock);
-    console.log(tipo);
-        
-    var form = $('#form-insumoadd');
+
+    var form = $('#form-mostrarinsu');
+    var id_insumo = $(btn_danger).data('id');
     var url = form.attr('action').replace(':INSUMO_ID', id_insumo);
+    var id_stock = $('.idstock').data('id');
     var token = form.serialize();
     data = {
       token: token,
       id_insumo: id_insumo,
-      cantidad: cantidad,
-      costo: costo,
-      tipo: tipo,
       id_stock: id_stock,
-      nombre: nombre
     };
-    if (id_insumo != 0) {
       $.get(url, data, function(stockinsumos){
         $('#cargarinsumo').hide();
-        $('#insumosingredientes').show();
-        $('#insumosingredientes').fadeOut().html(stockinsumos).fadeIn();
-        id_insumo = 0;
+        $('#cargarinsumo').show();
+        $('#cargarinsumo').fadeOut().html(stockinsumos).fadeIn();
 
       });
-
-    };
-
-  });
 
 };
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Stock;
 use App\StockInsumo;
+use App\Insumo;
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -68,7 +69,25 @@ class StockInsumosController extends Controller
         $stockinsumo->save();
 
         $stock = Stock::find($stockinsumo->stock_id);
-        $stock->load('stockinsumos', 'stockingredientes');
+        $stock->load('stockingredientes', 'stockinsumos');
+        $stock->stockinsumos->load('insumo');
+        $stock->stockingredientes->load('ingrediente');
+        $stockid = $stock->id;
+        $costoingredientes = 0;
+        $costoinsumos = 0;
+
+        foreach($stock->stockingredientes as $stockingrediente){
+            $costoingredientes += ($stockingrediente->cantidad/$stockingrediente->ingrediente->unidad) * $stockingrediente->ingrediente->costo_u;
+
+        }
+        foreach($stock->stockinsumos as $stockinsumo){
+            $costoinsumos += ($stockinsumo->cantidad/$stockinsumo->insumo->unidad) * $stockinsumo->insumo->costo_u;
+
+        }
+
+        $stock->costo = $costoingredientes + $costoinsumos;
+        $stock->save();
+
 
         $html = view('admin.stocks.partials.insumosingredientes')
                    ->with('stock', $stock);
@@ -97,6 +116,28 @@ class StockInsumosController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function mostrar($id)
+    {
+        $stock_id = $_GET['id_stock'];
+        $insumo_id = $_GET['id_insumo'];
+        $stock = Stock::find($stock_id);
+        $insumo = Insumo::find($insumo_id);
+
+        $html = view('admin.stocks.partials.cargarinsumos')
+                  ->with('stock', $stock)
+                  ->with('insumo',$insumo);
+
+        return $html;
+
     }
 
     /**

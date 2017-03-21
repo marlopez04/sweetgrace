@@ -1,82 +1,57 @@
-	<table class="table table-striped">
-              <thead>
-                <th>Ingrediente</th>
-                <th>Stock</th>
-                <th>Seleccionar</th>
-              </thead>
-              <tbody>
-                @foreach($ingredientes as $ingrediente)
-                  <tr>
-                    <td class="nombre">{{ $ingrediente->nombre }}</td>
-                    <td>{{ $ingrediente->cantidad }}</td>
-                    <td>
-                      <a href="javascript:void(0)" class="btn btn-danger" onclick='mostrarcantidad(this)' data-id="{{ $ingrediente->id}}">Agregar
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-    </table>
-<div class="text-center">
-  {!! $ingredientes->render()!!}
-</div>
+<table class="table table-striped">
+            <thead>
+              <th>Insumo</th>
+              <th>Stock</th>
+              <th>Seleccionar</th>
+            </thead>
+            <tbody>
+              @foreach($ingredientes as $ingrediente)
+                <tr>
+                  <td class="nombre">{{ $ingrediente->nombre }}</td>
+                  <td>{{ $ingrediente->cantidad }}</td>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-danger" onclick='mostrarcantidad(this)' data-id="{{ $ingrediente->id}}">Agregar</a>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+</table>
 
 <div id="cargaringrediente" hidden>
-  <h4 id="nombreing"></h4>
-{!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
-<button type="button" class="btn btn-danger" id="cargaring">cargar</button>
+
 </div>
+
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
-{!! Form::open(['route' => ['admin.recetaingredientes.show', ':INGREDIENTE_ID'], 'method' => 'POST' , 'id' => 'form-ingredienteadd' ]) !!}
+{!! Form::open(['route' => ['admin.recetaingredientes.mostrar', ':INSUMO_ID'], 'method' => 'POST' , 'id' => 'form-mostrarins' ]) !!}
 {!! Form::close() !!}
+
 
 <!-- INICIO agrega ingrediente a la receta y muestra los ingredientes cargados-->
 
 
 <script>
 
-//muestra el div con el nombre del insumo y brinda un campo para cargar la cantidad
+//muestra el div con el nombre del ingrediente y brinda un campo para cargar la cantidad
 function mostrarcantidad(btn_danger){
-  console.log("llama a la funcion");
-  var id_ingrediente = 0
-  id_ingrediente = $(btn_danger).data('id');
-  console.log(id_ingrediente);
-  $('#cargaringrediente').show();
-  var nombre = $(btn_danger).closest('tr').find('td.nombre').html()
-  console.log(nombre);
-  $('#nombreing').text(nombre);
-//cargar insumo en la receta  
-  $('#cargaring' ).click(function() {
-    var cantidad = $('.ingredientecantidad').val();
+
+    var form = $('#form-mostrarins');
+    var id_ingrediente = $(btn_danger).data('id');
+    var url = form.attr('action').replace(':INSUMO_ID', id_ingrediente);
     var id_receta = $('.idreceta').data('id');
-    console.log(id_ingrediente);
-    console.log(nombre);
-    console.log(cantidad);
-    console.log(id_receta);
-        
-    var form = $('#form-ingredienteadd');
-    var url = form.attr('action').replace(':INGREDIENTE_ID', id_ingrediente);
     var token = form.serialize();
     data = {
       token: token,
       id_ingrediente: id_ingrediente,
-      cantidad: cantidad,
       id_receta: id_receta,
-      nombre: nombre
     };
-    if (id_ingrediente != 0) {
-      $.get(url, data, function(receta){
+      $.get(url, data, function(recetaingredientes){
         $('#cargaringrediente').hide();
-        $('#insumosingredientes').show();
-        $('#insumosingredientes').fadeOut().html(receta).fadeIn();
-  //      $('#insumosingredientes').html(receta);
+        $('#cargaringrediente').show();
+        $('#cargaringrediente').fadeOut().html(recetaingredientes).fadeIn();
         id_ingrediente = 0;
 
       });
-
-    };
-
-  });
 
 };
 
