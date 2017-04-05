@@ -72,20 +72,19 @@ class StockInsumosController extends Controller
         $stock->load('stockingredientes', 'stockinsumos');
         $stock->stockinsumos->load('insumo');
         $stock->stockingredientes->load('ingrediente');
-        $stockid = $stock->id;
-        $costoingredientes = 0;
-        $costoinsumos = 0;
+        $costoinsumo = 0;
+        $costoingrediente = 0;
 
-        foreach($stock->stockingredientes as $stockingrediente){
-            $costoingredientes += ($stockingrediente->cantidad/$stockingrediente->ingrediente->unidad) * $stockingrediente->ingrediente->costo_u;
-
-        }
-        foreach($stock->stockinsumos as $stockinsumo){
-            $costoinsumos += ($stockinsumo->cantidad/$stockinsumo->insumo->unidad) * $stockinsumo->insumo->costo_u;
-
+        foreach($stock->stockinsumos as $stockinsu){
+            $costoinsumo += $stockinsu->costo;
         }
 
-        $stock->costo = $costoingredientes + $costoinsumos;
+        foreach($stock->stockingredientes as $stocking){
+            $costoingrediente += $stocking->costo;
+        }
+
+        $stock->costo = $costoingrediente + $costoinsumo;
+
         $stock->save();
 
 
@@ -153,6 +152,22 @@ class StockInsumosController extends Controller
 
         $stock = Stock::find($stockinsumo->stock_id);
         $stock->load('stockinsumos', 'stockingredientes');
+
+// recalcular el costo del stock
+        $costoinsumo = 0;
+        $costoingrediente = 0;
+
+        foreach($stock->stockinsumos as $stockinsu){
+            $costoinsumo += $stockinsu->costo;
+        }
+
+        foreach($stock->stockingredientes as $stocking){
+            $costoingrediente += $stocking->costo;
+        }
+
+        $stock->costo = $costoingrediente + $costoinsumo;
+        $stock->save();
+
 
         $html = view('admin.stocks.partials.insumosingredientes')
                    ->with('stock', $stock);
