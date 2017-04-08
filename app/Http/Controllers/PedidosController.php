@@ -115,13 +115,15 @@ class PedidosController extends Controller
     {
         $pedido = Pedido::find($id);
         $categorias = Categoria::all();
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
 
         $pedido->load('cliente');
         $pedido->load('user');
 
         return view('admin.pedidos.edit')
             ->with('pedido', $pedido)
-            ->with('categorias', $categorias);        
+            ->with('listasprecios', $listasprecios)
+            ->with('categorias', $categorias);
     }
 
     /**

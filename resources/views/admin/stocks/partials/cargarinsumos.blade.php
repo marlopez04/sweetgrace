@@ -5,13 +5,13 @@
 {!! Form::hidden('nombre',$insumo->nombre,['class'=>'nombre', 'id'=>'nombre'])!!}
 {!! Form::hidden('id_insumo',$insumo->id,['class'=>'id_insumo', 'id'=>'id_insumo'])!!}
 {!! Form::hidden('id_stock',$stock->id,['class'=>'id_stock', 'id'=>'id_stock'])!!}
-<button type="button" class="btn btn-danger" id="cargarins">cargar</button>
+<button type="button" class="btn btn-danger" id="cargaring">cargar</button>
 {!! Form::open(['route' => ['admin.stockinsumos.show', ':INGREDIENTE_ID'], 'method' => 'POST' , 'id' => 'form-insumoadd' ]) !!}
 {!! Form::close() !!}
 
 <script>
 
-  $('#cargarins').click(function() {
+  $('#cargaring').click(function() {
     var id_insumo = $('#id_insumo').val();
     var cantidad = $('.insumocantidad').val();
     var costo = $('.insumocosto').val();
@@ -22,6 +22,9 @@
     var form = $('#form-insumoadd');
     var url = form.attr('action').replace(':INGREDIENTE_ID', id_insumo);
     var token = form.serialize();
+    console.log("cargar");
+    console.log(id_insumo);
+    console.log(cantidad);
     data = {
       token: token,
       id_insumo: id_insumo,

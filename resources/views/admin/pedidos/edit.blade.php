@@ -137,6 +137,8 @@
         </div>
 
     <div class="panel-title">
+      <h4>Lista de Precio</h4>
+      {!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'id' => 'lista_id']) !!}
             <h4>Categorias</h4>
     </div>
 
@@ -329,10 +331,16 @@ function borraritem2(btn_danger){
 */
 //traer los articulos de cierta categoria
                 $('.categoria').click(function(){
-                    var id_categoria = $(this).data('id'); 
+                    var id_categoria = $(this).data('id');
+                    var lista_id = $('#lista_id').val();
                     var form = $('#form-categoria');
                     var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
-                    var data = form.serialize();
+                    var token = form.serialize();
+                      data = {
+                        token: token,
+                        lista_id: lista_id
+                      };
+
 
                     $.get(url, data, function(articulos){
                         

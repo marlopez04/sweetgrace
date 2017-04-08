@@ -40,6 +40,10 @@ function mostrarcantidad(btn_danger){
     var url = form.attr('action').replace(':INSUMO_ID', id_insumo);
     var id_stock = $('.idstock').data('id');
     var token = form.serialize();
+    console.log("cargar insumo");
+    console.log(id_insumo);
+    
+
     data = {
       token: token,
       id_insumo: id_insumo,

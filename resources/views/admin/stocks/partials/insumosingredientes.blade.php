@@ -5,7 +5,9 @@
               <tr><td align="center " colspan="6"><h3><strong>Ingredientes</strong></h3></td></tr>
               </thead>
               <thead>
-                <th>Borrar</th>
+                @if ($stock->estado == 'pendiente')
+                  <th>Borrar</th>
+                @endif
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
                 <th>Costo</th>
@@ -15,9 +17,11 @@
               <tbody>
                 @foreach($stock->stockingredientes as $stockingrediente)
                   <tr>
-                    <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" onclick='borraringrdiente(this)' data-id="{{ $stockingrediente->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
-                    </td>
+                    @if ($stock->estado == 'pendiente')
+                      <td>
+                      <a href="javascript:void(0)" class="btn btn-danger" onclick='borraringrdiente(this)' data-id="{{ $stockingrediente->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                      </td>
+                    @endif
                     <td>{{ $stockingrediente->nombre }}</td>
                     <td>{{ $stockingrediente->cantidad }}</td>
                     <td>{{ $stockingrediente->costo }}</td>
@@ -34,7 +38,9 @@
               <tr><td align="center " colspan="6"><h3><strong>Insumos</strong></h3></td></tr>
               </thead>
               <thead>
-                <th>Borrar</th>
+                @if ($stock->estado == 'pendiente')
+                  <th>Borrar</th>
+                @endif
                 <th>Insumo</th>
                 <th>Cantidad</th>
                 <th>Costo</th>
@@ -44,9 +50,11 @@
               <tbody>
                 @foreach($stock->stockinsumos as $stockinsumo)
                   <tr>
-                    <td>
-                    <a href="javascript:void(0)" class="btn btn-danger" onclick='borrarinsumo(this)' data-id="{{ $stockinsumo->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
-                    </td>
+                    @if ($stock->estado == 'pendiente')
+                      <td>
+                      <a href="javascript:void(0)" class="btn btn-danger" onclick='borrarinsumo(this)' data-id="{{ $stockinsumo->id}}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                      </td>
+                    @endif
                     <td>{{ $stockinsumo->nombre }}</td>
                     <td>{{ $stockinsumo->cantidad }}</td>
                     <td>{{ $stockinsumo->costo }}</td>
