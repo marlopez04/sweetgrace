@@ -116,6 +116,7 @@
         <div id="datospedido" >
 			{!! Form::hidden('id_pedido',$pedido->id,['class'=>'pedidoid'])!!}
 			{!! Form::hidden('id_stock',$pedido->stock_id,['class'=>'stockid'])!!}
+          {!! Form::open(['route' =>['admin.pedidos.update', $pedido], 'method' => 'PUT', 'files' => true]) !!}
           <table class="table table-striped">
               <thead>
                 <th>Cliente</th>
@@ -130,10 +131,12 @@
                     <td>{!! Form::date('entrega',null,['class'=>'form-control', 'required'])!!}</td>
                     <td>{{ $pedido->user->name }}</td>
                     <td>{{ $pedido->estado }}</td>
-                    <td><button type="button" class="btn btn-danger" id="buscar">Confirmar</button></td>
+                    
+                    <td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
                   </tr>
               </tbody>
             </table>
+                    {!!Form::close()!!}
         </div>
 
     <div class="panel-title">
@@ -333,6 +336,7 @@ function borraritem2(btn_danger){
                 $('.categoria').click(function(){
                     var id_categoria = $(this).data('id');
                     var lista_id = $('#lista_id').val();
+                    console.log(lista_id);
                     var form = $('#form-categoria');
                     var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
                     var token = form.serialize();

@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Categoria;
+use App\ListaPrecio;
+use App\Articulo;
 use Laracasts\Flash\Flash;
 use App\Http\Request\CategoriaRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Database\Connection;
 
 class CategoriasController extends Controller
 {
@@ -80,9 +83,31 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::find($id);
-        $articulos = Categoria::find($id)->articulos;
+        $id_lista = $_GET['lista_id'];
+        $id_categoria = $id;
+
+        $listaprecio = ListaPrecio::find($id_lista);
+//        dd($id_lista);
+        //dd($id_lista + " " + $id_categoria );
+//
+
+        $articulos = Articulo::where('lista_precio_id',$id_lista)
+                              ->where('categoria_id',$id_categoria)->get();
+
+/*
+        $articulos = \DB::select("SELECT nombre, imagen, precio
+                                 FROM articulos 
+                                 WHERE lista_precio_id = '{$id_lista}'
+                                 AND categoria_id = '{$id_categoria}' ");
+
+*/
+
+//        $articulos = Categoria::find($id)->articulos;
+//
         $articulos->load('listaprecio');
+//        dd($articulos);
+
+        $categoria = Categoria::find($id);
 
         $html = view('admin.pedidos.partials.articulos')
             ->with('articulos', $articulos)
