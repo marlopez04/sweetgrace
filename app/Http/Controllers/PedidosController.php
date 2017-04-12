@@ -138,18 +138,23 @@ class PedidosController extends Controller
 
 
 
-// selecciono transforma las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, cantidad)
-//corregir, no bien cuando hay 2 articulos iguales
-        $data = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, sum(ri.cantidad) as cantidad
-                            FROM articulos a
-                            INNER JOIN recetas r
-                            INNER JOIN recetaingredientes ri on ri.receta_id = r.id                            
-                            WHERE a.id in
-                            (SELECT articulo_id
-                            FROM pedidoarticulos
-                            WHERE pedido_id = '{$id}')
-                            group by ri.ingrediente_id");
+// selecciono las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
+       $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre, sum(ri.cantidad) as cantidad
+                                        FROM pedidoarticulos pa
+                                        INNER JOIN articulos a on a.id = pa.articulo_id
+                                        INNER JOIN recetas r on r.id = a.receta_id
+                                        INNER JOIN recetaingredientes ri on ri.receta_id = r.id
+                                        WHERE pedido_id = '{$id}'
+                                        group by ri.ingrediente_id");
+
+        $datainsumos = \DB::select("SELECT ri.insumo_id as ingrediente_id, ri.nombre, sum(ri.cantidad) as cantidad
+                                    FROM pedidoarticulos pa
+                                    INNER JOIN articulos a on a.id = pa.articulo_id
+                                    INNER JOIN recetas r on r.id = a.receta_id
+                                    INNER JOIN recetainsumos ri on ri.receta_id = r.id
+                                    WHERE pedido_id = '{$id}'
+                                    group by ri.insumo_id");
         return $data;
       
     }
