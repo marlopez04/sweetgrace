@@ -14,6 +14,8 @@ use App\ListaPrecio;
 use App\Pedido;
 use App\Cliente;
 use App\Stock;
+use App\StockIngrediente;
+use App\StockInsumo;
 
 
 class PedidosController extends Controller
@@ -135,12 +137,13 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $pedido = Pedido::find($id);
 
 
 
 // selecciono las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
-       $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre, sum(ri.cantidad) as cantidad
+       $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                         FROM pedidoarticulos pa
                                         INNER JOIN articulos a on a.id = pa.articulo_id
                                         INNER JOIN recetas r on r.id = a.receta_id
@@ -148,14 +151,38 @@ class PedidosController extends Controller
                                         WHERE pedido_id = '{$id}'
                                         group by ri.ingrediente_id");
 
-        $datainsumos = \DB::select("SELECT ri.insumo_id as ingrediente_id, ri.nombre, sum(ri.cantidad) as cantidad
+        $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                     FROM pedidoarticulos pa
                                     INNER JOIN articulos a on a.id = pa.articulo_id
                                     INNER JOIN recetas r on r.id = a.receta_id
                                     INNER JOIN recetainsumos ri on ri.receta_id = r.id
                                     WHERE pedido_id = '{$id}'
                                     group by ri.insumo_id");
-        return $data;
+
+        foreach ($dataingredientes as $ingrediente){
+            $stockingrediente = new StockIngrediente();
+            $stockingrediente->stock_id = $pedido->stock_id;
+            $stockingrediente->nombre = $ingrediente->nombre;
+            $stockingrediente->ingrediente_id = $ingrediente->ingrediente_id;
+            $stockingrediente->cantidad = $ingrediente->cantidad;
+            $stockingrediente->costo = 0;
+        }
+
+        foreach ($datainsumos as $insumo){
+            $stockinsumo = new StockInsumo();
+            $stockinsumo->stock_id = $pedido->stock_id;
+            $stockinsumo->nombre = $insumo->nombre;
+            $stockinsumo->insumo_id = $insumo->insumo_id;
+            $stockinsumo->cantidad = $insumo->cantidad;
+            $stockinsumo->costo = 0;
+
+        }
+
+        $stock = Stock::find($pedido->stock_id);
+        $stock->load('stockinsumos','stockingredientes');
+
+        dd($stock);
+
       
     }
 

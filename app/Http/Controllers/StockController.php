@@ -156,20 +156,20 @@ class StockController extends Controller
         foreach ($recetas as $recetaid){
             $receta = Receta::find($recetaid);
 //recupero los ingredientes
-            $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
+            $costoingredientes = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
                                 FROM recetaingredientes rin
                                 INNER JOIN ingredientes ing on ing.id = rin.ingrediente_id
-                                WHERE rin.receta_id = "{$recetaid}"
-                                GROUP BY rin.receta_id');
+                                WHERE rin.receta_id = '{$recetaid}'
+                                GROUP BY rin.receta_id");
 
 //        $costoingredientes = \DB::select($consulta);
 
 //recupero los insumos
-            $costoinsumos = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
+            $costoinsumos = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
                                             FROM recetainsumos rin
                                             INNER JOIN insumos ins on ins.id = rin.insumo_id
-                                            WHERE rin.receta_id = "{$recetaid}"
-                                            GROUP BY rin.receta_id');
+                                            WHERE rin.receta_id = '{$recetaid}'
+                                            GROUP BY rin.receta_id");
 
 //sumno los dos para sacar el costo total y grabarlo en la receta
 
@@ -177,31 +177,31 @@ class StockController extends Controller
 
         }
 
-        $recetas = \DB::select('SELECT rin.receta_id as receta_id
+        $recetas = \DB::select("SELECT rin.receta_id as receta_id
                                 FROM recetainsumos rin 
                                 WHERE rin.id IN 
                                 ( SELECT stockinsumos.insumo_id 
                                  FROM stock s 
                                  INNER JOIN stockinsumos on stockinsumos.stock_id = s.id
-                                 WHERE s.id = "{$id}")');
+                                 WHERE s.id = '{$id}')");
 
         foreach ($recetas as $recetaid){
             $receta = Receta::find($recetaid);
 //recupero los ingredientes
-            $costoingredientes = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
+            $costoingredientes = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
                                 FROM recetaingredientes rin
                                 INNER JOIN ingredientes ing on ing.id = rin.ingrediente_id
-                                WHERE rin.receta_id = "{$recetaid}"
-                                GROUP BY rin.receta_id');
+                                WHERE rin.receta_id = '{$recetaid}'
+                                GROUP BY rin.receta_id");
 
 //        $costoingredientes = \DB::select($consulta);
 
 //recupero los insumos
-            $costoinsumos = \DB::select('SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
+            $costoinsumos = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
                                             FROM recetainsumos rin
                                             INNER JOIN insumos ins on ins.id = rin.insumo_id
-                                            WHERE rin.receta_id = "{$recetaid}"
-                                            GROUP BY rin.receta_id');
+                                            WHERE rin.receta_id = '{$recetaid}'
+                                            GROUP BY rin.receta_id");
 
 //sumno los dos para sacar el costo total y grabarlo en la receta
 
