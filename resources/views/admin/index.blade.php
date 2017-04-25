@@ -22,42 +22,17 @@
 								<th>Editar</th>
 							</thead>
 							<tbody>
+								@foreach ($pedidos as $pedido)
 								<tr>
-									<td>Martin</td>
-									<td>12/10/2016</td>
-									<td>15/10/2016</td>
-									<td>3</td>
+									<td>{{$pedido->cliente->nombre}}</td>
+									<td>{{$pedido->created_at}}</td>
+									<td>{{$pedido->entrega}}</td>
+									<td>diferencia pendiente</td>
 									<td>
 										<a href="#" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 									</td>
 								</tr>
-									<tr>
-										<td>Laura</td>
-										<td>12/10/2016</td>
-										<td>15/10/2016</td>
-										<td>3</td>
-										<td>
-											<a href="#" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Griselda</td>
-										<td>12/10/2016</td>
-										<td>15/10/2016</td>
-										<td>3</td>
-										<td>
-											<a href="#" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Graciela</td>
-										<td>20/10/2016</td>
-										<td>25/10/2016</td>
-										<td>5</td>
-										<td>
-											<a href="#" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-										</td>
-									</tr>
+								@endforeach
 							</tbody>
 						</table>
 						</div>
@@ -68,45 +43,41 @@
 	</div>
 
 
+<!-- insumos inicio -->
+@foreach ($insumos as $insumo)
+	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#B393B5">
+		<div class="content-top-1">
+			<div class="col-md-6 top-content">
+				<h5>{{$insumo->nombre}}</h5>
+				<label>{{$insumo->cantidad}}</label>
+			</div>
+			<div class="col-md-6 top-content1">	   
+				<div id="demo-pie-1" class="pie-title-center" data-percent="{{($insumo->cantidad * 100)/ $insumo->max}}"> <span class="pie-value">{{($insumo->cantidad * 100)/ $insumo->max}}%</span> </div>
+			</div>
+				<div class="clearfix"> </div>
+		</div>
+	</div>
+@endforeach
 
-<div class="col-md-5 skil">
-	<div class="content-top-1">
-		<div class="col-md-6 top-content">
-			<h5>Harina</h5>
-			<label>8761</label>
+@foreach ($ingredientes as $ingrediente)
+	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#FFB347">
+		<div class="content-top-1">
+			<div class="col-md-6 top-content">
+				<h5>{{$ingrediente->nombre}}</h5>
+				<label>{{$ingrediente->cantidad}}</label>
+			</div>
+			<div class="col-md-6 top-content1">	   
+				<div id="demo-pie-1" class="pie-title-center" data-percent="{{($ingrediente->cantidad * 100)/ $ingrediente->max}}"> <span class="pie-value">{{($ingrediente->cantidad * 100)/ $ingrediente->max}}%</span> </div>
+			</div>
+			 <div class="clearfix"> </div>
 		</div>
-		<div class="col-md-6 top-content1">	   
-			<div id="demo-pie-1" class="pie-title-center" data-percent="25"> <span class="pie-value">25%</span> </div>
-		</div>
-			<div class="clearfix"> </div>
 	</div>
-	<div class="content-top-1">
-		<div class="col-md-6 top-content">
-			<h5>Chocolate Negro</h5>
-			<label>6295</label>
-		</div>
-		<div class="col-md-6 top-content1">	   
-			<div id="demo-pie-2" class="pie-title-center" data-percent="50"> <span class="pie-value">50%</span> </div>
-		</div>
-		 <div class="clearfix"> </div>
-	</div>
-	<div class="content-top-1">
-		<div class="col-md-6 top-content">
-			<h5>Chocolate Blanco</h5>
-			<label>3401</label>
-		</div>
-		<div class="col-md-6 top-content1">	   
-			<div id="demo-pie-3" class="pie-title-center" data-percent="75"> <span class="pie-value">75%</span> </div>
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-</div>
-
+@endforeach
 
 <script type="text/javascript">
 
         $(document).ready(function () {
-            $('#demo-pie-1').pieChart({
+            $('.pie-title-center').pieChart({
                 barColor: '#3bb2d0',
                 trackColor: '#eee',
                 lineCap: 'round',
@@ -128,6 +99,26 @@
 
             $('#demo-pie-3').pieChart({
                 barColor: '#ed6498',
+                trackColor: '#eee',
+                lineCap: 'square',
+                lineWidth: 8,
+                onStep: function (from, to, percent) {
+                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+                }
+            });
+
+            $('#demo-pie-4').pieChart({
+                barColor: 'red',
+                trackColor: '#eee',
+                lineCap: 'square',
+                lineWidth: 8,
+                onStep: function (from, to, percent) {
+                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
+                }
+            });
+
+            $('#demo-pie-5').pieChart({
+                barColor: 'green',
                 trackColor: '#eee',
                 lineCap: 'square',
                 lineWidth: 8,

@@ -14,6 +14,7 @@ class IngredienteSeeder extends Seeder
         DB::table('ingredientes')->insert([
 			'nombre'       => 'harina',
 			'cantidad'     => '3000',
+			'max'          => '10000',
 			'stockcritico' => '600',
 			'unidad'       => '100',
 			'costo_u'      => '0.5'
@@ -22,15 +23,17 @@ class IngredienteSeeder extends Seeder
         DB::table('ingredientes')->insert([
 			'nombre'       => 'huevo',
 			'cantidad'     => '60',
+			'max'          => '100',
 			'stockcritico' => '20',
 			'unidad'       => '1',
 			'costo_u'      => '0.3'
 			]);
 
         DB::table('ingredientes')->insert([
-			'nombre'     => 'azucar',
+			'nombre'       => 'azucar',
 			'cantidad'     => '3000',
-			'stockcritico'     => '600',
+			'max'          => '10000',
+			'stockcritico' => '600',
 			'unidad'       => '100',
 			'costo_u'      => '0.3'
 			]);

@@ -14,6 +14,7 @@ class InsumoSeeder extends Seeder
         DB::table('insumos')->insert([
 			'nombre'       => 'tartera baja',
 			'cantidad'     => '100',
+			'max'          => '1000',
 			'stockcritico' => '30',
 			'unidad'       => '1',
 			'costo_u'      => '1.2'
@@ -22,6 +23,7 @@ class InsumoSeeder extends Seeder
         DB::table('insumos')->insert([
 			'nombre'       => 'moños',
 			'cantidad'     => '100',
+			'max'          => '1000',
 			'stockcritico' => '30',
 			'unidad'       => '1',
 			'costo_u'      => '1.5'
@@ -30,6 +32,7 @@ class InsumoSeeder extends Seeder
         DB::table('insumos')->insert([
 			'nombre'       => 'bolsa camiseta',
 			'cantidad'     => '100',
+			'max'          => '1000',
 			'stockcritico' => '30',
 			'unidad'       => '1',
 			'costo_u'      => '1.6'

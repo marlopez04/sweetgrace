@@ -41,9 +41,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.users.destroy'
 	]);
 
+/*
 	Route::get('/',['as' => 'admin.index', function () {
     	return view('admin.index');
 	}]);
+*/
+
+	Route::get('/', [
+	'as' => 'admin.index',
+	'uses' => 'AdminController@index'
+	]);
 
 	Route::resource('insumos', 'InsumosController');
 	Route::get('insumos/{id}/destroy',[

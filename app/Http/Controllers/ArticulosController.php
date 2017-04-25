@@ -21,6 +21,9 @@ class ArticulosController extends Controller
     public function index()
     {
         $articulos = Articulo::orderBy('id', 'DESC')->paginate(8);
+        $categorias = Categoria::all();
+        $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
+
 //        $articulos = Articulo::all();
         $articulos->load('categoria', 'user', 'listaprecio', 'receta');
 /*        
@@ -32,7 +35,9 @@ class ArticulosController extends Controller
 */
 //        dd($articulos);
         return view('admin.articulos.index')
-            ->with('articulos', $articulos);
+            ->with('articulos', $articulos)
+            ->with('listasprecios', $listasprecios)
+            ->with('categorias', $categorias);
     }
 
     /**
@@ -109,11 +114,11 @@ class ArticulosController extends Controller
     public function edit($id)
     {
         $articulo = Articulo::find($id);
-        $articulos->load('categoria', 'user', 'listaprecio');
+        $articulo->load('categoria', 'user', 'listaprecio');
         $categorias = Categoria::orderBy('nombre', 'ASC')->lists('nombre', 'id');
         $listasprecios = ListaPrecio::orderBy('id', 'DECS')->lists('nombre', 'id');
 
-        return view('admin.articulos.create')
+        return view('admin.articulos.edit')
             ->with('articulo', $articulo)
             ->with('categorias', $categorias)
             ->with('listasprecios', $listasprecios);

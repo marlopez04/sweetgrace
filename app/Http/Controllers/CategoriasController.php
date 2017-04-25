@@ -83,41 +83,34 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
+// agrego una variable para saber de donde proviene la peticion
+// "tipo" me define si tiene que devolver para (pedido.create = 1, articulos.index = 2)
+        $tipo = $_GET['tipo'];
+
         $id_lista = $_GET['lista_id'];
         $id_categoria = $id;
 
         $listaprecio = ListaPrecio::find($id_lista);
-//        dd($id_lista);
-        //dd($id_lista + " " + $id_categoria );
-//
 
         $articulos = Articulo::where('lista_precio_id',$id_lista)
                               ->where('categoria_id',$id_categoria)->get();
 
-/*
-        $articulos = \DB::select("SELECT nombre, imagen, precio
-                                 FROM articulos 
-                                 WHERE lista_precio_id = '{$id_lista}'
-                                 AND categoria_id = '{$id_categoria}' ");
-
-*/
-
-//        $articulos = Categoria::find($id)->articulos;
-//
-        $articulos->load('listaprecio');
-//        dd($articulos);
+        $articulos->load('listaprecio', 'receta', 'categoria');
 
         $categoria = Categoria::find($id);
 
-        $html = view('admin.pedidos.partials.articulos')
-            ->with('articulos', $articulos)
-            ->with('categoria', $categoria);
+        if($tipo == 1){
+            $html = view('admin.pedidos.partials.articulos')
+                ->with('articulos', $articulos)
+                ->with('categoria', $categoria);
+        }else{
+            $html = view('admin.articulos.partials.articulos')
+                ->with('articulos', $articulos)
+                ->with('categoria', $categoria);
+        }
 
-//        dd($html);
-//        var_export($html);
-            return $html;
 
-//        return response->json(['html' => $html]);
+        return $html;
     }
 
     /**
@@ -143,13 +136,6 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, $id)
     {   
-
-//$categoria      = Categoria::find($id);
-//$imagencategoria   = $categoria->imagenescategorias;
-//$imagencategoriaId = $imagencategoria->$nombre;
-
-        //$categoria = Categoria::find($id)->imagenescategorias;
-//        dd($imagencategoria);
 
         $categoria = Categoria::find($id);
 

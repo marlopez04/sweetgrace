@@ -128,7 +128,7 @@
               <tbody>
                   <tr>
                     <td>{{ $pedido->cliente->nombre }}</td>
-                    <td>{!! Form::date('entrega',null,['class'=>'form-control', 'required'])!!}</td>
+                    <td>{!! Form::date('entrega',$pedido->entrega,['class'=>'form-control', 'required'])!!}</td>
                     <td>{{ $pedido->user->name }}</td>
                     <td>{{ $pedido->estado }}</td>
                     
@@ -340,9 +340,11 @@ function borraritem2(btn_danger){
                     var form = $('#form-categoria');
                     var url = form.attr('action').replace(':CATEGORIA_ID', id_categoria);
                     var token = form.serialize();
+                    var tipo = 1;
                       data = {
                         token: token,
-                        lista_id: lista_id
+                        lista_id: lista_id,
+                        tipo: tipo
                       };
 
 

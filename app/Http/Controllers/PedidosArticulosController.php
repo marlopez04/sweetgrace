@@ -77,6 +77,7 @@ class PedidosArticulosController extends Controller
         }
 
         $pedido->importe = $importepedido;
+        $pedido->estado = 'pendiente';
         $pedido->save();
 
 //fin suma de los importes
@@ -137,6 +138,7 @@ class PedidosArticulosController extends Controller
         }
 
         $pedido->importe = $importepedido;
+        $pedido->estado = 'pendiente';
         $pedido->save();
 
 //fin suma de los importes

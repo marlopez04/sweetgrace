@@ -67,6 +67,11 @@ class PedidosController extends Controller
      */
     public function show($id)
     {
+        //por ahora redirijo hasta que haga una vista pedido.show
+        return redirect()->route('admin.pedidos.edit', $id);
+
+//vieja forma de crear el pedido INICIO
+/*
 
         // 1° crear el stock
         // 2° crear el pedido y asociar el stock creado
@@ -104,6 +109,8 @@ class PedidosController extends Controller
             ->with('pedido', $nuevopedido);
 
         return $html;
+*/
+//vieja forma de crear el pedido FIN
 
     }
 
@@ -137,8 +144,27 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //recupero el pedido
         $pedido = Pedido::find($id);
 
+        //grabo el stock_id en una variable
+        $stockviejo_id = $pedido->stock_id;
+
+        //creo un nuevo stock
+        $nuevostock = new Stock();
+        $nuevostock->tipo = 'negativo';
+        $nuevostock->user_id = \Auth::user()->id;
+        $nuevostock->save();
+
+        //asigno el nuevo stock al pedido        
+        $pedido->stock_id = $nuevostock->id;
+        $pedido->entrega = $request->entrega;
+        $pedido->estado = 'confirmado';
+        $pedido->save();
+
+        //borro el viejo stock
+        $stock = Stock::find($stockviejo_id);
+        $stock->delete();
 
 
 // selecciono las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
@@ -166,6 +192,8 @@ class PedidosController extends Controller
             $stockingrediente->ingrediente_id = $ingrediente->ingrediente_id;
             $stockingrediente->cantidad = $ingrediente->cantidad;
             $stockingrediente->costo = 0;
+            $stockingrediente->save();
+
         }
 
         foreach ($datainsumos as $insumo){
@@ -175,13 +203,16 @@ class PedidosController extends Controller
             $stockinsumo->insumo_id = $insumo->insumo_id;
             $stockinsumo->cantidad = $insumo->cantidad;
             $stockinsumo->costo = 0;
+            $stockinsumo->save();
 
         }
 
         $stock = Stock::find($pedido->stock_id);
         $stock->load('stockinsumos','stockingredientes');
 
-        dd($stock);
+        $idnuevo = $pedido->id;
+
+        return redirect()->route('admin.pedidos.edit', $idnuevo);
 
       
     }
@@ -213,6 +244,7 @@ class PedidosController extends Controller
         //1°
         //arma una variable para grabar un stock nuevo
         $nuevostock = new Stock();
+        $nuevostock->tipo = 'negativo';
         $nuevostock->user_id = \Auth::user()->id;
         $nuevostock->save();
 
