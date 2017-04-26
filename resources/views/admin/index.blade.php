@@ -52,7 +52,15 @@
 				<label>{{$insumo->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   
-				<div id="demo-pie-1" class="pie-title-center" data-percent="{{($insumo->cantidad * 100)/ $insumo->max}}"> <span class="pie-value">{{($insumo->cantidad * 100)/ $insumo->max}}%</span> </div>
+				@if( (($insumo->cantidad * 100)/ $insumo->max) >= 70 )
+					<div id="demo-pie-1" class="pie-title-center verde" data-percent="{{($insumo->cantidad * 100)/ $insumo->max}}"> <span class="pie-value">{{($insumo->cantidad * 100)/ $insumo->max}}%</span> </div>
+				@else
+					@if( (($insumo->cantidad * 100)/ $insumo->max) > 30 )
+						<div id="demo-pie-1" class="pie-title-center naranja" data-percent="{{($insumo->cantidad * 100)/ $insumo->max}}"> <span class="pie-value">{{($insumo->cantidad * 100)/ $insumo->max}}%</span> </div>
+					@else
+						<div id="demo-pie-1" class="pie-title-center rojo" data-percent="{{($insumo->cantidad * 100)/ $insumo->max}}"> <span class="pie-value">{{($insumo->cantidad * 100)/ $insumo->max}}%</span> </div>
+					@endif
+				@endif
 			</div>
 				<div class="clearfix"> </div>
 		</div>
@@ -67,7 +75,15 @@
 				<label>{{$ingrediente->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   
-				<div id="demo-pie-1" class="pie-title-center" data-percent="{{($ingrediente->cantidad * 100)/ $ingrediente->max}}"> <span class="pie-value">{{($ingrediente->cantidad * 100)/ $ingrediente->max}}%</span> </div>
+				@if( (($ingrediente->cantidad * 100)/ $ingrediente->max) >= 70 )
+					<div id="demo-pie-1" class="pie-title-center verde" data-percent="{{($ingrediente->cantidad * 100)/ $ingrediente->max}}"> <span class="pie-value">{{($ingrediente->cantidad * 100)/ $ingrediente->max}}%</span> </div>
+				@else
+					@if( (($ingrediente->cantidad * 100)/ $ingrediente->max) > 30 )
+						<div id="demo-pie-1" class="pie-title-center naranja" data-percent="{{($ingrediente->cantidad * 100)/ $ingrediente->max}}"> <span class="pie-value">{{($ingrediente->cantidad * 100)/ $ingrediente->max}}%</span> </div>
+					@else
+						<div id="demo-pie-1" class="pie-title-center rojo" data-percent="{{($ingrediente->cantidad * 100)/ $ingrediente->max}}"> <span class="pie-value">{{($ingrediente->cantidad * 100)/ $ingrediente->max}}%</span> </div>
+					@endif
+				@endif
 			</div>
 			 <div class="clearfix"> </div>
 		</div>
@@ -77,8 +93,8 @@
 <script type="text/javascript">
 
         $(document).ready(function () {
-            $('.pie-title-center').pieChart({
-                barColor: '#3bb2d0',
+            $('.pie-title-center.rojo').pieChart({
+                barColor: '#ff3333',
                 trackColor: '#eee',
                 lineCap: 'round',
                 lineWidth: 8,
@@ -87,46 +103,25 @@
                 }
             });
 
-            $('#demo-pie-2').pieChart({
-                barColor: '#fbb03b',
+            $('.pie-title-center.verde').pieChart({
+                barColor: '#00cc00',
                 trackColor: '#eee',
-                lineCap: 'butt',
+                lineCap: 'round',
                 lineWidth: 8,
                 onStep: function (from, to, percent) {
                     $(this.element).find('.pie-value').text(Math.round(percent) + '%');
                 }
             });
 
-            $('#demo-pie-3').pieChart({
-                barColor: '#ed6498',
+            $('.pie-title-center.naranja').pieChart({
+                barColor: '#ff8533',
                 trackColor: '#eee',
-                lineCap: 'square',
+                lineCap: 'round',
                 lineWidth: 8,
                 onStep: function (from, to, percent) {
                     $(this.element).find('.pie-value').text(Math.round(percent) + '%');
                 }
             });
-
-            $('#demo-pie-4').pieChart({
-                barColor: 'red',
-                trackColor: '#eee',
-                lineCap: 'square',
-                lineWidth: 8,
-                onStep: function (from, to, percent) {
-                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
-                }
-            });
-
-            $('#demo-pie-5').pieChart({
-                barColor: 'green',
-                trackColor: '#eee',
-                lineCap: 'square',
-                lineWidth: 8,
-                onStep: function (from, to, percent) {
-                    $(this.element).find('.pie-value').text(Math.round(percent) + '%');
-                }
-            });
-
            
         });
 

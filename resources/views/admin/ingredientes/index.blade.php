@@ -19,6 +19,9 @@
 								<th>Nombre</th>
 								<th>Cantidad</th>
 								<th>StockCritico</th>
+								<th>Unidad</th>
+								<th>Costo/U</th>
+								<th>Max</th>
 								<th>Editar</th>
 							</thead>
 							<tbody>
@@ -29,6 +32,7 @@
 										<td>{{ $ingrediente->stockcritico }}</td>
 										<td>{{ $ingrediente->unidad }}</td>
 										<td>{{ $ingrediente->custo_u }}</td>
+										<td>{{ $ingrediente->max }}</td>
 										<td>
 										<a href="{{ route('admin.ingredientes.edit', $ingrediente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

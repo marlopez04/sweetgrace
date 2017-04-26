@@ -17,9 +17,11 @@
 						<table class="table table-striped">
 							<thead>
 								<th>Nombre</th>
-								<th>Costo</th>
 								<th>Cantidad</th>
 								<th>StockCritico</th>
+								<th>Unidad</th>
+								<th>Costo/U</th>
+								<th>Max</th>
 								<th>Editar</th>
 							</thead>
 							<tbody>
@@ -30,6 +32,7 @@
 										<td>{{ $insumo->stockcritico }}</td>
 										<td>{{ $insumo->unidad }}</td>
 										<td>{{ $insumo->costo_u }}</td>
+										<td>{{ $insumo->max }}</td>
 										<td>
 										<a href="{{ route('admin.insumos.edit', $insumo->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 						

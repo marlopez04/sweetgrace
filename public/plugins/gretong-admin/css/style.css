@@ -1496,6 +1496,24 @@ h3.sub-tittle {
   position: relative;
   text-align: center;
 }
+
+/* AGREGADO!!!!!*/
+.rojo {
+  background: #000;
+  background-color: #000;
+}
+
+.verde {
+  background: green;
+}
+  
+.naranja {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+/* AGREGADO!!!!!*/
 .pie-value {
   display: block;
   position: absolute;

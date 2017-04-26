@@ -8,6 +8,7 @@ use App\Insumo;
 use App\Ingrediente;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -22,8 +23,19 @@ class AdminController extends Controller
         $pedidos->load('cliente');
         $pedidos->load('user');
 
+/*
         $insumos = Insumo::all();
         $ingredientes = Ingrediente::all();
+
+        $insumos = Insumo::where('cantidad','<','stockcritico')->get();
+
+        $insumos = \DB::table('insumos')->where('cantidad',"<", 'stockcritico')->get();
+
+*/
+        $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
+
+        $ingredientes = \DB::select("SELECT * FROM ingredientes WHERE cantidad <= stockcritico");
+
 
         return view('admin.index')
             ->with('pedidos', $pedidos)

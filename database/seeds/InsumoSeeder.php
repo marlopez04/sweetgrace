@@ -15,25 +15,25 @@ class InsumoSeeder extends Seeder
 			'nombre'       => 'tartera baja',
 			'cantidad'     => '100',
 			'max'          => '1000',
-			'stockcritico' => '30',
+			'stockcritico' => '350',
 			'unidad'       => '1',
 			'costo_u'      => '1.2'
 			]);
 
         DB::table('insumos')->insert([
 			'nombre'       => 'moños',
-			'cantidad'     => '100',
+			'cantidad'     => '450',
 			'max'          => '1000',
-			'stockcritico' => '30',
+			'stockcritico' => '350',
 			'unidad'       => '1',
 			'costo_u'      => '1.5'
 			]);
 
         DB::table('insumos')->insert([
 			'nombre'       => 'bolsa camiseta',
-			'cantidad'     => '100',
+			'cantidad'     => '710',
 			'max'          => '1000',
-			'stockcritico' => '30',
+			'stockcritico' => '350',
 			'unidad'       => '1',
 			'costo_u'      => '1.6'
 			]);
