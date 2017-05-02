@@ -14,7 +14,7 @@ class AddPedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('entrega');
+            $table->timestamp('entrega');
             $table->double('importe', 10, 2);
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes');

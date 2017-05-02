@@ -15,22 +15,36 @@
 					<div class="gantt">
 						<table class="table table-striped">
 							<thead>
-								<th>Cliente</th>
+								<th>Editar /Cliente</th>
 								<th>Fecha pedido</th>
 								<th>Fecha entrega</th>
 								<th>Dias restantes</th>
-								<th>Editar</th>
+								<th>Importe</th>
+								<th>Cobrado</th>
+								<th>Debe</th>
+								<th>Estado</th>
+								<th>Guardar</th>
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
 								<tr>
-									<td>{{$pedido->cliente->nombre}}</td>
-									<td>{{$pedido->created_at}}</td>
-									<td>{{$pedido->entrega}}</td>
-									<td>diferencia pendiente</td>
 									<td>
-										<a href="#" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+										<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
+
+										{{$pedido->cliente->nombre}}
 									</td>
+									<td>
+									{{ $pedido->created_at->format('d/m/Y') }}
+									</td>
+									<td>
+									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }}
+									</td>
+									<td>{{ $pedido->created_at->diffInDays(Carbon\Carbon::parse($pedido->entrega)) }}</td>
+									<td>${{$pedido->importe}}</td>
+									<td>$0</td>
+									<td style="color:#ff3333">${{$pedido->importe}}</td>
+									<td>{!! Form::select('type', ['confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
+									<td><a href="#" class="btn btn-warning">Guardar</a></td>
 								</tr>
 								@endforeach
 							</tbody>

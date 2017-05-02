@@ -136,7 +136,6 @@
                     <td>{{ $cliente->telefono }}</td>
                     <td>{{ $cliente->direccion }}</td>
                     <td>
-                    <a href="#" class="btn-warning" data-id="{{ $cliente->id}}"> <span class="glyphicon glyphicon-wrench"></span></a>
                     <a href="{{ route('admin.pedidos.nuevo', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
                     </td>
                   </tr>

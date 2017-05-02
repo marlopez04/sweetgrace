@@ -15,8 +15,8 @@ class AddListapreciosTable extends Migration
         Schema::create('listaprecios', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->date('vigencia_desde');
-            $table->date('vigencia_hasta');
+            $table->timestamp('vigencia_desde');
+            $table->timestamp('vigencia_hasta');
             $table->timestamps();
         });
     }

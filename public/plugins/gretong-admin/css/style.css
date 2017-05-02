@@ -1499,18 +1499,15 @@ h3.sub-tittle {
 
 /* AGREGADO!!!!!*/
 .rojo {
-  background: #000;
-  background-color: #000;
+  background: white;
 }
 
 .verde {
-  background: green;
+  background: white;
 }
   
 .naranja {
-  display: inline-block;
-  position: relative;
-  text-align: center;
+  background: white;
 }
 
 /* AGREGADO!!!!!*/

@@ -16,6 +16,8 @@ use App\Cliente;
 use App\Stock;
 use App\StockIngrediente;
 use App\StockInsumo;
+use App\Ingrediente;
+use App\Insumo;
 
 
 class PedidosController extends Controller
@@ -147,6 +149,8 @@ class PedidosController extends Controller
         //recupero el pedido
         $pedido = Pedido::find($id);
 
+        if ($pedido->estado == 'pendiente'){
+
         //grabo el stock_id en una variable
         $stockviejo_id = $pedido->stock_id;
 
@@ -214,6 +218,93 @@ class PedidosController extends Controller
 
         return redirect()->route('admin.pedidos.edit', $idnuevo);
 
+        }else{
+
+            $pedido->estado = $request->estado;
+            $pedido->save();
+
+            if($pedido->estado == 'entregado'){
+
+                //se confirma el STOCK que posee el pedido
+
+        //cargo todo el stock y le cambio el estado a confirmado        
+                $stock = Stock::find($pedido->stock_id);
+                $stock->estado = 'confirmado';
+                $stock->save();
+                $stock->load('stockingredientes', 'stockinsumos');
+
+
+        //cargo los ingredientes/insumos del stock y actualizo los costos y cantidades
+                foreach ($stock->stockingredientes as $stockingrediente) {
+
+                    $ingrediente = Ingrediente::find($stockingrediente->ingrediente_id);
+
+                    if ($stockingrediente->tipo == 'ingreso'){
+                        $ingrediente->cantidad = $ingrediente->cantidad + $stockingrediente->cantidad;
+                        if($stockingrediente->costo_u <> 0 ){
+                            $ingrediente->costo_u = $stockingrediente->costo_u;
+                            $ingrediente->unidad = $stockingrediente->unidad;
+                        }
+                    }else{
+                        $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
+                    }
+
+                    $ingrediente->save();
+                }
+
+                foreach ($stock->stockinsumos as $stockinsumo) {
+
+                    $insumo = Insumo::find($stockinsumo->insumo_id);
+
+                    if ($stockinsumo->tipo == 'ingreso'){
+                        $insumo->cantidad = $insumo->cantidad + $stockinsumo->cantidad;
+                        if($stockinsumo->costo_u <> 0){
+                            $insumo->costo_u = $stockinsumo->costo_u;
+                            $insumo->unidad = $stockinsumo->unidad;
+                        }
+                    }else{
+                        $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
+                    }
+
+                    $insumo->save();
+
+                } //fin foreach stockinsumos
+
+
+                $pedidos = Pedido::all();
+                $pedidos->load('cliente');
+                $pedidos->load('user');
+
+                $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
+
+                $ingredientes = \DB::select("SELECT * FROM ingredientes WHERE cantidad <= stockcritico");
+
+
+                return view('admin.index')
+                    ->with('pedidos', $pedidos)
+                    ->with('insumos', $insumos)
+                    ->with('ingredientes', $ingredientes);
+
+
+            } //fin de if control de estado en ENTREGADO
+
+                $pedidos = Pedido::all();
+                $pedidos->load('cliente');
+                $pedidos->load('user');
+
+                $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
+
+                $ingredientes = \DB::select("SELECT * FROM ingredientes WHERE cantidad <= stockcritico");
+
+
+                return view('admin.index')
+                    ->with('pedidos', $pedidos)
+                    ->with('insumos', $insumos)
+                    ->with('ingredientes', $ingredientes);
+
+
+        } //fin de primer if control de estado en PENDIENTE
+
       
     }
 
@@ -269,6 +360,33 @@ class PedidosController extends Controller
 //        return redirect()->route('admin.recetas.edit', $id);
 //            ->with('pedido', $nuevopedido)
 //            ->with('categorias', $categorias);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function guardar($id)
+    {
+        $pedido = Pedido::find($id);
+
+        switch($pedido->estado){
+            case 'confirmado';
+            
+                $html = view('admin.precios.partials.listavieja')
+                   ->with('listaprecios', $listaprecios);
+
+                 return $html;
+
+            break;
+
+        if($pedido->estado == ''){
+
+        }
+
     }
 
 

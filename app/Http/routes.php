@@ -103,6 +103,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.pedidos.nuevo'
 	]);
 
+	Route::get('pedidos/{id}/guardar',[
+		'uses' => 'PedidosController@nuevo',
+		'as'   => 'admin.pedidos.guardar'
+	]);
+
 	Route::resource('categorias', 'CategoriasController');
 	Route::get('categorias/{id}/destroy',[
 		'uses' => 'CategoriasController@destroy',
