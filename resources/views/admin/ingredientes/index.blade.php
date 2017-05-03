@@ -13,6 +13,7 @@
 				<!-- status -->
 				<div class="contain">									
 					<div class="gantt">
+						<a href="{{ route('admin.ingredientes.create') }}" class="btn btn-info">Registrar nuevo ingrediente</a>
 						</div>
 				</div>
 			</div>
@@ -24,7 +25,9 @@
 	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#FFB347">
 		<div class="content-top-1">
 			<div class="col-md-6 top-content">
-				<h5>{{$ingrediente->nombre}}</h5>
+				<h5>
+				<a href="{{ route('admin.ingredientes.edit', $ingrediente->id) }}"> {{$ingrediente->nombre}}</a>
+				</h5>
 				<label>{{$ingrediente->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   

@@ -193,6 +193,7 @@ class PedidosController extends Controller
             $stockingrediente = new StockIngrediente();
             $stockingrediente->stock_id = $pedido->stock_id;
             $stockingrediente->nombre = $ingrediente->nombre;
+            $stockingrediente->tipo = 'egreso';
             $stockingrediente->ingrediente_id = $ingrediente->ingrediente_id;
             $stockingrediente->cantidad = $ingrediente->cantidad;
             $stockingrediente->costo = 0;
@@ -204,6 +205,7 @@ class PedidosController extends Controller
             $stockinsumo = new StockInsumo();
             $stockinsumo->stock_id = $pedido->stock_id;
             $stockinsumo->nombre = $insumo->nombre;
+            $stockinsumo->tipo = 'egreso';
             $stockinsumo->insumo_id = $insumo->insumo_id;
             $stockinsumo->cantidad = $insumo->cantidad;
             $stockinsumo->costo = 0;
@@ -221,6 +223,7 @@ class PedidosController extends Controller
         }else{
 
             $pedido->estado = $request->estado;
+            $pedido->entrega = $request->entrega;
             $pedido->save();
 
             if($pedido->estado == 'entregado'){
@@ -372,7 +375,7 @@ class PedidosController extends Controller
     public function guardar($id)
     {
         $pedido = Pedido::find($id);
-
+/*
         switch($pedido->estado){
             case 'confirmado';
             
@@ -386,7 +389,7 @@ class PedidosController extends Controller
         if($pedido->estado == ''){
 
         }
-
+*/
     }
 
 

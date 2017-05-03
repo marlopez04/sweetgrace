@@ -13,6 +13,7 @@
 				<!-- status -->
 				<div class="contain">									
 					<div class="gantt">
+						<a href="{{ route('admin.insumos.create') }}" class="btn btn-info">Registrar nuevo insumo</a>
 						</div>
 				</div>
 			</div>
@@ -25,7 +26,7 @@
 	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#B393B5">
 		<div class="content-top-1">
 			<div class="col-md-6 top-content">
-				<h5>{{$insumo->nombre}}</h5>
+				<h5><a href="{{ route('admin.insumos.edit', $insumo->id) }}"> {{$insumo->nombre}}</a></h5>
 				<label>{{$insumo->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   

@@ -128,7 +128,7 @@
               <tbody>
                   <tr>
                     <td>{{ $pedido->cliente->nombre }}</td>
-                    <td>{!! Form::date('entrega',$pedido->entrega,['class'=>'form-control', 'required'])!!}</td>
+                    <td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
                     <td>{{ $pedido->user->name }}</td>
                     <td>{{ $pedido->estado }}</td>
                     
@@ -290,13 +290,17 @@ function borraritem2(btn_danger){
     console.log(data);
     $.get(url, data, function(items){
 
+/*
            $('#itemcontent').hide();                                          
            $('#items2').hide
+*/
 
+          $('#items2').hide();
+          $('#items').fadeOut().html(items).fadeIn();
+/*
            $('#items').fadeOut().html(items).fadeIn();
-
-           $('#itemcontent').show();
-
+           $('#items').show();
+*/
            });
   };
 

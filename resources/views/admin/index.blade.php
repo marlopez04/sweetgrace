@@ -27,7 +27,18 @@
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
-								<tr>
+								{!! Form::open(['route' =>['admin.pedidos.update', $pedido], 'method' => 'PUT', 'files' => true]) !!}
+								@if ($pedido->estado == 'confirmado')
+									<tr class="table-warning">
+								@else
+									@if ($pedido->estado == 'a entregar')
+										<tr class="table-success">
+									@else
+										<tr class="table-danger">
+									@endif
+
+								@endif
+								
 									<td>
 										<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
 
@@ -36,19 +47,20 @@
 									<td>
 									{{ $pedido->created_at->format('d/m/Y') }}
 									</td>
-									<td>
-									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }}
+<!--									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }} -->
+									<td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
 									</td>
 									<td>{{ $pedido->created_at->diffInDays(Carbon\Carbon::parse($pedido->entrega)) }}</td>
 									<td>${{$pedido->importe}}</td>
 									<td>$0</td>
 									<td style="color:#ff3333">${{$pedido->importe}}</td>
-									<td>{!! Form::select('type', ['confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
-									<td><a href="#" class="btn btn-warning">Guardar</a></td>
+									<td>{!! Form::select('estado', ['confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
+									<td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
+						{!!Form::close()!!}
 						</div>
 				</div>
 			</div>
@@ -62,7 +74,7 @@
 	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#B393B5">
 		<div class="content-top-1">
 			<div class="col-md-6 top-content">
-				<h5>{{$insumo->nombre}}</h5>
+				<h5><a href="{{ route('admin.insumos.edit', $insumo->id) }}"> {{$insumo->nombre}}</a></h5>
 				<label>{{$insumo->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   
@@ -85,7 +97,7 @@
 	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#FFB347">
 		<div class="content-top-1">
 			<div class="col-md-6 top-content">
-				<h5>{{$ingrediente->nombre}}</h5>
+				<h5><a href="{{ route('admin.ingredientes.edit', $ingrediente->id) }}"> {{$ingrediente->nombre}}</a></h5>
 				<label>{{$ingrediente->cantidad}}</label>
 			</div>
 			<div class="col-md-6 top-content1">	   

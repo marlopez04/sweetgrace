@@ -40,13 +40,18 @@ function borraritem(btn_danger){
     };
     console.log(data);
     $.get(url, data, function(items){
-
-            $('#itemcontent').hide();                                         
-
+/*
+            $('#itemcontent').hide();
+            $('#items2').hide();
+            $('#items').hide();                                       
+*/
+          $('#items2').hide();
+          $('#items').fadeOut().html(items).fadeIn();
+          
+/*
            $('#items').fadeOut().html(items).fadeIn();
-
            $('#itemcontent').show();
-
+*/
            });
   };
 
