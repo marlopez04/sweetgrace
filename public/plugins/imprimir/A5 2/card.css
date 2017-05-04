@@ -1,0 +1,48 @@
+@page {
+    /* dimensions for the whole page */
+    size: A5;
+    
+    margin: 0;
+}
+
+html {
+    /* off-white, so body edge is visible in browser */
+    background: #eee;
+}
+
+body {
+    /* A5 dimensions */
+    height: 210mm;
+    width: 148.5mm;
+
+    margin: 0;
+}
+
+.column {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+}
+
+.container {
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+header, footer, nav, article {
+display: block;
+}
+
+.floatLeftImageBorder {
+float: left;
+border: 3px solid #999;
+}
+
+footer {
+}
+
+header{
+}
