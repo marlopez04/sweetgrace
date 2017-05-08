@@ -13,7 +13,7 @@
 				<!-- status -->
 				<div class="contain">									
 					<div class="gantt">
-						<table class="table table-striped">
+						<table class="table table-hover table-striped">
 							<thead>
 								<th>Editar /Cliente</th>
 								<th>Fecha pedido</th>

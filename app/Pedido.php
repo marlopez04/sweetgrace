@@ -8,7 +8,7 @@ class Pedido extends Model
 {
 
     protected $table = "pedidos";
-    protected $fillable = ['entrega','importe','cliente_id','user_id','estado','stock_id'];
+    protected $fillable = ['entrega','importe','cliente_id','user_id','estado','movimiento_id','stock_id'];
 
 	public function pedidoarticulos()
     {
@@ -34,5 +34,11 @@ class Pedido extends Model
     {
     	return $this->hasMany('App\Cobranza');
     }
+
+    public function movimiento()
+    {
+        return $this->belongsTo('App\Movimiento', 'movimiento_id', 'id');
+    }
+
 
 }

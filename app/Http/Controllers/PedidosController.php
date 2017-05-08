@@ -18,6 +18,7 @@ use App\StockIngrediente;
 use App\StockInsumo;
 use App\Ingrediente;
 use App\Insumo;
+use App\Movimiento;
 
 
 class PedidosController extends Controller
@@ -148,6 +149,10 @@ class PedidosController extends Controller
     {
         //recupero el pedido
         $pedido = Pedido::find($id);
+        //Actualizo el importe del movimiento relacionado
+        $movimiento = Movimiento::find($pedido->movimiento_id);
+        $movimiento->importe = $pedido->importe;
+        $movimiento->save();
 
         if ($pedido->estado == 'pendiente'){
 
@@ -336,13 +341,23 @@ class PedidosController extends Controller
         $categorias = Categoria::all();
 
         //1°
+        //Crea el movimiento contable postivo por tratarse de un ingreso
+        $movimiento = new Movimiento();
+        $movimiento->tipo = 'ingreso';
+        $movimiento->user_id = \Auth::user()->id;
+        $movimiento->importe = 0;
+        $movimiento->save();
+
+
+        //2°
         //arma una variable para grabar un stock nuevo
         $nuevostock = new Stock();
         $nuevostock->tipo = 'negativo';
         $nuevostock->user_id = \Auth::user()->id;
+        $nuevostock->movimiento_id = $movimiento->id;
         $nuevostock->save();
 
-        //2°
+        //3°
         //arma una variable para grabar un pedido nuevo
         $nuevopedido = new Pedido();
         $nuevopedido->entrega = date('Y-m-d_His');
@@ -353,7 +368,11 @@ class PedidosController extends Controller
         $nuevopedido->estado = 'pendiente';
         $nuevopedido->user_id = \Auth::user()->id;
         $nuevopedido->stock_id = $nuevostock->id;
+        $nuevopedido->movimiento_id = $movimiento->id;
         $nuevopedido->save();
+
+        $movimiento->detalle = 'Ingreso por el pedido N°' . $nuevopedido->id;
+        $movimiento->save();
 
 //        $nuevopedido->stock_id = $_GET['stock_id'];
         $idnuevo = $nuevopedido->id;

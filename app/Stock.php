@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     protected $table = "stock";
-    protected $fillable = ['user_id', 'tipo', 'estado', 'costo'];
+    protected $fillable = ['user_id', 'tipo', 'estado', 'costo', 'movimiento_id'];
 
 	public function stockingredientes()
     {
@@ -27,6 +27,11 @@ class Stock extends Model
     public function pedido()
     {
         return $this->hasOne('App\Pedido');
+    }
+
+    public function movimiento()
+    {
+        return $this->belongsTo('App\Movimiento', 'movimiento_id', 'id');
     }
 
 }
