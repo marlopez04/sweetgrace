@@ -8,6 +8,7 @@ use App\User;
 use App\Ingrediente;
 use App\Insumo;
 use App\Receta;
+use App\Movimiento;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
@@ -51,6 +52,10 @@ class StockController extends Controller
         $stock->user_id = \Auth::user()->id;
         $stock->movimiento_id = $movimiento->id;
         $stock->save();
+
+        $movimiento->detalle = 'Egreso por el Stock N° ' . $stock->id;
+        $movimiento->save();
+
         $id = $stock->id;
 
            return redirect()->route('admin.stocks.edit', $id);
@@ -132,6 +137,11 @@ class StockController extends Controller
                 $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
             }
 
+            //compara la nueva cantidad para renovar o no el maximo de ingredientes
+            if ($ingrediente->max < $ingrediente->cantidad ){
+                $ingrediente->max = $ingrediente->cantidad;
+            }
+
             $ingrediente->save();
         }
 
@@ -147,6 +157,11 @@ class StockController extends Controller
                 }
             }else{
                 $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
+            }
+
+            //compara la nueva cantidad para renovar o no el maximo de insumos
+            if ($ingrediente->max < $ingrediente->cantidad ){
+                $ingrediente->max = $ingrediente->cantidad;
             }
 
             $insumo->save();

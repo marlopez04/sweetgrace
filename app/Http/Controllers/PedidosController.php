@@ -163,6 +163,7 @@ class PedidosController extends Controller
         $nuevostock = new Stock();
         $nuevostock->tipo = 'negativo';
         $nuevostock->user_id = \Auth::user()->id;
+        $nuevostock->movimiento_id = $movimiento->id;
         $nuevostock->save();
 
         //asigno el nuevo stock al pedido        

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Movimiento;
+use App\User;
+use App\Pedido;
+use App\Stock;
 
 class MovimientosController extends Controller
 {
@@ -16,7 +20,11 @@ class MovimientosController extends Controller
      */
     public function index()
     {
-        //
+        $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(5);
+        $movimientos->load('user', 'stocks', 'pedidos');
+
+        return view('admin.movimientos.index')
+                ->with('movimientos', $movimientos);
     }
 
     /**
@@ -26,7 +34,7 @@ class MovimientosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.movimientos.create');
     }
 
     /**
@@ -37,7 +45,16 @@ class MovimientosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $movimiento = new Movimiento($request->all());
+        $movimiento->user_id = \Auth::user()->id;
+        $movimiento->save();
+
+        $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(5);
+        $movimientos->load('user', 'stocks', 'pedidos');
+
+        return view('admin.movimientos.index')
+                ->with('movimientos', $movimientos);
+
     }
 
     /**

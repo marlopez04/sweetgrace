@@ -173,8 +173,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
 	Route::resource('stocks', 'StockController');
 	Route::get('stocks/{id}/destroy',[
-		'uses' => 'RecetaInsumosController@destroy',
-		'as'   => 'admin.recetainsumos.destroy'
+		'uses' => 'StockController@destroy',
+		'as'   => 'admin.stocks.destroy'
+	]);
+
+	Route::resource('movimientos', 'MovimientosController');
+	Route::get('stocks/{id}/destroy',[
+		'uses' => 'MovimientosController@destroy',
+		'as'   => 'admin.movimientos.destroy'
 	]);
 
 });
