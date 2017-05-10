@@ -70,7 +70,6 @@
 							</tbody>
 						</table>
 							<div class="text-center">
-								{!! $movimientos->render()!!}
 							</div>
 						</div>
 				</div>

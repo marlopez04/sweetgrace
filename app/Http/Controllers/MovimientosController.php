@@ -10,6 +10,8 @@ use App\Movimiento;
 use App\User;
 use App\Pedido;
 use App\Stock;
+use Carbon\Carbon;
+
 
 class MovimientosController extends Controller
 {
@@ -20,8 +22,13 @@ class MovimientosController extends Controller
      */
     public function index()
     {
-        $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(5);
-        $movimientos->load('user', 'stocks', 'pedidos');
+//        $movimientos = Movimiento::orderBy('id', 'desc')->take(2)->get();
+//        dd($movimientos[1]);
+//        dd($movimientos);
+        $tiempo = Carbon::now();
+        dd($tiempo);
+        $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(100);
+        $movimientos->load('user');
 
         return view('admin.movimientos.index')
                 ->with('movimientos', $movimientos);
