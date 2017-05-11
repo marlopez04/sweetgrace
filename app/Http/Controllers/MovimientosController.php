@@ -10,6 +10,7 @@ use App\Movimiento;
 use App\User;
 use App\Pedido;
 use App\Stock;
+use App\Saldo;
 use Carbon\Carbon;
 
 
@@ -22,11 +23,35 @@ class MovimientosController extends Controller
      */
     public function index()
     {
-//        $movimientos = Movimiento::orderBy('id', 'desc')->take(2)->get();
+// 1° recuperar el ultimo SALDO para controlar con el ultimo 
+        $saldo = Saldo::orderBy('id', 'desc')->take(1)->get();
+        $sysdate = Carbon::now(); //recupero el sysdate
+        
+// 2° Controlo el cambio de mes, si es asi, genero el nuevo SALDO
+        if($sysdate->format('Ym') > $saldo[0]->periodo){
+            //recuperar el ultimo SALDO
+            $nuevosaldo = new Saldo();
+            $nuevosaldo->periodo = $sysdate->format('Ym');
+            $saldo[0]->importe;
+
+            //recuperar todos los movimientos de ese mes
+/*
+            select DATE_FORMAT(SYSDATE(), '%Y-%m-%d') from movimientos
+*/
+
+
+
+            //sumar al SALDO, todos los ingresos y restar todos los egresos
+            //grabar el nuevo SALDO en la tabla saldos
+
+        }
+// 3° Devuelvo el Saldo y los movimientos del mes en curso
+
 //        dd($movimientos[1]);
-//        dd($movimientos);
-        $tiempo = Carbon::now();
-        dd($tiempo);
+//        dd($saldo[0]->periodo);
+//        dd($tiempo->format('Ym')); //obtengo el periodo del mes
+/*
+*/
         $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(100);
         $movimientos->load('user');
 
