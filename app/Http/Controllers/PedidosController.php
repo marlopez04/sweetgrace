@@ -19,6 +19,7 @@ use App\StockInsumo;
 use App\Ingrediente;
 use App\Insumo;
 use App\Movimiento;
+use Carbon\Carbon;
 
 
 class PedidosController extends Controller
@@ -149,9 +150,14 @@ class PedidosController extends Controller
     {
         //recupero el pedido
         $pedido = Pedido::find($id);
+
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('Ym');
+
         //Actualizo el importe del movimiento relacionado
         $movimiento = Movimiento::find($pedido->movimiento_id);
         $movimiento->importe = $pedido->importe;
+        $movimiento->periodo = $periodoactual;
         $movimiento->save();
 
         if ($pedido->estado == 'pendiente'){
@@ -372,7 +378,7 @@ class PedidosController extends Controller
         $nuevopedido->movimiento_id = $movimiento->id;
         $nuevopedido->save();
 
-        $movimiento->detalle = 'Ingreso por el pedido N°' . $nuevopedido->id;
+        $movimiento->detalle = 'Ingreso por el pedido N° ' . $nuevopedido->id;
         $movimiento->save();
 
 //        $nuevopedido->stock_id = $_GET['stock_id'];

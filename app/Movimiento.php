@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movimiento extends Model
 {
     protected $table = "movimientos";
-    protected $fillable = ['detalle','importe','user_id','tipo','estado'];
+    protected $fillable = ['detalle','importe','user_id','tipo','estado', 'periodo'];
 
 	public function pedidos()
     {

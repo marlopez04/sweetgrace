@@ -435,6 +435,7 @@ class ComposerStaticInit73c24fcc2afe95bbff6595c3d130c0e3
         'IngredienteSeeder' => __DIR__ . '/../..' . '/database/seeds/IngredienteSeeder.php',
         'InsumoSeeder' => __DIR__ . '/../..' . '/database/seeds/InsumoSeeder.php',
         'ListaSeeder' => __DIR__ . '/../..' . '/database/seeds/ListaSeeder.php',
+        'MovimientoSeeder' => __DIR__ . '/../..' . '/database/seeds/MovimientoSeeder.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

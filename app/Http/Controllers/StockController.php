@@ -13,6 +13,7 @@ use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class StockController extends Controller
 {
@@ -40,10 +41,14 @@ class StockController extends Controller
         //1°
         //Creo el movimiento negativo o egreso por que se gasta plata en el stock
 
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('Ym');
+
         $movimiento = new Movimiento();
         $movimiento->tipo = 'egreso';
         $movimiento->user_id = \Auth::user()->id;
         $movimiento->importe = 0;
+        $movimiento->periodo = $periodoactual;
         $movimiento->save();
 
         //2°

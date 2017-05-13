@@ -10,12 +10,31 @@
 			Listas de Movimientos Contables
 		</div>
 			<div class="panel-body">
-				<?php $saldo = 10000; ?>
+				<?php $saldo = $saldoactual; ?>
 				<?php $ingresos = 0; ?>
 				<?php $egresos = 0; ?>
 				<!-- status -->
 				<div class="contain">
 					<a href="{{ route('admin.movimientos.create') }}" class="btn btn-info">Nueva Movimiento</a><hr>
+					
+					<table class="table table-striped">
+						<thead>
+							<th>DESDE</th>
+							<th>HASTA</th>
+							<th>BUSCAR</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{!! Form::select('periodo1', $saldos, null, ['class' => 'form-control select-category', 'required']) !!}
+								</td>
+								<td>
+									{!! Form::select('periodo2', $saldos, null, ['class' => 'form-control select-category', 'required']) !!}
+								</td>
+								<td><a href="#" class="btn btn-info">Buscar</a></td>
+							</tr>
+						</tbody>
+					</table>
+
 					<div class="gantt">
 						<h4>Movimientos Confirmados</h4>
 						<h4 align="right">SALDO ANTERIR ${{ $saldo }}</h4>

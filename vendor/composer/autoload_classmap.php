@@ -110,6 +110,7 @@ return array(
     'IngredienteSeeder' => $baseDir . '/database/seeds/IngredienteSeeder.php',
     'InsumoSeeder' => $baseDir . '/database/seeds/InsumoSeeder.php',
     'ListaSeeder' => $baseDir . '/database/seeds/ListaSeeder.php',
+    'MovimientoSeeder' => $baseDir . '/database/seeds/MovimientoSeeder.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

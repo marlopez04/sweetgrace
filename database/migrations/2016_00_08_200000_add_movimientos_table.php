@@ -16,6 +16,7 @@ class AddMovimientosTable extends Migration
             $table->increments('id');
             $table->string('detalle');
             $table->double('importe', 10, 2);
+            $table->integer('periodo');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->enum('tipo',['ingreso', 'egreso'])->default('ingreso');

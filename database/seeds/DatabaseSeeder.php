@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RecetaIngredienteSeeder::class);
         $this->call(RecetaInsumoSeeder::class);
         $this->call(SaldoSeeder::class);
+        $this->call(MovimientoSeeder::class);
 
         Model::reguard();
     }
