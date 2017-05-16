@@ -20,23 +20,28 @@
 					<table class="table table-striped">
 						<thead>
 							<th>DESDE</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
 							<th>HASTA</th>
 							<th>BUSCAR</th>
 						</thead>
 						<tbody>
 							<tr>
-								<td>{!! Form::select('periodo1', $saldos, null, ['class' => 'form-control select-category', 'required']) !!}
+								<td colspan='5'>{!! Form::select('periodo1', $saldos, null, ['id' => 'periodo1']) !!}
 								</td>
 								<td>
-									{!! Form::select('periodo2', $saldos, null, ['class' => 'form-control select-category', 'required']) !!}
+									{!! Form::select('periodo2', $saldos, null, ['id' => 'periodo2']) !!}
 								</td>
-								<td><a href="#" class="btn btn-info">Buscar</a></td>
+								<td><button type="button" class="btn btn-danger" id="cargar">Buscar</button></td>
 							</tr>
 						</tbody>
 					</table>
 
 					<div class="gantt">
 						<h4>Movimientos Confirmados</h4>
+						<div id="reporteinicial"> <!--Reporte al cargar la pagina, cambia al elegir otro periodo, INICIO-->
 						<h4 align="right">SALDO ANTERIR ${{ $saldo }}</h4>
 						<table class="table table-striped">
 							<thead>
@@ -45,7 +50,7 @@
 								<th>Detalle</th>
 								<th>Ingreso</th>
 								<th>Egreso</th>
-								<th>saldo</th>
+								<th>Saldo</th>
 								<th>Editar</th>
 							</thead>
 							<tbody>
@@ -90,6 +95,8 @@
 						</table>
 							<div class="text-center">
 							</div>
+						  </div> <!--div contenido de carga, se cierra al pedir otro intervalo de periodos que no sea el periodo actual FIN -->
+						  <div id="reporteintervalo"></div>
 						</div>
 				</div>
 			</div>
@@ -97,11 +104,48 @@
 		</div>
 	</div>
 
+{!! Form::open(['route' => ['admin.movimientos.intervalo', 'ID'], 'method' => 'POST' , 'id' => 'form-intervalo' ]) !!}
+{!! Form::close() !!}
+
+
 @endsection
 
 
+@section('js')
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+	// Carga el intervalo requerido por el usuario
+
+	$('#cargar' ).click(function() {
+	  var form = $('#form-intervalo');
+	  var periodo1 = $('#periodo1').val();
+	  var periodo2 = $('#periodo2').val();
+	  var url = form.attr('action').replace(':ID', periodo1);
+	  console.log(periodo1);
+	  console.log(periodo2);
+	  var token = form.serialize();
+	  data = {
+	    token: token,
+	    periodo1: periodo1,
+	    periodo2: periodo2
+	  };
+	  $.get(url, data, function(intervalo){
+		      $('#reporteinicial').hide();
+		      $('#reporteintervalo').show();
+		      $('#reporteintervalo').fadeOut().html(intervalo).fadeIn();
+	   }); //FIN RETORNO DE AJAX
+
+	 }); // FIN CARGAR
+
+}); // FIN DOCUMENT READY
+
+</script>
 
 
+@endsection
 
 
 

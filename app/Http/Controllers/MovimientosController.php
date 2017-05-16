@@ -119,6 +119,7 @@ class MovimientosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $sysdate = Carbon::now(); //recupero el sysdate
@@ -129,11 +130,11 @@ class MovimientosController extends Controller
         $movimiento->periodo = $periodoactual;
         $movimiento->save();
 
+/*
         $movimientos = Movimiento::orderBy('id', 'DECS')->paginate(5);
         $movimientos->load('user', 'stocks', 'pedidos');
-
-        return view('admin.movimientos.index')
-                ->with('movimientos', $movimientos);
+*/
+        return redirect()->route('admin.movimientos.index');
 
     }
 
@@ -177,6 +178,53 @@ class MovimientosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function intervalo($id)
+    {
+
+        $periodo1ID = $_GET['periodo1'];
+        $periodo2ID = $_GET['periodo2'];
+
+
+        $periodo1 = Saldo::find($periodo1ID);
+        $periodo2 = Saldo::find($periodo2ID);
+
+//-------------------------------------------------
+//asigno los intervalos para recuperar los movimientos
+    $from = $periodo1->periodo;
+    $to = $periodo2->periodo;
+
+
+
+
+//recupero los movimientos en ese intervalo
+    $movimientos2 = Movimiento::whereBetween('periodo', array($from, $to))->get();
+    $movimientos2->load('user');
+
+
+//recupero el saldo del periodo1
+    $saldoactual = Saldo::where('periodo', $periodo1->periodo)->get();
+
+    $saldoactual2 = $saldoactual[0]->importe;
+//dd($saldoactual[0]->importe);
+
+    $html = view('admin.movimientos.partials.intervalo')
+            ->with('movimientos2', $movimientos2)
+            ->with('saldoactual2', $saldoactual2);
+
+//--------------------------------------------------
+
+        return $html;
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function destroy($id)
     {
         //

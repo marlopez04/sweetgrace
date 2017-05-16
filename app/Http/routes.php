@@ -178,9 +178,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 	]);
 
 	Route::resource('movimientos', 'MovimientosController');
-	Route::get('stocks/{id}/destroy',[
+	Route::get('movimientos/{id}/destroy',[
 		'uses' => 'MovimientosController@destroy',
 		'as'   => 'admin.movimientos.destroy'
+	]);
+
+	Route::get('movimientos/{id}/intervalo',[
+		'uses' => 'MovimientosController@intervalo',
+		'as'   => 'admin.movimientos.intervalo'
 	]);
 
 });
