@@ -21,6 +21,7 @@ class AddMovimientosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->enum('tipo',['ingreso', 'egreso'])->default('ingreso');
             $table->enum('estado',['pendiente', 'confirmado'])->default('pendiente');
+            $table->enum('relacion',['pedido', 'stock', 'otro'])->default('otro');
             $table->timestamps();
         });
     }

@@ -2,11 +2,12 @@
 <?php $ingresos2 = 0; ?>
 <?php $egresos2 = 0; ?>
 
-	<h4 align="right">SALDO ANTERIR ${{ $saldo2 }}</h4>
+	<h4 align="right">SALDO ANTERIOR ${{ $saldo2 }} {{ $periodoinicial2 }}</h4>
 	<table class="table table-striped">
 		<thead>
 			<th>Usuario</th>
 			<th>Fecha</th>
+			<th>Periodo</th>
 			<th>Detalle</th>
 			<th>Ingreso</th>
 			<th>Egreso</th>
@@ -18,6 +19,7 @@
 				<tr>
 					<td>{{ $movimiento2->user->name }}</td>
 					<td>{{ date("d-m-Y", strtotime($movimiento2->created_at)) }}</td>
+					<td>{{ $movimiento2->periodo }}</td>
 					<td>{{ $movimiento2->detalle }}</td>
 					@if ($movimiento2->tipo == 'ingreso')
 					<td>${{ $movimiento2->importe }}</td>

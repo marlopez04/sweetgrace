@@ -39,7 +39,10 @@ class MovimientosController extends Controller
             $egresos = 0;
 
             //recuperar todos los movimientos de ese mes
-            $movimientosanteriores = \DB::select("SELECT * FROM movimientos WHERE periodo = '{$periodosaldo}'");
+            $movimientosanteriores = \DB::select("SELECT * 
+                                                    FROM movimientos
+                                                    WHERE periodo = '{$periodosaldo}'
+                                                    AND estado = 'confirmado'");
 
             //sumar al SALDO, todos los ingresos y restar todos los egresos
             foreach($movimientosanteriores as $movimiento){
@@ -82,14 +85,16 @@ class MovimientosController extends Controller
 */
 
 //prueba 5 inicio
-    $from = '201701';
-    $to = '201701';
+    $from = $periodoactual;
+    $to = $periodoactual;
 
-    $movimientos = Movimiento::whereBetween('periodo', array($from, $to))->get();
+    $movimientos = Movimiento::whereBetween('periodo', array($from, $to))
+                                ->where('estado', 'confirmado')->get();
     $movimientos->load('user');
 //prueba 5 fin
 
     $saldoactual = $saldo[0]->importe;
+    $periodoinicial = $saldo[0]->periodo;
 
     $saldos = Saldo::orderBy('id', 'DECS')->lists('periodo', 'id');
 
@@ -100,6 +105,7 @@ class MovimientosController extends Controller
         return view('admin.movimientos.index')
                 ->with('movimientos', $movimientos)
                 ->with('saldoactual', $saldoactual)
+                ->with('periodoinicial', $periodoinicial)
                 ->with('saldos', $saldos);
     }
 
@@ -198,7 +204,8 @@ class MovimientosController extends Controller
 
 
 //recupero los movimientos en ese intervalo
-    $movimientos2 = Movimiento::whereBetween('periodo', array($from, $to))->get();
+    $movimientos2 = Movimiento::whereBetween('periodo', array($from, $to))
+                                ->where('estado', 'confirmado')->get();
     $movimientos2->load('user');
 
 
@@ -206,10 +213,12 @@ class MovimientosController extends Controller
     $saldoactual = Saldo::where('periodo', $periodo1->periodo)->get();
 
     $saldoactual2 = $saldoactual[0]->importe;
+    $periodoinicial2 = $saldoactual[0]->periodo;
 //dd($saldoactual[0]->importe);
 
     $html = view('admin.movimientos.partials.intervalo')
             ->with('movimientos2', $movimientos2)
+            ->with('periodoinicial2', $periodoinicial2)
             ->with('saldoactual2', $saldoactual2);
 
 //--------------------------------------------------

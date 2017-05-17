@@ -158,6 +158,7 @@ class PedidosController extends Controller
         $movimiento = Movimiento::find($pedido->movimiento_id);
         $movimiento->importe = $pedido->importe;
         $movimiento->periodo = $periodoactual;
+        $movimiento->relacion = 'pedido';
         $movimiento->save();
 
         if ($pedido->estado == 'pendiente'){

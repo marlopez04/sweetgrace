@@ -49,6 +49,7 @@ class StockController extends Controller
         $movimiento->user_id = \Auth::user()->id;
         $movimiento->importe = 0;
         $movimiento->periodo = $periodoactual;
+        $movimiento->relacion = 'stock';
         $movimiento->save();
 
         //2°
@@ -124,6 +125,11 @@ class StockController extends Controller
 
         $movimiento = Movimiento::find($stock->movimiento_id);
         $movimiento->importe = $stock->costo;
+        @if ($movimiento->importe == 0){
+            $movimiento->estado = 'pendiente';            
+        }else{
+            $movimiento->estado = 'confirmado';
+        }
         $movimiento->save();
 
 

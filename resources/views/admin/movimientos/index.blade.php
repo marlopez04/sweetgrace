@@ -42,11 +42,12 @@
 					<div class="gantt">
 						<h4>Movimientos Confirmados</h4>
 						<div id="reporteinicial"> <!--Reporte al cargar la pagina, cambia al elegir otro periodo, INICIO-->
-						<h4 align="right">SALDO ANTERIR ${{ $saldo }}</h4>
+						<h4 align="right">SALDO ANTERIOR ${{ $saldo }} {{ $periodoinicial }}</h4>
 						<table class="table table-striped">
 							<thead>
 								<th>Usuario</th>
 								<th>Fecha</th>
+								<th>Periodo</th>
 								<th>Detalle</th>
 								<th>Ingreso</th>
 								<th>Egreso</th>
@@ -58,6 +59,7 @@
 									<tr>
 										<td>{{ $movimiento->user->name }}</td>
 										<td>{{ date("d-m-Y", strtotime($movimiento->created_at)) }}</td>
+										<td>{{ $movimiento->periodo }}</td>
 										<td>{{ $movimiento->detalle }}</td>
 										@if ($movimiento->tipo == 'ingreso')
 										<td>${{ $movimiento->importe }}</td>
@@ -106,6 +108,10 @@
 
 {!! Form::open(['route' => ['admin.movimientos.intervalo', 'ID'], 'method' => 'POST' , 'id' => 'form-intervalo' ]) !!}
 {!! Form::close() !!}
+
+<div id="correctorscroll">
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
 
 
 @endsection
