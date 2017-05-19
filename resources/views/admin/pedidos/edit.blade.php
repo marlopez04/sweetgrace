@@ -106,6 +106,12 @@
     </style>
 
 <div class="monthly-grid" id="pedidoinfo">
+
+<!--Variables para la cobranza INICIO-->
+          <?php $debe = $pedido->importe; ?>
+        <?php $pagos = 0; ?>
+<!--Variables para la cobranza FIN-->
+
   <div class="panel panel-widget">
       <div class="panel-body">
 
@@ -130,29 +136,22 @@
                     <td>{{ $pedido->cliente->nombre }}</td>
                     <td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
                     <td>{!! Form::number('pago',0,['class'=>'form-control'])!!}</td>
-                    <td>{{ $pedido->estado }}</td>
+                    <td>{!! Form::select('estado', ['pendiente' => 'PENDIENTE','confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
                     
                     <td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
                   </tr>
-              </tbody>
-            </table>
                     {!!Form::close()!!}
-      </div>
-      <div>
-<!--Variables para la cobranza INICIO-->
-        <?php $debe = $pedido->importe; ?>
-        <?php $pagos = 0; ?>
-<!--Variables para la cobranza FIN-->
-            <table class="table table-striped">
-              <tbody>
+
+@if( $cobrado <> 0)
+
+<tr bgcolor="#B52E31" ><td colspan= "4" align= "center"> <font color="#fff">Pagos</font></td></tr>
+
                 @foreach($pedido->cobranzas as $cobranza)
                 <tr>
-                  @if($cobranza->tipo == 'seña')
-                    <td>Seña</td>
-                  @else
-                    <td>Pago</td>
-                  @endif
-                  <td>{{ $cobranza->created_at }}</td>
+                  <td>{{ $cobranza->tipo }}</td>
+                  <td >
+                    {{ date("d-m-Y", strtotime($cobranza->created_at)) }}
+                  </td>
                   <td>{{ $cobranza->user->name }}</td>
                   <td>
                       {{ $cobranza->importe}}
@@ -162,21 +161,17 @@
                 </tr>
                 @endforeach
                 <tr>
-                  <td></td><!-- Tipo -->
-                  <td></td><!-- fecha -->
-                  <td>Total</td>
+                  <td colspan= "3" align= "right">Total</td>
                   <td>{{$pagos}}</td>
                 </tr>
                 <tr>
-                  <td></td><!-- Tipo -->
-                  <td></td><!-- fecha -->
-                  <td>Debe</td>
-                  <td>{{$pagos}}</td>
+                  <td colspan= "3" align= "right">Debe</td>
+                  <td>{{$debe}}</td>
                 </tr>
+@endif
               </tbody>
-
-
-        </div>
+            </table>
+      </div>
 
     <div class="panel-title">
       <h4>Lista de Precio</h4>

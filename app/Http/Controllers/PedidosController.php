@@ -136,10 +136,17 @@ class PedidosController extends Controller
         $pedido->load('cobranzas');
         $pedido->cobranzas->load('user');
 
+        $cobrado = 0;
+
+        foreach($pedido->cobranzas as $cobranza1){
+                $cobrado = $cobrado + $cobranza1->importe;
+        }
+
         return view('admin.pedidos.edit')
             ->with('pedido', $pedido)
             ->with('listasprecios', $listasprecios)
-            ->with('categorias', $categorias);
+            ->with('categorias', $categorias)
+            ->with('cobrado', $cobrado);
     }
 
     /**
@@ -314,42 +321,11 @@ class PedidosController extends Controller
 
                 } //fin foreach stockinsumos
 
-
-                $pedidos = Pedido::all();
-                $pedidos->load('cliente');
-                $pedidos->load('user');
-                $pedidos->load('cobranzas');
-                $pedidos->cobranzas->load('user');
-
-                $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
-
-                $ingredientes = \DB::select("SELECT * FROM ingredientes WHERE cantidad <= stockcritico");
-
-
-                return view('admin.index')
-                    ->with('pedidos', $pedidos)
-                    ->with('insumos', $insumos)
-                    ->with('ingredientes', $ingredientes);
-
+                return redirect()->route('admin.pedidos.edit', $id);
 
             } //fin de if control de estado en ENTREGADO
 
-                $pedidos = Pedido::all();
-                $pedidos->load('cliente');
-                $pedidos->load('user');
-                $pedidos->load('cobranzas');
-                $pedidos->cobranzas->load('user');
-
-                $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
-
-                $ingredientes = \DB::select("SELECT * FROM ingredientes WHERE cantidad <= stockcritico");
-
-
-                return view('admin.index')
-                    ->with('pedidos', $pedidos)
-                    ->with('insumos', $insumos)
-                    ->with('ingredientes', $ingredientes);
-
+            return redirect()->route('admin.pedidos.edit', $id);
 
         } //fin de primer if control de estado en PENDIENTE
 
