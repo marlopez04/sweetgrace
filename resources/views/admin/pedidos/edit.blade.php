@@ -121,7 +121,7 @@
               <thead>
                 <th>Cliente</th>
                 <th>Entrega</th>
-                <th>Usuario</th>
+                <th>Pago</th>
                 <th>Estado</th>
                 <th></th>
               </thead>
@@ -129,7 +129,7 @@
                   <tr>
                     <td>{{ $pedido->cliente->nombre }}</td>
                     <td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
-                    <td>{{ $pedido->user->name }}</td>
+                    <td>{!! Form::number('pago',0,['class'=>'form-control'])!!}</td>
                     <td>{{ $pedido->estado }}</td>
                     
                     <td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
@@ -137,6 +137,45 @@
               </tbody>
             </table>
                     {!!Form::close()!!}
+      </div>
+      <div>
+<!--Variables para la cobranza INICIO-->
+        <?php $debe = $pedido->importe; ?>
+        <?php $pagos = 0; ?>
+<!--Variables para la cobranza FIN-->
+            <table class="table table-striped">
+              <tbody>
+                @foreach($pedido->cobranzas as $cobranza)
+                <tr>
+                  @if($cobranza->tipo == 'seña')
+                    <td>Seña</td>
+                  @else
+                    <td>Pago</td>
+                  @endif
+                  <td>{{ $cobranza->created_at }}</td>
+                  <td>{{ $cobranza->user->name }}</td>
+                  <td>
+                      {{ $cobranza->importe}}
+                      <?php $pagos = $pagos + $cobranza->importe; ?>
+                      <?php $debe = $debe - $cobranza->importe; ?>
+                  </td>
+                </tr>
+                @endforeach
+                <tr>
+                  <td></td><!-- Tipo -->
+                  <td></td><!-- fecha -->
+                  <td>Total</td>
+                  <td>{{$pagos}}</td>
+                </tr>
+                <tr>
+                  <td></td><!-- Tipo -->
+                  <td></td><!-- fecha -->
+                  <td>Debe</td>
+                  <td>{{$pagos}}</td>
+                </tr>
+              </tbody>
+
+
         </div>
 
     <div class="panel-title">

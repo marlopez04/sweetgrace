@@ -20,6 +20,7 @@ use App\Ingrediente;
 use App\Insumo;
 use App\Movimiento;
 use Carbon\Carbon;
+use App\Cobranza;
 
 
 class PedidosController extends Controller
@@ -132,6 +133,8 @@ class PedidosController extends Controller
 
         $pedido->load('cliente');
         $pedido->load('user');
+        $pedido->load('cobranzas');
+        $pedido->cobranzas->load('user');
 
         return view('admin.pedidos.edit')
             ->with('pedido', $pedido)
@@ -151,6 +154,7 @@ class PedidosController extends Controller
         //recupero el pedido
         $pedido = Pedido::find($id);
 
+        //recupero la fecha del dia y la transformo en un periodo EJ: 201705
         $sysdate = Carbon::now(); //recupero el sysdate
         $periodoactual = $sysdate->format('Ym');
 
@@ -163,30 +167,40 @@ class PedidosController extends Controller
 
         if ($pedido->estado == 'pendiente'){
 
-        //grabo el stock_id en una variable
-        $stockviejo_id = $pedido->stock_id;
+            //controlo que el campo pago no este vacio
+            if($request->pago <> 0){
+                $cobranza = new Cobranza();
+                $cobranza->pedido_id = $id;
+                $cobranza->tipo = 'seña';
+                $cobranza->importe = $request->pago;
+                $cobranza->user_id = \Auth::user()->id;
+                $cobranza->save();
+            }
 
-        //creo un nuevo stock
-        $nuevostock = new Stock();
-        $nuevostock->tipo = 'negativo';
-        $nuevostock->user_id = \Auth::user()->id;
-        $nuevostock->movimiento_id = $movimiento->id;
-        $nuevostock->save();
+            //grabo el stock_id en una variable
+            $stockviejo_id = $pedido->stock_id;
 
-        //asigno el nuevo stock al pedido        
-        $pedido->stock_id = $nuevostock->id;
-        $pedido->entrega = $request->entrega;
-        $pedido->estado = 'confirmado';
-        $pedido->save();
+            //creo un nuevo stock
+            $nuevostock = new Stock();
+            $nuevostock->tipo = 'negativo';
+            $nuevostock->user_id = \Auth::user()->id;
+            $nuevostock->movimiento_id = $movimiento->id;
+            $nuevostock->save();
 
-        //borro el viejo stock
-        $stock = Stock::find($stockviejo_id);
-        $stock->delete();
+            //asigno el nuevo stock al pedido        
+            $pedido->stock_id = $nuevostock->id;
+            $pedido->entrega = $request->entrega;
+            $pedido->estado = 'confirmado';
+            $pedido->save();
+
+            //borro el viejo stock
+            $stock = Stock::find($stockviejo_id);
+            $stock->delete();
 
 
-// selecciono las recetas, suma los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
+// selecciono las recetas, sumo los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
-       $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
+           $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                         FROM pedidoarticulos pa
                                         INNER JOIN articulos a on a.id = pa.articulo_id
                                         INNER JOIN recetas r on r.id = a.receta_id
@@ -194,7 +208,9 @@ class PedidosController extends Controller
                                         WHERE pedido_id = '{$id}'
                                         group by ri.ingrediente_id");
 
-        $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
+// selecciono las recetas, sumo los insumos y los devuelve sumados (ingrediente_id, nombre, cantidad)
+
+            $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                     FROM pedidoarticulos pa
                                     INNER JOIN articulos a on a.id = pa.articulo_id
                                     INNER JOIN recetas r on r.id = a.receta_id
@@ -202,42 +218,54 @@ class PedidosController extends Controller
                                     WHERE pedido_id = '{$id}'
                                     group by ri.insumo_id");
 
-        foreach ($dataingredientes as $ingrediente){
-            $stockingrediente = new StockIngrediente();
-            $stockingrediente->stock_id = $pedido->stock_id;
-            $stockingrediente->nombre = $ingrediente->nombre;
-            $stockingrediente->tipo = 'egreso';
-            $stockingrediente->ingrediente_id = $ingrediente->ingrediente_id;
-            $stockingrediente->cantidad = $ingrediente->cantidad;
-            $stockingrediente->costo = 0;
-            $stockingrediente->save();
+//recorro la consulta de ingredientes y los agrego al stock del pedido
+            foreach ($dataingredientes as $ingrediente){
+                $stockingrediente = new StockIngrediente();
+                $stockingrediente->stock_id = $pedido->stock_id;
+                $stockingrediente->nombre = $ingrediente->nombre;
+                $stockingrediente->tipo = 'egreso';
+                $stockingrediente->ingrediente_id = $ingrediente->ingrediente_id;
+                $stockingrediente->cantidad = $ingrediente->cantidad;
+                $stockingrediente->costo = 0;
+                $stockingrediente->save();
+            }
 
-        }
+//recorro la consulta de insumos y los agrego al stock del pedido
+            foreach ($datainsumos as $insumo){
+                $stockinsumo = new StockInsumo();
+                $stockinsumo->stock_id = $pedido->stock_id;
+                $stockinsumo->nombre = $insumo->nombre;
+                $stockinsumo->tipo = 'egreso';
+                $stockinsumo->insumo_id = $insumo->insumo_id;
+                $stockinsumo->cantidad = $insumo->cantidad;
+                $stockinsumo->costo = 0;
+                $stockinsumo->save();
+            }
 
-        foreach ($datainsumos as $insumo){
-            $stockinsumo = new StockInsumo();
-            $stockinsumo->stock_id = $pedido->stock_id;
-            $stockinsumo->nombre = $insumo->nombre;
-            $stockinsumo->tipo = 'egreso';
-            $stockinsumo->insumo_id = $insumo->insumo_id;
-            $stockinsumo->cantidad = $insumo->cantidad;
-            $stockinsumo->costo = 0;
-            $stockinsumo->save();
+//recupero el Stock completo
+            $stock = Stock::find($pedido->stock_id);
+            $stock->load('stockinsumos','stockingredientes');
 
-        }
+            $idnuevo = $pedido->id;
 
-        $stock = Stock::find($pedido->stock_id);
-        $stock->load('stockinsumos','stockingredientes');
+            return redirect()->route('admin.pedidos.edit', $idnuevo);
 
-        $idnuevo = $pedido->id;
-
-        return redirect()->route('admin.pedidos.edit', $idnuevo);
-
-        }else{
+        }else{ //controlo el cambio del pedido que ya paso por "pendiente" a 'para entregar'/'entregado'
 
             $pedido->estado = $request->estado;
             $pedido->entrega = $request->entrega;
             $pedido->save();
+
+
+            if($request->pago <> 0){
+                $cobranza = new Cobranza();
+                $cobranza->pedido_id = $id;
+                $cobranza->tipo = 'pago';
+                $cobranza->importe = $request->pago;
+                $cobranza->user_id = \Auth::user()->id;
+                $cobranza->save();
+            }
+
 
             if($pedido->estado == 'entregado'){
 
@@ -290,6 +318,8 @@ class PedidosController extends Controller
                 $pedidos = Pedido::all();
                 $pedidos->load('cliente');
                 $pedidos->load('user');
+                $pedidos->load('cobranzas');
+                $pedidos->cobranzas->load('user');
 
                 $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
 
@@ -307,6 +337,8 @@ class PedidosController extends Controller
                 $pedidos = Pedido::all();
                 $pedidos->load('cliente');
                 $pedidos->load('user');
+                $pedidos->load('cobranzas');
+                $pedidos->cobranzas->load('user');
 
                 $insumos = \DB::select("SELECT * FROM insumos WHERE cantidad <= stockcritico");
 
