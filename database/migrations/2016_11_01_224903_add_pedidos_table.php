@@ -25,6 +25,7 @@ class AddPedidosTable extends Migration
             $table->integer('movimiento_id')->unsigned();
             $table->foreign('movimiento_id')->references('id')->on('movimientos');
             $table->enum('estado',['pendiente', 'confirmado', 'a entregar', 'entregado'])->default('pendiente');
+            $table->enum('cobranza',['debe', 'pagado'])->default('debe');
             $table->timestamps();
         });
     }

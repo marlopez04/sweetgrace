@@ -171,8 +171,8 @@ class StockController extends Controller
             }
 
             //compara la nueva cantidad para renovar o no el maximo de insumos
-            if ($ingrediente->max < $ingrediente->cantidad ){
-                $ingrediente->max = $ingrediente->cantidad;
+            if ($insumo->max < $insumo->cantidad ){
+                $insumo->max = $insumo->cantidad;
             }
 
             $insumo->save();

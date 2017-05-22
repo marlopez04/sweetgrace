@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Pedido;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
+use Carbon\Carbon;
 
 class ClientesController extends Controller
 {
@@ -55,7 +57,25 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        //
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('Ym');
+
+        $cliente = Cliente::find($id);
+        $cliente->load('pedidos');
+        $pedidos = Pedido::where('cliente_id', $cliente->id)->orderBy('id','DSC')->paginate(5);
+        $pedidos->load('cobranzas');
+
+// calculo de deuda del cliente INICIO
+        foreach($pedidos as $pedido){
+
+        }
+
+// calculo de deuda del cliente FIN
+
+        return view('admin.clientes.show')
+                    ->with('cliente', $cliente)
+                    ->with('pedidos', $pedidos)
+                    ->with('sysdate', $sysdate);
     }
 
     /**

@@ -184,6 +184,15 @@ class PedidosController extends Controller
                 $cobranza->save();
             }
 
+            //controlar si ya esta saldada la deuda
+            $pedido->load('cobranzas')
+
+            foreach($pedido->cobranzas as $cobranzap){
+
+            }
+
+
+
             //grabo el stock_id en una variable
             $stockviejo_id = $pedido->stock_id;
 
