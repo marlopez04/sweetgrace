@@ -160,6 +160,7 @@ class PedidosController extends Controller
     {
         //recupero el pedido
         $pedido = Pedido::find($id);
+        $pago = 0;
 
         //recupero la fecha del dia y la transformo en un periodo EJ: 201705
         $sysdate = Carbon::now(); //recupero el sysdate
@@ -169,28 +170,35 @@ class PedidosController extends Controller
         $movimiento = Movimiento::find($pedido->movimiento_id);
         $movimiento->importe = $pedido->importe;
         $movimiento->periodo = $periodoactual;
-        $movimiento->relacion = 'pedido';
         $movimiento->save();
 
         if ($pedido->estado == 'pendiente'){
 
             //controlo que el campo pago no este vacio
-            if($request->pago <> 0){
+            if($request->pago <> 0 and $pago == 0){
                 $cobranza = new Cobranza();
                 $cobranza->pedido_id = $id;
                 $cobranza->tipo = 'seña';
                 $cobranza->importe = $request->pago;
                 $cobranza->user_id = \Auth::user()->id;
                 $cobranza->save();
+                $pago = 1;
             }
 
-            //controlar si ya esta saldada la deuda
-            $pedido->load('cobranzas')
+            //recupero las cobranzas
+            $pedido->load('cobranzas');
+            $cobrado = 0;
 
+            //sumo todo lo cobrado
             foreach($pedido->cobranzas as $cobranzap){
+                $cobrado = $cobranzap->importe;
 
             }
 
+            //calculo cuanto se debe
+            if($pedido->importe <= $cobrado){
+                $pedido->cobranza = 'pagado';
+            }
 
 
             //grabo el stock_id en una variable
@@ -206,7 +214,7 @@ class PedidosController extends Controller
             //asigno el nuevo stock al pedido        
             $pedido->stock_id = $nuevostock->id;
             $pedido->entrega = $request->entrega;
-            $pedido->estado = 'confirmado';
+            $pedido->estado = $request->estado;
             $pedido->save();
 
             //borro el viejo stock
@@ -273,17 +281,56 @@ class PedidosController extends Controller
             $pedido->save();
 
 
-            if($request->pago <> 0){
+            if($request->pago <> 0 and $pago == 0){
                 $cobranza = new Cobranza();
                 $cobranza->pedido_id = $id;
                 $cobranza->tipo = 'pago';
                 $cobranza->importe = $request->pago;
                 $cobranza->user_id = \Auth::user()->id;
                 $cobranza->save();
+                $pago = 1;
+            }
+
+            //recupero las cobranzas
+            $pedido->load('cobranzas');
+            $cobrado = 0;
+
+            //sumo todo lo cobrado
+            foreach($pedido->cobranzas as $cobranzap){
+                $cobrado +=  $cobranzap->importe;
+            }
+
+            //calculo cuanto se debe
+            if($pedido->importe <= $cobrado){
+                $pedido->cobranza = 'pagado';
             }
 
 
             if($pedido->estado == 'entregado'){
+
+
+                if($request->pago <> 0 and $pago == 0){
+                    $cobranza = new Cobranza();
+                    $cobranza->pedido_id = $id;
+                    $cobranza->tipo = 'pago';
+                    $cobranza->importe = $request->pago;
+                    $cobranza->user_id = \Auth::user()->id;
+                    $cobranza->save();
+                    $pago = 1;
+                }
+
+                //recupero las cobranzas
+                $pedido->load('cobranzas');
+
+                //sumo todo lo cobrado
+                foreach($pedido->cobranzas as $cobranzap){
+                    $cobrado += $cobranzap->importe;
+                }
+
+                //calculo cuanto se debe
+                if($pedido->importe <= $cobrado){
+                    $pedido->cobranza = 'pagado';
+                }
 
                 //se confirma el STOCK que posee el pedido
 
@@ -371,6 +418,7 @@ class PedidosController extends Controller
         $movimiento->tipo = 'ingreso';
         $movimiento->user_id = \Auth::user()->id;
         $movimiento->importe = 0;
+        $movimiento->relacion = 'pedido';
         $movimiento->save();
 
 

@@ -22,6 +22,7 @@ class AdminController extends Controller
         $pedidos = Pedido::all();
         $pedidos->load('cliente');
         $pedidos->load('user');
+        $pedidos->load('cobranzas');
 
 /*
         $insumos = Insumo::all();

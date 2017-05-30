@@ -27,7 +27,7 @@
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
-								{!! Form::open(['route' =>['admin.pedidos.update', $pedido], 'method' => 'PUT', 'files' => true]) !!}
+									{!! $cobrado = 0 !!}
 								@if ($pedido->estado == 'confirmado')
 									<tr class="table-warning">
 								@else
@@ -48,19 +48,25 @@
 									{{ $pedido->created_at->format('d/m/Y') }}
 									</td>
 <!--									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }} -->
-									<td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
+									<td>{{Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y')}}</td>
 									</td>
 									<td>{{ $pedido->created_at->diffInDays(Carbon\Carbon::parse($pedido->entrega)) }}</td>
 									<td>${{$pedido->importe}}</td>
-									<td>$0</td>
-									<td style="color:#ff3333">${{$pedido->importe}}</td>
-									<td>{!! Form::select('estado', ['confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
-									<td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
+									<td>$
+										@foreach($pedido->cobranzas as $cobranza)
+											<?php  $cobrado += $cobranza->importe ?>
+										@endforeach
+										{{$cobrado}}
+									</td>
+									<td style="color:#ff3333"> $ {{$pedido->importe - $cobrado}}</td>
+									<td>{{$pedido->estado}}</td>
+									<td>
+										<a href="#" class="btn btn-warning">Pedido</a>
+									</td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
-						{!!Form::close()!!}
 						</div>
 				</div>
 			</div>
