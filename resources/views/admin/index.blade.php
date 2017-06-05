@@ -27,14 +27,14 @@
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
-									{!! $cobrado = 0 !!}
+									<?php $cobrado = 0; ?>
 								@if ($pedido->estado == 'confirmado')
-									<tr class="table-warning">
+									<tr bgcolor="#61FF69">
 								@else
 									@if ($pedido->estado == 'a entregar')
-										<tr class="table-success">
+										<tr bgcolor="#6961FF">
 									@else
-										<tr class="table-danger">
+										<tr bgcolor="#61F7FF">
 									@endif
 
 								@endif
@@ -50,7 +50,7 @@
 <!--									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }} -->
 									<td>{{Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y')}}</td>
 									</td>
-									<td>{{ $pedido->created_at->diffInDays(Carbon\Carbon::parse($pedido->entrega)) }}</td>
+									<td>{{ Carbon\Carbon::parse($pedido->entrega)->diffInDays(Carbon\Carbon::parse($sysdate)) }}</td>
 									<td>${{$pedido->importe}}</td>
 									<td>$
 										@foreach($pedido->cobranzas as $cobranza)
@@ -60,8 +60,9 @@
 									</td>
 									<td style="color:#ff3333"> $ {{$pedido->importe - $cobrado}}</td>
 									<td>{{$pedido->estado}}</td>
+									<td>{{$pedido->cobranza}}</td>
 									<td>
-										<a href="#" class="btn btn-warning">Pedido</a>
+										<a href="{{ route('admin.pedidos.edit', $pedido->id) }}" class="btn btn-warning">Pedido</a>
 									</td>
 								</tr>
 								@endforeach

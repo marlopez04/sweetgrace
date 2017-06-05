@@ -188,6 +188,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.movimientos.intervalo'
 	]);
 
+	Route::resource('cobranzas', 'CobranzasController');
+	Route::get('cobranzas/{id}/destroy',[
+		'uses' => 'CobranzasController@destroy',
+		'as'   => 'admin.cobranzas.destroy'
+	]);
+
 });
 
 Route::get('admin/auth/login', [

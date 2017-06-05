@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Cobranza;
 
 class CobranzasController extends Controller
 {
@@ -82,6 +83,9 @@ class CobranzasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cobranza = Cobranza::find($id);
+        $cobranza->delete();
+
+        return redirect()->route('admin.pedidos.edit', $cobranza->pedido_id);
     }
 }

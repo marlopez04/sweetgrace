@@ -148,7 +148,10 @@
 
                 @foreach($pedido->cobranzas as $cobranza)
                 <tr>
-                  <td>{{ $cobranza->tipo }}</td>
+                  <td>
+                    <a href="{{ route('admin.cobranzas.destroy', $cobranza->id) }}" class='btn_danger'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    {{ $cobranza->tipo }}
+                  </td>
                   <td >
                     {{ date("d-m-Y", strtotime($cobranza->created_at)) }}
                   </td>

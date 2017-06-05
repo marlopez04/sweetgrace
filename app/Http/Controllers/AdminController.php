@@ -9,6 +9,7 @@ use App\Ingrediente;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,9 @@ class AdminController extends Controller
         $pedidos->load('cliente');
         $pedidos->load('user');
         $pedidos->load('cobranzas');
+
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('d/m/Y');
 
 /*
         $insumos = Insumo::all();
@@ -41,7 +45,8 @@ class AdminController extends Controller
         return view('admin.index')
             ->with('pedidos', $pedidos)
             ->with('insumos', $insumos)
-            ->with('ingredientes', $ingredientes);
+            ->with('ingredientes', $ingredientes)
+            ->with('sysdate', $sysdate);
     }
 
     /**
