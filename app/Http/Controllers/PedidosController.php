@@ -222,7 +222,7 @@ class PedidosController extends Controller
             $stock->delete();
 
 
-// selecciono las recetas, sumo los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
+            // selecciono las recetas, sumo los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
            $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                         FROM pedidoarticulos pa
@@ -232,7 +232,7 @@ class PedidosController extends Controller
                                         WHERE pedido_id = '{$id}'
                                         group by ri.ingrediente_id");
 
-// selecciono las recetas, sumo los insumos y los devuelve sumados (ingrediente_id, nombre, cantidad)
+            // selecciono las recetas, sumo los insumos y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
             $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
                                     FROM pedidoarticulos pa
@@ -242,7 +242,7 @@ class PedidosController extends Controller
                                     WHERE pedido_id = '{$id}'
                                     group by ri.insumo_id");
 
-//recorro la consulta de ingredientes y los agrego al stock del pedido
+            //recorro la consulta de ingredientes y los agrego al stock del pedido
             foreach ($dataingredientes as $ingrediente){
                 $stockingrediente = new StockIngrediente();
                 $stockingrediente->stock_id = $pedido->stock_id;
@@ -254,7 +254,7 @@ class PedidosController extends Controller
                 $stockingrediente->save();
             }
 
-//recorro la consulta de insumos y los agrego al stock del pedido
+            //recorro la consulta de insumos y los agrego al stock del pedido
             foreach ($datainsumos as $insumo){
                 $stockinsumo = new StockInsumo();
                 $stockinsumo->stock_id = $pedido->stock_id;
@@ -266,7 +266,7 @@ class PedidosController extends Controller
                 $stockinsumo->save();
             }
 
-//recupero el Stock completo
+            //recupero el Stock completo
             $stock = Stock::find($pedido->stock_id);
             $stock->load('stockinsumos','stockingredientes');
 
@@ -334,48 +334,53 @@ class PedidosController extends Controller
 
                 //se confirma el STOCK que posee el pedido
 
-        //cargo todo el stock y le cambio el estado a confirmado        
+                //cargo todo el stock y le cambio el estado a confirmado        
                 $stock = Stock::find($pedido->stock_id);
-                $stock->estado = 'confirmado';
-                $stock->save();
-                $stock->load('stockingredientes', 'stockinsumos');
+                //controlo que el pedido no alla sido entregado, para no duplicar el descuento del stock
+                if($stock->estado == 'pendiente'){
+                
+                    $stock->estado = 'confirmado';
+                    $stock->save();
+                    $stock->load('stockingredientes', 'stockinsumos');
 
 
-        //cargo los ingredientes/insumos del stock y actualizo los costos y cantidades
-                foreach ($stock->stockingredientes as $stockingrediente) {
+            //cargo los ingredientes/insumos del stock y actualizo los costos y cantidades
+                    foreach ($stock->stockingredientes as $stockingrediente) {
 
-                    $ingrediente = Ingrediente::find($stockingrediente->ingrediente_id);
+                        $ingrediente = Ingrediente::find($stockingrediente->ingrediente_id);
 
-                    if ($stockingrediente->tipo == 'ingreso'){
-                        $ingrediente->cantidad = $ingrediente->cantidad + $stockingrediente->cantidad;
-                        if($stockingrediente->costo_u <> 0 ){
-                            $ingrediente->costo_u = $stockingrediente->costo_u;
-                            $ingrediente->unidad = $stockingrediente->unidad;
+                        if ($stockingrediente->tipo == 'ingreso'){
+                            $ingrediente->cantidad = $ingrediente->cantidad + $stockingrediente->cantidad;
+                            if($stockingrediente->costo_u <> 0 ){
+                                $ingrediente->costo_u = $stockingrediente->costo_u;
+                                $ingrediente->unidad = $stockingrediente->unidad;
+                            }
+                        }else{
+                            $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
                         }
-                    }else{
-                        $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
+
+                        $ingrediente->save();
                     }
 
-                    $ingrediente->save();
-                }
+                    foreach ($stock->stockinsumos as $stockinsumo) {
 
-                foreach ($stock->stockinsumos as $stockinsumo) {
+                        $insumo = Insumo::find($stockinsumo->insumo_id);
 
-                    $insumo = Insumo::find($stockinsumo->insumo_id);
-
-                    if ($stockinsumo->tipo == 'ingreso'){
-                        $insumo->cantidad = $insumo->cantidad + $stockinsumo->cantidad;
-                        if($stockinsumo->costo_u <> 0){
-                            $insumo->costo_u = $stockinsumo->costo_u;
-                            $insumo->unidad = $stockinsumo->unidad;
+                        if ($stockinsumo->tipo == 'ingreso'){
+                            $insumo->cantidad = $insumo->cantidad + $stockinsumo->cantidad;
+                            if($stockinsumo->costo_u <> 0){
+                                $insumo->costo_u = $stockinsumo->costo_u;
+                                $insumo->unidad = $stockinsumo->unidad;
+                            }
+                        }else{
+                            $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
                         }
-                    }else{
-                        $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
-                    }
 
-                    $insumo->save();
+                        $insumo->save();
+    
+                    } //fin foreach stockinsumos
 
-                } //fin foreach stockinsumos
+                } //endif controla que no alla sido entregado ya el pedido
 
                 return redirect()->route('admin.pedidos.edit', $id);
 

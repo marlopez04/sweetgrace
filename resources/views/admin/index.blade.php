@@ -29,12 +29,12 @@
 								@foreach ($pedidos as $pedido)
 									<?php $cobrado = 0; ?>
 								@if ($pedido->estado == 'confirmado')
-									<tr bgcolor="#61FF69">
+									<tr>
 								@else
 									@if ($pedido->estado == 'a entregar')
-										<tr bgcolor="#6961FF">
+										<tr>
 									@else
-										<tr bgcolor="#61F7FF">
+										<tr>
 									@endif
 
 								@endif
