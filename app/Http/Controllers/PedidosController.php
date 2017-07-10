@@ -32,7 +32,24 @@ class PedidosController extends Controller
      */
     public function index()
     {
-        //
+
+        $pedidos = Pedido::orderBy('id', 'desc')->get();
+/*
+        $pedidos = Pedido::where('estado', '!=','entregado')
+                                ->orderBy('id', 'desc')->get();
+*/
+        $pedidos->load('cliente');
+        $pedidos->load('user');
+        $pedidos->load('cobranzas');
+
+
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('d/m/Y');
+
+         return view('admin.pedidos.index')
+            ->with('pedidos', $pedidos)
+            ->with('sysdate', $sysdate);
+
     }
 
     /**

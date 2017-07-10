@@ -9,8 +9,7 @@
 										 <li id="menu-academico" ><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span>Pedidos</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
 										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.create')}}">Nuevo Pedido</a></li>
-											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.create')}}">Pendientes</a></li>
-											<li id="menu-academico-boletim" ><a href="{{ route('admin.pedidos.create')}}">Entregados</a></li>
+											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.pedidos.index')}}">Todos los pedidos</a></li>
 										  </ul>
 										</li>
 										 <li id="menu-academico" ><a href="#"><i class="glyphicon glyphicon-gift"></i> <span>Articulos</span> <span class="fa fa-angle-right" style="float: right"></span></a>

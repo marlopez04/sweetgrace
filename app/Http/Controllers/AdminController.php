@@ -20,7 +20,12 @@ class AdminController extends Controller
      */
     public function index()
     {
+/*
         $pedidos = Pedido::all();
+        $saldo = Saldo::orderBy('id', 'desc')->take(1)->get();
+*/
+        $pedidos = Pedido::where('estado', '!=','entregado')
+                                ->orderBy('id', 'desc')->get();
         $pedidos->load('cliente');
         $pedidos->load('user');
         $pedidos->load('cobranzas');

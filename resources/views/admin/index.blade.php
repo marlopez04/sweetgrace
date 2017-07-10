@@ -23,7 +23,7 @@
 								<th>Cobrado</th>
 								<th>Debe</th>
 								<th>Estado</th>
-								<th>Guardar</th>
+								<th>Cobranza</th>
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
@@ -59,8 +59,29 @@
 										{{$cobrado}}
 									</td>
 									<td style="color:#ff3333"> $ {{$pedido->importe - $cobrado}}</td>
-									<td>{{$pedido->estado}}</td>
-									<td>{{$pedido->cobranza}}</td>
+                                    <td>
+                                    @if ($pedido->estado == 'confirmado')
+                                            <span class="label label-warning">{{$pedido->estado}}</span>
+                                    @else
+                                        @if ($pedido->estado == 'a entregar')
+                                            <span class="label label-primary">{{$pedido->estado}}</span>
+                                        @else
+                                            @if ($pedido->estado == 'pendiente')
+                                                <span class="label label-danger">{{$pedido->estado}}</span>
+                                            @else
+                                                <!--Entregado-->
+                                                <span class="label label-success">{{$pedido->estado}}</span>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    </td>
+                                    <td>
+                                        @if ($pedido->cobranza == 'debe')
+                                            <span class="label label-danger">{{$pedido->cobranza}}</span>
+                                        @else
+                                            <span class="label label-success">{{$pedido->cobranza}}</span>
+                                        @endif
+                                        </td>
 									<td>
 										<a href="{{ route('admin.pedidos.edit', $pedido->id) }}" class="btn btn-warning">Pedido</a>
 									</td>
