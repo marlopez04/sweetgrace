@@ -78,14 +78,14 @@
 											@endif
 										</td>
 										<td>
-										<a href="{{ route('admin.movimientos.edit', $movimiento->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-						
-										<a href="{{ route('admin.stocks.destroy', $movimiento->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+											<a href="{{ route('admin.movimientos.edit', $movimiento->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
 										</td>
+										<td>{{$movimiento->relacion}}</td>
 									</tr>
 								@endforeach
 								<tr>
 									<td></td>							
+									<td></td>
 									<td></td>
 									<th>TOTAL</th>
 									<td>${{$ingresos}}</td>

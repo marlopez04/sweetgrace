@@ -61,6 +61,16 @@ class StockIngredientesController extends Controller
         $stockingrediente->cantidad = $_GET['cantidad'];
         $stockingrediente->costo = $_GET['costo'];
 
+        $ingrediente = new Ingrediente::find($stockingrediente);
+
+        $stockingrediente->unidad = $ingrediente->unidad;
+
+        if ($stockingrediente->unidad == 100) {
+            $stockingrediente->costo_u = $stockingrediente->costo * 100 / $stockingrediente->cantidad;
+        }else{
+            $stockingrediente->costo_u = $stockingrediente->costo / $stockingrediente->cantidad;
+        }
+/*  Se quita esto para que al grabar el stock no se modifique la unidad del ingrediente INICIO
         if ($stockingrediente->cantidad >= 500) {
             $stockingrediente->unidad = 100;
             $stockingrediente->costo_u = $stockingrediente->costo * 100 / $stockingrediente->cantidad;
@@ -68,7 +78,7 @@ class StockIngredientesController extends Controller
             $stockingrediente->unidad = 1;
             $stockingrediente->costo_u = $stockingrediente->costo / $stockingrediente->cantidad;
         }
-
+Se quita esto para que al grabar el stock no se modifique la unidad del ingrediente FIN */
         $stockingrediente->save();
 
         $stock = Stock::find($stockingrediente->stock_id);

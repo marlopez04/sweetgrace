@@ -90,7 +90,7 @@ class MovimientosController extends Controller
 
     $movimientos = Movimiento::whereBetween('periodo', array($from, $to))
                                 ->where('estado', 'confirmado')->get();
-    $movimientos->load('user');
+    $movimientos->load('user', 'pedidos', 'stocks');
 //prueba 5 fin
 
     $saldoactual = $saldo[0]->importe;
@@ -163,7 +163,22 @@ class MovimientosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $movimiento = Movimiento::find($id);
+
+        if ($movimiento->relacion == 'stock') {
+            $movimiento->load('stocks');
+            dd($movimiento);
+            return redirect()->route('admin.stocks.edit',$movimiento->stocks->id);
+        }else{
+            if ($movimiento->relacion == 'pedido') {
+                $movimiento->load('pedido');
+                dd($movimiento);
+                return redirect()->route('admin.movimientos.index');
+            }else{
+
+            }
+
+        }
     }
 
     /**

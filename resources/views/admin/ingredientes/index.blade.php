@@ -42,9 +42,15 @@
 				@endif
 			</div>
 			 <div class="clearfix"> </div>
+
 		</div>
 	</div>
 @endforeach
+		<div class="clearfix"> </div>
+		<div class="text-center">
+			{!! $ingredientes->render()!!}
+		</div>
+		
 
 <script type="text/javascript">
 

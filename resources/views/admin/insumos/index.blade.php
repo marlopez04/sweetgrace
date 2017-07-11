@@ -45,6 +45,12 @@
 	</div>
 @endforeach
 
+
+		<div class="clearfix"> </div>
+		<div class="text-center">
+			{!! $insumos->render()!!}
+		</div>
+
 <script type="text/javascript">
 
         $(document).ready(function () {

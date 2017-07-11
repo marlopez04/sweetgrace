@@ -142,7 +142,9 @@ class StockController extends Controller
                 $ingrediente->cantidad = $ingrediente->cantidad + $stockingrediente->cantidad;
                 if($stockingrediente->costo_u <> 0 ){
                     $ingrediente->costo_u = $stockingrediente->costo_u;
+                    /*
                     $ingrediente->unidad = $stockingrediente->unidad;
+                    */
                 }
             }else{
                 $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
@@ -164,7 +166,9 @@ class StockController extends Controller
                 $insumo->cantidad = $insumo->cantidad + $stockinsumo->cantidad;
                 if($stockinsumo->costo_u <> 0){
                     $insumo->costo_u = $stockinsumo->costo_u;
+                    /*
                     $insumo->unidad = $stockinsumo->unidad;
+                    */
                 }
             }else{
                 $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;

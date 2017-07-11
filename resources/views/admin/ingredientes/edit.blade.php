@@ -15,6 +15,8 @@
 			{!!	Form::number('cantidad',$ingrediente->cantidad,['class'=>'form-control', 'required'])!!}
 			<h4>StockCritico</h4>
 			{!!	Form::number('stockcritico',$ingrediente->stockcritico,['class'=>'form-control', 'required'])!!}
+			<h4>Unidad</h4>
+			{!!	Form::number('unidad',$ingrediente->unidad,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
 		</div>
 		<div class="form-group">
 			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}

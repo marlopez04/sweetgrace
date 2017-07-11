@@ -12,7 +12,7 @@
 			<h4>Nombre</h4>
 			{!!	Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre del cliente', 'required'])!!}
 			<h4>Email</h4>
-			{!!	Form::email('email',null,['class'=>'form-control', 'placeholder'=>' hola@hola.com ' , 'required'])!!}
+			{!!	Form::email('email',null,['class'=>'form-control', 'placeholder'=>' hola@hola.com '])!!}
 			<h4>Telefono</h4>
 			{!!	Form::text('telefono',null,['class'=>'form-control','placeholder'=>' Ej 381-654321' ,'required'])!!}
 			<h4>Direccion</h4>

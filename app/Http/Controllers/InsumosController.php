@@ -18,7 +18,7 @@ class InsumosController extends Controller
      */
     public function index()
     {
-        $insumos = Insumo::orderBy('id', 'DESC')->paginate(5);
+        $insumos = Insumo::orderBy('id', 'DESC')->paginate(12);
         return view('admin.insumos.index')->with('insumos', $insumos);
     }
 
@@ -41,6 +41,7 @@ class InsumosController extends Controller
     public function store(Request $request)
     {
         $insumo = new Insumo($request->all());
+        $insumo->max = $request->cantidad;
         $insumo->save();
         
         Flash::warning('El insumo '. $insumo->name . ' ha sido creado con exito');
@@ -107,6 +108,9 @@ class InsumosController extends Controller
     {
         $insumo = Insumo::find($id);
         $insumo->fill($request->all());
+        if ($insumo->max < $request->cantidad) {
+            $insumo->max = $request->cantidad;
+        }
         $insumo->save();
 
         Flash::warning('El insumo '. $insumo->nombre . ' ha sido editado con exito');

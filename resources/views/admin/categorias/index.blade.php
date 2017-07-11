@@ -10,6 +10,11 @@
         <div class="women">
             <h4>Categorias</h4>
              <div class="clearfix"></div>   
+          <div class="contain">
+          <div class="gantt">
+            <a href="{{ route('admin.categorias.create') }}" class="btn btn-info">Registrar nueva Categoria</a>
+            </div>
+        </div>
         </div>
         <!-- grids_of_4 -->
         <div class="grids_of_4">
@@ -18,7 +23,7 @@
           <div class="grid1_of_4">
                      <div class="content_box"><a href="">
                       <h4><a href=""> {{$categoria->nombre}}</a></h4>
-                       <img src="{{ asset('imagenes/categorias/' . $categoria->imagen) }}" class="img" alt="">
+                       <img src="{{ asset('imagenes/categorias/' . $categoria->imagen) }}" class="img" alt="" style="width:200px;height:150px;">
                       </a>
                      <div class="grid_1 simpleCart_shelfItem">
                      <div class="item_add"><span class="item_price"></div>

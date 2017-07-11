@@ -5,7 +5,7 @@
                      <div class="content_box">
                       <h4>{{$articulo->nombre}}</h4>
                       <a href="#" class="articulo" data-id="{{ $articulo->id}}">
-                       <img src="{{ asset('imagenes/articulos/' . $articulo->imagen) }}" class="img" alt="" style="width:200;height:150;">
+                       <img src="{{ asset('imagenes/articulos/' . $articulo->imagen) }}" class="img" alt="" style="width:200px;height:150px;">
                       </a>
                      <div class="grid_1 simpleCart_shelfItem">
                      <div class="item_add"><span class="item_price">

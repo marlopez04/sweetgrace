@@ -18,7 +18,7 @@ class IngredientesController extends Controller
      */
     public function index()
     {
-        $ingredientes = Ingrediente::orderBy('id', 'DESC')->paginate(5);
+        $ingredientes = Ingrediente::orderBy('id', 'DESC')->paginate(12);
         return view('admin.ingredientes.index')->with('ingredientes', $ingredientes);
     }
 
@@ -41,6 +41,7 @@ class IngredientesController extends Controller
     public function store(Request $request)
     {
         $ingrediente = new Ingrediente($request->all());
+        $ingrediente->max = $request->cantidad;
         $ingrediente->save();
         
         Flash::warning('El ingrediente '. $ingrediente->nombre . ' ha sido creado con exito');
@@ -109,6 +110,9 @@ class IngredientesController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->fill($request->all());
+        if ($ingrediente->max < $request->cantidad) {
+            $ingrediente->max = $request->cantidad;
+        }
         $ingrediente->save();
 
         Flash::warning('El ingrediente '. $ingrediente->nombre . ' ha sido editado con exito');

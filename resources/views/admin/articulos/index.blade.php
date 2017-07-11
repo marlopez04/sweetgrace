@@ -112,6 +112,13 @@
         <div class="col-md-12">
 
     <div class="panel-title">
+
+        <div class="contain">
+          <div class="gantt">
+            <a href="{{ route('admin.articulos.create') }}" class="btn btn-info">Registrar nueva Articulo</a>
+            </div>
+        </div>
+
       <h4>Lista de Precio</h4>
       {!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'id' => 'lista_id']) !!}
             <h4>Categorias</h4>
@@ -127,7 +134,7 @@
                         @foreach ($categorias as $categoria)
                             <div style="display: none;">
                               <a href="#" class="categoria" data-id="{{ $categoria->id}}">
-                                <img data-u="image" src="{{asset('imagenes/categorias/' . $categoria->imagen)}}" />
+                                <img data-u="image" src="{{asset('imagenes/categorias/' . $categoria->imagen)}}" style="width:200px;height:150px;"/>
                                 </a>
                             </div>
                         @endforeach
