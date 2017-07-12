@@ -177,29 +177,45 @@ class PedidosController extends Controller
     {
         //recupero el pedido
         $pedido = Pedido::find($id);
-        $pago = 0;
+        $cobrado1 = 0;
 
         //recupero la fecha del dia y la transformo en un periodo EJ: 201705
         $sysdate = Carbon::now(); //recupero el sysdate
         $periodoactual = $sysdate->format('Ym');
 
         //Actualizo el importe del movimiento relacionado
+/*
         $movimiento = Movimiento::find($pedido->movimiento_id);
         $movimiento->importe = $pedido->importe;
         $movimiento->periodo = $periodoactual;
         $movimiento->save();
-
+*/
         if ($pedido->estado == 'pendiente'){
 
+            foreach($pedido->cobranzas as $cobranzap){
+                    $cobrado1 += $cobranzap->importe;
+            }
+
+            $deuda = $pedido->importe - $cobrado1;
+
             //controlo que el campo pago no este vacio
-            if($request->pago <> 0 and $pago == 0){
+            if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
+
+                $movimiento = new Movimiento();
+                $movimiento->tipo = 'ingreso';
+                $movimiento->user_id = \Auth::user()->id;
+                $movimiento->importe = 0;
+                $movimiento->estado = 'confirmado';
+                $movimiento->relacion = 'pedido';
+                $movimiento->save();
+
                 $cobranza = new Cobranza();
                 $cobranza->pedido_id = $id;
                 $cobranza->tipo = 'seña';
                 $cobranza->importe = $request->pago;
                 $cobranza->user_id = \Auth::user()->id;
+                $cobranza->movimiento_id = $movimiento->id;
                 $cobranza->save();
-                $pago = 1;
             }
 
             //recupero las cobranzas
@@ -213,7 +229,7 @@ class PedidosController extends Controller
             }
 
             //calculo cuanto se debe
-            if($pedido->importe <= $cobrado){
+            if($pedido->importe == $cobrado){
                 $pedido->cobranza = 'pagado';
             }
 
@@ -297,15 +313,31 @@ class PedidosController extends Controller
             $pedido->entrega = $request->entrega;
             $pedido->save();
 
+            foreach($pedido->cobranzas as $cobranzap){
+                    $cobrado1 += $cobranzap->importe;
+            }
 
-            if($request->pago <> 0 and $pago == 0){
+            $deuda = $pedido->importe - $cobrado1;
+
+            //controlo que el campo pago no este vacio
+            if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
+
+                $movimiento = new Movimiento();
+                $movimiento->tipo = 'ingreso';
+                $movimiento->user_id = \Auth::user()->id;
+                $movimiento->importe = 0;
+                $movimiento->relacion = 'pedido';
+                $movimiento->estado = 'confirmado';
+                $movimiento->detalle = 'Ingreso por el pedido N° ' . $pedido->id;
+                $movimiento->save();
+
                 $cobranza = new Cobranza();
                 $cobranza->pedido_id = $id;
                 $cobranza->tipo = 'pago';
                 $cobranza->importe = $request->pago;
                 $cobranza->user_id = \Auth::user()->id;
+                $cobranza->movimiento_id = $movimiento->id;
                 $cobranza->save();
-                $pago = 1;
             }
 
             //recupero las cobranzas
@@ -318,22 +350,38 @@ class PedidosController extends Controller
             }
 
             //calculo cuanto se debe
-            if($pedido->importe <= $cobrado){
+            if($pedido->importe == $cobrado){
                 $pedido->cobranza = 'pagado';
             }
 
 
             if($pedido->estado == 'entregado'){
 
+                foreach($pedido->cobranzas as $cobranzap){
+                        $cobrado1 += $cobranzap->importe;
+                }
 
-                if($request->pago <> 0 and $pago == 0){
+                $deuda = $pedido->importe - $cobrado1;
+
+                //controlo que el campo pago no este vacio
+                if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
+
+                    $movimiento = new Movimiento();
+                    $movimiento->tipo = 'ingreso';
+                    $movimiento->user_id = \Auth::user()->id;
+                    $movimiento->importe = 0;
+                    $movimiento->relacion = 'pedido';
+                    $movimiento->estado = 'confirmado';
+                    $movimiento->detalle = 'Ingreso por el pedido N° ' . $pedido->id;
+                    $movimiento->save();
+
                     $cobranza = new Cobranza();
                     $cobranza->pedido_id = $id;
                     $cobranza->tipo = 'pago';
                     $cobranza->importe = $request->pago;
                     $cobranza->user_id = \Auth::user()->id;
+                    $cobranza->movimiento_id = $movimiento->id;
                     $cobranza->save();
-                    $pago = 1;
                 }
 
                 //recupero las cobranzas
@@ -345,7 +393,7 @@ class PedidosController extends Controller
                 }
 
                 //calculo cuanto se debe
-                if($pedido->importe <= $cobrado){
+                if($pedido->importe == $cobrado){
                     $pedido->cobranza = 'pagado';
                 }
 
@@ -366,15 +414,7 @@ class PedidosController extends Controller
 
                         $ingrediente = Ingrediente::find($stockingrediente->ingrediente_id);
 
-                        if ($stockingrediente->tipo == 'ingreso'){
-                            $ingrediente->cantidad = $ingrediente->cantidad + $stockingrediente->cantidad;
-                            if($stockingrediente->costo_u <> 0 ){
-                                $ingrediente->costo_u = $stockingrediente->costo_u;
-                                $ingrediente->unidad = $stockingrediente->unidad;
-                            }
-                        }else{
-                            $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
-                        }
+                        $ingrediente->cantidad = $ingrediente->cantidad - $stockingrediente->cantidad;
 
                         $ingrediente->save();
                     }
@@ -383,15 +423,7 @@ class PedidosController extends Controller
 
                         $insumo = Insumo::find($stockinsumo->insumo_id);
 
-                        if ($stockinsumo->tipo == 'ingreso'){
-                            $insumo->cantidad = $insumo->cantidad + $stockinsumo->cantidad;
-                            if($stockinsumo->costo_u <> 0){
-                                $insumo->costo_u = $stockinsumo->costo_u;
-                                $insumo->unidad = $stockinsumo->unidad;
-                            }
-                        }else{
-                            $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
-                        }
+                        $insumo->cantidad = $insumo->cantidad - $stockinsumo->cantidad;
 
                         $insumo->save();
     
@@ -434,15 +466,18 @@ class PedidosController extends Controller
         $cliente = Cliente::find($id);
         $categorias = Categoria::all();
 
+/* Se cambia las relaciones por eso no se relaciona el movimiento al pedido, sino la cobranza al movimiento,
+//para poder usar el pago en cuotas, el movimiento se crea y solo se relaciona con el stock, no con el pedido
+12/07/2017
+*/
         //1°
         //Crea el movimiento contable postivo por tratarse de un ingreso
         $movimiento = new Movimiento();
-        $movimiento->tipo = 'ingreso';
+        $movimiento->tipo = 'egreso';
         $movimiento->user_id = \Auth::user()->id;
         $movimiento->importe = 0;
         $movimiento->relacion = 'pedido';
         $movimiento->save();
-
 
         //2°
         //arma una variable para grabar un stock nuevo
@@ -463,7 +498,7 @@ class PedidosController extends Controller
         $nuevopedido->estado = 'pendiente';
         $nuevopedido->user_id = \Auth::user()->id;
         $nuevopedido->stock_id = $nuevostock->id;
-        $nuevopedido->movimiento_id = $movimiento->id;
+//        $nuevopedido->movimiento_id = $movimiento->id;
         $nuevopedido->save();
 
         $movimiento->detalle = 'Ingreso por el pedido N° ' . $nuevopedido->id;

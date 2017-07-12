@@ -160,7 +160,7 @@ footer {
             <th class="service">Articulo</th>
             <th>Precio</th>
             <th>Costo</th>
-            <th>Diferencia</th>
+            <th>Utilidad</th>
           </tr>
         </thead>
         <tbody>

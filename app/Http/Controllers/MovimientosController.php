@@ -90,7 +90,7 @@ class MovimientosController extends Controller
 
     $movimientos = Movimiento::whereBetween('periodo', array($from, $to))
                                 ->where('estado', 'confirmado')->get();
-    $movimientos->load('user', 'pedidos', 'stocks');
+    $movimientos->load('user', 'cobranzas', 'stocks');
 //prueba 5 fin
 
     $saldoactual = $saldo[0]->importe;

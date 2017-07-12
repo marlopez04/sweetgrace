@@ -86,6 +86,12 @@ class CobranzasController extends Controller
         $cobranza = Cobranza::find($id);
         $cobranza->delete();
 
+        $movimiento = Movimiento::find($cobranza->movimiento_id);
+        $movimiento->delete();
+
+        $pedido = Pedido::find($cobranza->pedido_id)
+        $pedido->cobranza = 'debe';
+
         return redirect()->route('admin.pedidos.edit', $cobranza->pedido_id);
     }
 }

@@ -13,8 +13,9 @@ class SaldoSeeder extends Seeder
     {
 		DB::table('saldos')->insert([
 			'periodo'       => '201701',
-			'importe'     => '10000'
+			'importe'     => '0'
 			]);
+/*
         DB::table('saldos')->insert([
             'periodo'       => '201702',
             'importe'     => '24500'
@@ -27,5 +28,6 @@ class SaldoSeeder extends Seeder
             'periodo'       => '201704',
             'importe'     => '39300'
             ]);
+*/
     }
 }

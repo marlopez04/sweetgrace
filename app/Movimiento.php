@@ -9,9 +9,9 @@ class Movimiento extends Model
     protected $table = "movimientos";
     protected $fillable = ['detalle','importe','user_id','tipo','estado', 'periodo', 'relacion'];
 
-	public function pedidos()
+	public function cobranzas()
     {
-    	return $this->hasMany('App\Pedido');
+    	return $this->hasMany('App\Cobranza');
     }
 
     public function user()

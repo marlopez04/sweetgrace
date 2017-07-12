@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         // $this->call(UserTableSeeder::class);
+        $this->call(SaldoSeeder::class);
+/*
         $this->call(UserSeeder::class);
         $this->call(CategoriaSeeder::class);
         $this->call(ListaSeeder::class);
@@ -25,9 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(InsumoSeeder::class);
         $this->call(RecetaIngredienteSeeder::class);
         $this->call(RecetaInsumoSeeder::class);
-        $this->call(SaldoSeeder::class);
         $this->call(MovimientoSeeder::class);
-
+*/
         Model::reguard();
     }
 }

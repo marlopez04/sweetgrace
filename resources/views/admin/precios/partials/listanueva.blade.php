@@ -3,7 +3,7 @@
                 <th>Articulo</th>
                 <th>Precio</th>
                 <th>Costo</th>
-                <th>Diferencia</th>
+                <th>Utilidad</th>
               </thead>
               <tbody>
                 @foreach($listaprecios->articulos as $articulo)

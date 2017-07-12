@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Cobranza extends Model
 {
     protected $table = "cobranzas";
-    protected $fillable = ['pedido_id','tipo','importe','user_id'];
+    protected $fillable = ['pedido_id', 'movimiento_id', 'tipo','importe','user_id'];
 
     public function pedido()
     {
     	return $this->belongsTo('App\Pedido', 'pedido_id', 'id');
+    }
+
+    public function movimiento()
+    {
+        return $this->belongsTo('App\Movimiento', 'movimiento_id', 'id');
     }
 
     public function user()
