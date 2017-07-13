@@ -133,23 +133,23 @@ class ArticulosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::find($id);
+        $articulo = Articulo::find($id);
 
         if ($request->file('imagen'))
         {
-            $path = public_path() . '/imagenes/categorias/';
-            unlink($path . $categoria->imagen);
+            $path = public_path() . '/imagenes/articulos/';
+            unlink($path . $articulo->imagen);
 
             $file = $request->file('imagen');
-            $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
+            $nombre = 'articulo_' . time() .'.' . $file->getClientOriginalExtension();
             $file->move($path, $nombre);     
         }
 
-        $categoria->fill($request->all());
-        $categoria->imagen = $nombre;
-        $categoria->save();
+        $articulo->fill($request->all());
+        $articulo->imagen = $nombre;
+        $articulo->save();
 
-        return redirect()->route('admin.categorias.index');
+        return redirect()->route('admin.articulos.index');
     }
 
     /**

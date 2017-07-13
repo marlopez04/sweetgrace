@@ -136,7 +136,11 @@
                     <td>{{ $pedido->cliente->nombre }}</td>
                     <td>{!! Form::date('entrega',Carbon\Carbon::parse($pedido->entrega),['class'=>'form-control', 'required'])!!}</td>
                     <td>{!! Form::number('pago',0,['class'=>'form-control'])!!}</td>
-                    <td>{!! Form::select('estado', ['pendiente' => 'PENDIENTE','confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
+                    @if ($pedido->estaod <> 'entregado')
+                      <td>{!! Form::select('estado', ['borrar' => 'BORRAR','pendiente' => 'PENDIENTE','confirmado' => 'CONFIRMADO', 'a entregar' => 'A ENTREGAR', 'entregado' => 'ENTREGADO'], $pedido->estado, ['class' => 'form-control select-category'])!!}</td>
+                    @else
+                      <td>{!!$pedido->estado!!}</td>
+                    @endif
                     
                     <td>{!! Form::submit('Confirmar',['class' =>'btn btn-primary']) !!}</td>
                   </tr>

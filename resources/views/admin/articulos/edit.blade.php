@@ -27,9 +27,14 @@
 		<h4>Precio</h4>
 			{!!	Form::number('precio',$articulo->precio,['class'=>'form-control', 'required'])!!}
 
+		<div class="from-group">
+			<h4>Foto Actual</h4>
+               <img src="{{ asset('imagenes/articulos/' . $articulo->imagen) }}" class="img" alt="">
+		</div>
+
 		<div class="form-group">
 			<h4>Imagen</h4>
-			{!! Form::file('imagen',['required'])!!}
+			{!! Form::file('imagen',['class'=>'form-control'])!!}
 		</div>
 		<div class="form-group">
 			{!! Form::submit('Guardar',['class' => 'btn btn-primary']) !!}

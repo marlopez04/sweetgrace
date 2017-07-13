@@ -17,6 +17,8 @@
 			{!!	Form::number('stockcritico',$ingrediente->stockcritico,['class'=>'form-control', 'required'])!!}
 			<h4>Unidad</h4>
 			{!!	Form::number('unidad',$ingrediente->unidad,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
+			<h4>Costo</h4>
+			{!!	Form::text('costo',$ingrediente->costo_u,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
 		</div>
 		<div class="form-group">
 			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}

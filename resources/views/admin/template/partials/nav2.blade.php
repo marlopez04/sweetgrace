@@ -28,7 +28,7 @@
 											<li id="menu-academico-avaliacoes" ><a href="{{ route('admin.clientes.index')}}">Clientes</a></li>
 										  </ul>
 										</li>
-										<li id="menu-academico" ><a href=""><i class="glyphicon glyphicon-user"></i> <span>Balance</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+										<li id="menu-academico" ><a href=""><i class="glyphicon glyphicon-usd"></i> <span>Balance</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
 										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.movimientos.index')}}">Ingresos / Egresos</a></li>
 										  </ul>

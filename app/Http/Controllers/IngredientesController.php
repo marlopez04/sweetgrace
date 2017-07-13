@@ -41,6 +41,7 @@ class IngredientesController extends Controller
     public function store(Request $request)
     {
         $ingrediente = new Ingrediente($request->all());
+        $ingrediente->costo_u = doubleval($request->costo);
         $ingrediente->max = $request->cantidad;
         $ingrediente->save();
         
@@ -110,6 +111,7 @@ class IngredientesController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->fill($request->all());
+        $ingrediente->costo_u = doubleval($request->costo);
         if ($ingrediente->max < $request->cantidad) {
             $ingrediente->max = $request->cantidad;
         }

@@ -175,6 +175,11 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        //controlo si el estado esta en BORRAR
+        if ($request->estado == 'borrar') {
+            return redirect()->route('admin.pedidos.destroy', $id);
+        }
         //recupero el pedido
         $pedido = Pedido::find($id);
         $cobrado1 = 0;
@@ -550,6 +555,7 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pedido = Pedido::find($id);
+        dd($pedido);
     }
 }

@@ -41,6 +41,7 @@ class InsumosController extends Controller
     public function store(Request $request)
     {
         $insumo = new Insumo($request->all());
+        $insumo->costo_u = doubleval($request->costo);
         $insumo->max = $request->cantidad;
         $insumo->save();
         
@@ -108,6 +109,7 @@ class InsumosController extends Controller
     {
         $insumo = Insumo::find($id);
         $insumo->fill($request->all());
+        $insumo->costo_u = doubleval($request->costo);
         if ($insumo->max < $request->cantidad) {
             $insumo->max = $request->cantidad;
         }
