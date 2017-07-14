@@ -8,7 +8,7 @@ class Pedido extends Model
 {
 
     protected $table = "pedidos";
-    protected $fillable = ['entrega','importe','cliente_id','user_id','estado','stock_id'];
+    protected $fillable = ['entrega','importe','cliente_id','user_id','estado','stock_id','cobranza'];
 
 	public function pedidoarticulos()
     {

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Cobranza;
+use App\Pedido;
+use App\Movimiento;
 
 class CobranzasController extends Controller
 {
@@ -89,8 +91,9 @@ class CobranzasController extends Controller
         $movimiento = Movimiento::find($cobranza->movimiento_id);
         $movimiento->delete();
 
-        $pedido = Pedido::find($cobranza->pedido_id)
+        $pedido = Pedido::find($cobranza->pedido_id);
         $pedido->cobranza = 'debe';
+        $pedido->save();
 
         return redirect()->route('admin.pedidos.edit', $cobranza->pedido_id);
     }

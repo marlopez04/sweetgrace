@@ -165,20 +165,8 @@ class MovimientosController extends Controller
     {
         $movimiento = Movimiento::find($id);
 
-        if ($movimiento->relacion == 'stock') {
-            $movimiento->load('stocks');
-            dd($movimiento);
-            return redirect()->route('admin.stocks.edit',$movimiento->stocks->id);
-        }else{
-            if ($movimiento->relacion == 'pedido') {
-                $movimiento->load('pedido');
-                dd($movimiento);
-                return redirect()->route('admin.movimientos.index');
-            }else{
-
-            }
-
-        }
+        return view('admin.movimientos.edit')
+            ->with('movimiento', $movimiento);
     }
 
     /**
@@ -190,7 +178,13 @@ class MovimientosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $movimiento = Movimiento::find($id);
+
+        $movimiento->fill($request->all());
+        $movimiento->user_id = \Auth::user()->id;
+        $movimiento->save();
+
+        return redirect()->route('admin.articulos.index');
     }
 
     /**
@@ -221,7 +215,7 @@ class MovimientosController extends Controller
 //recupero los movimientos en ese intervalo
     $movimientos2 = Movimiento::whereBetween('periodo', array($from, $to))
                                 ->where('estado', 'confirmado')->get();
-    $movimientos2->load('user');
+$movimientos2->load('user', 'cobranzas', 'stocks');
 
 
 //recupero el saldo del periodo1
@@ -251,6 +245,9 @@ class MovimientosController extends Controller
 
     public function destroy($id)
     {
-        //
+        $movimiento = Movimiento::find($id);
+        $movimiento->delete();
+
+        return redirect()->route('admin.movimientos.index');
     }
 }

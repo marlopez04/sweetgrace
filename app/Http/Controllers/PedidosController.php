@@ -189,29 +189,40 @@ class PedidosController extends Controller
         $periodoactual = $sysdate->format('Ym');
 
         //Actualizo el importe del movimiento relacionado
-/*
-        $movimiento = Movimiento::find($pedido->movimiento_id);
-        $movimiento->importe = $pedido->importe;
-        $movimiento->periodo = $periodoactual;
-        $movimiento->save();
-*/
         if ($pedido->estado == 'pendiente'){
 
+            //calculo cuanto se cobro del pedido para poder saber cuanto debe
             foreach($pedido->cobranzas as $cobranzap){
                     $cobrado1 += $cobranzap->importe;
             }
 
+            //en base a lo cobrado calculo la deuda
             $deuda = $pedido->importe - $cobrado1;
 
             //controlo que el campo pago no este vacio
-            if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
+            if($request->pago <> 0 and $pedido->cobranza <> 'pagado'){
+
+                if ($deuda < $request->pago) {
+                    $request->pago = $deuda;
+                    $pedido->cobranza = 'pagado';
+                    $pedido->save();
+                }
+
+                $deuda = $deuda - $request->pago;
+
+                if($deuda == 0 and $pedido->cobranza <> 'pagado'){
+                    $pedido->cobranza = 'pagado';
+                    $pedido->save();
+                }
 
                 $movimiento = new Movimiento();
                 $movimiento->tipo = 'ingreso';
                 $movimiento->user_id = \Auth::user()->id;
-                $movimiento->importe = 0;
+                $movimiento->importe = $request->pago;
                 $movimiento->estado = 'confirmado';
                 $movimiento->relacion = 'pedido';
+                $movimiento->detalle = 'Ingreso por el pedido N° ' . $pedido->id;
+                $movimiento->periodo = $periodoactual;
                 $movimiento->save();
 
                 $cobranza = new Cobranza();
@@ -223,30 +234,16 @@ class PedidosController extends Controller
                 $cobranza->save();
             }
 
-            //recupero las cobranzas
-            $pedido->load('cobranzas');
-            $cobrado = 0;
-
-            //sumo todo lo cobrado
-            foreach($pedido->cobranzas as $cobranzap){
-                $cobrado = $cobranzap->importe;
-
-            }
-
-            //calculo cuanto se debe
-            if($pedido->importe == $cobrado){
-                $pedido->cobranza = 'pagado';
-            }
-
-
             //grabo el stock_id en una variable
             $stockviejo_id = $pedido->stock_id;
+
+            $stock = Stock::find($stockviejo_id);
 
             //creo un nuevo stock
             $nuevostock = new Stock();
             $nuevostock->tipo = 'negativo';
             $nuevostock->user_id = \Auth::user()->id;
-            $nuevostock->movimiento_id = $movimiento->id;
+            $nuevostock->movimiento_id = $stock->movimiento_id;
             $nuevostock->save();
 
             //asigno el nuevo stock al pedido        
@@ -256,7 +253,7 @@ class PedidosController extends Controller
             $pedido->save();
 
             //borro el viejo stock
-            $stock = Stock::find($stockviejo_id);
+
             $stock->delete();
 
 
@@ -314,7 +311,7 @@ class PedidosController extends Controller
 
         }else{ //controlo el cambio del pedido que ya paso por "pendiente" a 'para entregar'/'entregado'
 
-            $pedido->estado = $request->estado;
+
             $pedido->entrega = $request->entrega;
             $pedido->save();
 
@@ -325,15 +322,29 @@ class PedidosController extends Controller
             $deuda = $pedido->importe - $cobrado1;
 
             //controlo que el campo pago no este vacio
-            if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
+            if($request->pago <> 0 and $pedido->cobranza <> 'pagado'){
+
+                if ($deuda < $request->pago) {
+                    $request->pago = $deuda;
+                    $pedido->cobranza = 'pagado';
+                    $pedido->save();
+                }
+
+                $deuda = $deuda - $request->pago;
+
+                if($deuda == 0 and $pedido->cobranza <> 'pagado'){
+                    $pedido->cobranza = 'pagado';
+                    $pedido->save();
+                }
 
                 $movimiento = new Movimiento();
                 $movimiento->tipo = 'ingreso';
                 $movimiento->user_id = \Auth::user()->id;
-                $movimiento->importe = 0;
+                $movimiento->importe = $request->pago;
                 $movimiento->relacion = 'pedido';
                 $movimiento->estado = 'confirmado';
                 $movimiento->detalle = 'Ingreso por el pedido N° ' . $pedido->id;
+                $movimiento->periodo = $periodoactual;
                 $movimiento->save();
 
                 $cobranza = new Cobranza();
@@ -345,62 +356,10 @@ class PedidosController extends Controller
                 $cobranza->save();
             }
 
-            //recupero las cobranzas
-            $pedido->load('cobranzas');
-            $cobrado = 0;
+            if($pedido->estado <> 'entregado' and $request->estado = 'entregado'){
 
-            //sumo todo lo cobrado
-            foreach($pedido->cobranzas as $cobranzap){
-                $cobrado +=  $cobranzap->importe;
-            }
-
-            //calculo cuanto se debe
-            if($pedido->importe == $cobrado){
-                $pedido->cobranza = 'pagado';
-            }
-
-
-            if($pedido->estado == 'entregado'){
-
-                foreach($pedido->cobranzas as $cobranzap){
-                        $cobrado1 += $cobranzap->importe;
-                }
-
-                $deuda = $pedido->importe - $cobrado1;
-
-                //controlo que el campo pago no este vacio
-                if($request->pago <> 0 and $pedido->cobranza <> 'pagado' and $deuda >= $request->pago){
-
-                    $movimiento = new Movimiento();
-                    $movimiento->tipo = 'ingreso';
-                    $movimiento->user_id = \Auth::user()->id;
-                    $movimiento->importe = 0;
-                    $movimiento->relacion = 'pedido';
-                    $movimiento->estado = 'confirmado';
-                    $movimiento->detalle = 'Ingreso por el pedido N° ' . $pedido->id;
-                    $movimiento->save();
-
-                    $cobranza = new Cobranza();
-                    $cobranza->pedido_id = $id;
-                    $cobranza->tipo = 'pago';
-                    $cobranza->importe = $request->pago;
-                    $cobranza->user_id = \Auth::user()->id;
-                    $cobranza->movimiento_id = $movimiento->id;
-                    $cobranza->save();
-                }
-
-                //recupero las cobranzas
-                $pedido->load('cobranzas');
-
-                //sumo todo lo cobrado
-                foreach($pedido->cobranzas as $cobranzap){
-                    $cobrado += $cobranzap->importe;
-                }
-
-                //calculo cuanto se debe
-                if($pedido->importe == $cobrado){
-                    $pedido->cobranza = 'pagado';
-                }
+                $pedido->estado = $request->estado;
+                $pedido->save();
 
                 //se confirma el STOCK que posee el pedido
 
@@ -440,6 +399,9 @@ class PedidosController extends Controller
 
             } //fin de if control de estado en ENTREGADO
 
+            $pedido->estado = $request->estado;
+            $pedido->save();
+
             return redirect()->route('admin.pedidos.edit', $id);
 
         } //fin de primer if control de estado en PENDIENTE
@@ -449,6 +411,22 @@ class PedidosController extends Controller
 
     public function imprimir($id)
     {
+        $pedidoc = Pedido::find($id);
+        $pedidoc->load('cobranzas');
+        $cobranzat = 0;
+
+        foreach ($pedidoc->cobranzas as $cobranzap) {
+            $cobranzat += $cobranzap->importe;
+        }
+
+        if($pedidoc->importe == $cobranzat){
+            dd("son iguales");
+        }else{
+            dd("no son iguales");
+        }
+
+        dd($cobranzat . " " . $pedido->importe);
+/*
         $html = view('admin.precios.partials.imprimir')
                    ->with('listaprecios', $listaprecios);
 
@@ -457,6 +435,7 @@ class PedidosController extends Controller
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream('listaprecio');
+*/
     }
 
     /**
@@ -556,6 +535,7 @@ class PedidosController extends Controller
     public function destroy($id)
     {
         $pedido = Pedido::find($id);
+        $pedido->load('pedidoarticulos', 'cobranzas','stock');
         dd($pedido);
     }
 }

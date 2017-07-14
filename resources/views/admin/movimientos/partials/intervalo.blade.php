@@ -38,14 +38,21 @@
 						@endif
 					</td>
 					<td>
-					<a href="{{ route('admin.movimientos.edit', $movimiento2->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-	
-					<a href="{{ route('admin.stocks.destroy', $movimiento2->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+					@if ($movimiento2->relacion == 'pedido')
+						<a href="{{ route('admin.pedidos.edit', $movimiento2->cobranzas->pedido_id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+						@else
+							@if ($movimiento2->relacion == 'stock')
+								<a href="{{ route('admin.stocks.edit', $movimiento2->stocks->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+							@else
+								<a href="{{ route('admin.movimientos.edit', $movimiento2->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+							@endif
+						@endif
 					</td>
 				</tr>
 			@endforeach
 			<tr>
 				<td></td>							
+				<td></td>
 				<td></td>
 				<th>TOTAL</th>
 				<td>${{$ingresos2}}</td>

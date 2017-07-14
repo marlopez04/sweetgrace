@@ -15,7 +15,7 @@
 				<?php $egresos = 0; ?>
 				<!-- status -->
 				<div class="contain">
-					<a href="{{ route('admin.movimientos.create') }}" class="btn btn-info">Nueva Movimiento</a><hr>
+					<a href="{{ route('admin.movimientos.create') }}" class="btn btn-info">Nuevo Movimiento</a><hr>
 					
 					<table class="table table-striped">
 						<thead>
@@ -78,9 +78,16 @@
 											@endif
 										</td>
 										<td>
-											<a href="{{ route('admin.movimientos.edit', $movimiento->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+											@if ($movimiento->relacion == 'pedido')
+											<a href="{{ route('admin.pedidos.edit', $movimiento->cobranzas->pedido_id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+											@else
+												@if ($movimiento->relacion == 'stock')
+													<a href="{{ route('admin.stocks.edit', $movimiento->stocks->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+												@else
+													<a href="{{ route('admin.movimientos.edit', $movimiento->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+												@endif
+											@endif
 										</td>
-										<td>{{$movimiento->relacion}}</td>
 									</tr>
 								@endforeach
 								<tr>

@@ -11,7 +11,7 @@ class Movimiento extends Model
 
 	public function cobranzas()
     {
-    	return $this->hasMany('App\Cobranza');
+    	return $this->hasOne('App\Cobranza');
     }
 
     public function user()
@@ -21,7 +21,7 @@ class Movimiento extends Model
 
     public function stocks()
     {
-    	return $this->hasMany('App\Stock');
+    	return $this->hasOne('App\Stock');
     }
 
 }
