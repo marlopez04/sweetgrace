@@ -24,8 +24,8 @@
 				<tbody>
 					<tr>
 						<td>{!!	Form::text('nombre',$listaprecio->nombre,['class'=>'form-control','required'])!!}</td>
-						<td>{!!	Form::date('vigencia',$listaprecio->vigencia_desde,['class'=>'form-control', 'required'])!!}</td>
-						<td>{!!	Form::date('vigencia',$listaprecio->vigencia_hasta,['class'=>'form-control', 'required'])!!}</td>
+						<td>{!!	Form::date('vigencia_desde',$listaprecio->vigencia_desde,['class'=>'form-control', 'required'])!!}</td>
+						<td>{!!	Form::date('vigencia_hasta',$listaprecio->vigencia_hasta,['class'=>'form-control', 'required'])!!}</td>
 						<td>{!!	Form::submit('Guardar',['class' =>'btn btn-primary']) !!}</td>
 					</tr>
 				</tbody>

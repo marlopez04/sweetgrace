@@ -61,7 +61,7 @@ class StockIngredientesController extends Controller
         $stockingrediente->cantidad = $_GET['cantidad'];
         $stockingrediente->costo = $_GET['costo'];
 
-        $ingrediente = new Ingrediente::find($stockingrediente);
+        $ingrediente = Ingrediente::find($stockingrediente->ingrediente_id);
 
         $stockingrediente->unidad = $ingrediente->unidad;
 

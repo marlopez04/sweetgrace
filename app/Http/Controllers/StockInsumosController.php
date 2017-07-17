@@ -58,14 +58,14 @@ class StockInsumosController extends Controller
         $stockinsumo->cantidad = $_GET['cantidad'];
         $stockinsumo->costo = $_GET['costo'];
 
-        $insumo = new Insumo::find($stockinsumo);
+        $insumo = Insumo::find($stockinsumo->insumo_id);
 
         $stockinsumo->unidad = $insumo->unidad;
 
         if ($insumo->unidad == 100) {
-            $stockingrediente->costo_u = $stockingrediente->costo * 100 / $stockingrediente->cantidad;
+            $stockinsumo->costo_u = $stockinsumo->costo * 100 / $stockinsumo->cantidad;
         }else{
-            $stockingrediente->costo_u = $stockingrediente->costo / $stockingrediente->cantidad;
+            $stockinsumo->costo_u = $stockinsumo->costo / $stockinsumo->cantidad;
         }
 /*  Se quita esto para que al grabar el stock no se modifique la unidad del ingrediente INICIO
 

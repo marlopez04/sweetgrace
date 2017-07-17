@@ -12,7 +12,7 @@
 			<div class="panel-body">
 				<!-- status -->
 				<div class="contain">
-					<a href="{{ route('admin.stocks.create') }}" class="btn btn-info">Nueva Stock</a><hr>
+					<a href="{{ route('admin.stocks.create') }}" class="btn btn-info">Nuevo Stock</a><hr>
 					<div class="gantt">
 						<table class="table table-striped">
 							<thead>

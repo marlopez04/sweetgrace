@@ -86,6 +86,7 @@ class UsersController extends Controller
 
         //esta linea de abajo reemplaza
         $user ->fill($request->all());
+        $user ->password = bcrypt($request -> password);
         /* todo lo que yo tengo escrito en comentarios
             es una manera mas sencilla de tomar todo lo que trae
             el request y ponerlo en el objeto user, para luego ser

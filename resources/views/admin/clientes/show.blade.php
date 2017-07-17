@@ -28,7 +28,10 @@
 						<td>{{$cliente->telefono}}</td>
 						<td>{{$cliente->direccion}}</td>
 						<td>{{$cliente->email}}</td>
-						<td><a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a></td>
+						<td><a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
+							<a href="{{ route('admin.clientes.destroy', $cliente->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+						</td>
+
 					</tr>
 				</tbody>
 			</table>
@@ -45,7 +48,6 @@
 
 						<table class="table table-hover table-striped">
 							<thead>
-								<th>Editar</th>
 								<th>Fecha pedido</th>
 								<th>Fecha entrega</th>
 								<th>Dias restantes</th>
@@ -53,48 +55,67 @@
 								<th>Cobrado</th>
 								<th>Debe</th>
 								<th>Estado</th>
+								<th>Cobranza</th>
 							</thead>
 							<tbody>
 								@foreach ($pedidos as $pedido)
+									<?php $cobrado = 0; ?>
 								@if ($pedido->estado == 'confirmado')
-									<tr class="table-warning">
+									<tr>
 								@else
 									@if ($pedido->estado == 'a entregar')
-										<tr class="table-success">
+										<tr>
 									@else
-										<tr class="table-danger">
+										<tr>
 									@endif
 
 								@endif
-									<td>
-										<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
-									</td>
+								
 									<td>
 									{{ $pedido->created_at->format('d/m/Y') }}
 									</td>
-									<td> {{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }}</td>
+<!--									{{ Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y') }} -->
+									<td>{{Carbon\Carbon::parse($pedido->entrega)->format('d/m/Y')}}</td>
 									</td>
-									<td>
-										@if ($pedido->estado == 'entregado')
-											ENTREGADO
-										@else
-											{{ $sysdate->diffInDays(Carbon\Carbon::parse($pedido->entrega)) }}</td>
-										@endif
+									<td>{{ Carbon\Carbon::parse($pedido->entrega)->diffInDays(Carbon\Carbon::parse($sysdate)) }}</td>
 									<td>${{$pedido->importe}}</td>
 									<td>$
-										<?php $cobrado = 0; ?>
 										@foreach($pedido->cobranzas as $cobranza)
-										<?php $cobrado = $cobrado + $cobranza->importe; ?>
+											<?php  $cobrado += $cobranza->importe ?>
 										@endforeach
 										{{$cobrado}}
 									</td>
-									<td style="color:#ff3333">${{$pedido->importe - $cobrado}}</td>
-									<td>{{$pedido->estado}}</td>
+									<td style="color:#ff3333"> $ {{$pedido->importe - $cobrado}}</td>
+                                    <td>
+                                    @if ($pedido->estado == 'confirmado')
+                                            <span class="label label-warning">{{$pedido->estado}}</span>
+                                    @else
+                                        @if ($pedido->estado == 'a entregar')
+                                            <span class="label label-primary">{{$pedido->estado}}</span>
+                                        @else
+                                            @if ($pedido->estado == 'pendiente')
+                                                <span class="label label-danger">{{$pedido->estado}}</span>
+                                            @else
+                                                <!--Entregado-->
+                                                <span class="label label-success">{{$pedido->estado}}</span>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    </td>
+                                    <td>
+                                        @if ($pedido->cobranza == 'debe')
+                                            <span class="label label-danger">{{$pedido->cobranza}}</span>
+                                        @else
+                                            <span class="label label-success">{{$pedido->cobranza}}</span>
+                                        @endif
+                                        </td>
+									<td>
+										<a href="{{ route('admin.pedidos.edit', $pedido->id) }}" class="btn btn-warning">Pedido</a>
+									</td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
-
 
 	</div>
 

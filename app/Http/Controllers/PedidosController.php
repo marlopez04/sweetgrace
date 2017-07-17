@@ -534,8 +534,25 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
+        //recuperar pedido
         $pedido = Pedido::find($id);
         $pedido->load('pedidoarticulos', 'cobranzas','stock');
-        dd($pedido);
+        //cambiar el tipo de movimiento y la descripcion para que figure como otro "cobrado de pedido borrado"
+        foreach ($pedido->cobranzas as $cobranza) {
+            $movimiento = Movimiento::find($cobranza->movimiento_id);
+            $movimiento->relacion = "otro";
+            $movimiento->detalle = "Cobranza del pedido borrado" . $pedido->id;
+            $movimiento->save();
+            //borrar cobranza
+            $cobranza->delete();
+        }
+        //Borrar pedido
+        $pedido->delete();
+        //borrar stock
+        $stock = Stock::find($pedido->stock_id);
+        $stock->delete();
+
+        return redirect()->route('admin.pedidos.index');
+
     }
 }

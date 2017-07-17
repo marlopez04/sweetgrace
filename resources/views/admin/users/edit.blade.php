@@ -13,6 +13,8 @@
 			{!!	Form::text('name',$user->name,['class'=>'form-control', 'required'])!!}
 			<h4>Email</h4>
 			{!! Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'required'])!!}
+			<h4>Contraseña</h4>
+			{!!	Form::password('password',['class'=>'form-control','placeholder'=>'********' ,'required'])!!}
 			<h4>Tipo</h4>
 			{!! Form::select('type', [''=>'', 'member' => 'Miembro', 'admin' => 'Administrador'], $user->type, ['class'=> 'form-control'])!!}
 		</div>

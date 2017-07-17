@@ -62,6 +62,7 @@
 		@if ($stock->estado == 'pendiente')
 			{!! Form::open(['route' =>['admin.stocks.update', $stock], 'method' => 'PUT', 'files' => true]) !!}
 			{!!	Form::submit('Confirmar Stock',['class' =>'btn btn-primary']) !!}
+			<a href="{{ route('admin.stocks.destroy', $stock->id) }}" class="btn btn-danger"> Borrar</a>
 			{!! Form::close() !!}
 		@endif
 <!--

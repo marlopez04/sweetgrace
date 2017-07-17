@@ -40,7 +40,7 @@
 								@endif
 								
 									<td>
-										<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
+										<a href="{{ route('admin.clientes.show', $pedido->cliente_id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span></a>
 
 										{{$pedido->cliente->nombre}}
 									</td>

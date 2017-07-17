@@ -269,6 +269,11 @@ class StockController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $stock = Stock::find($id);
+        $movimiento = Movimiento::find($stock->movimiento_id);
+        $stock->delete();
+        $movimiento->delete();
+
+        return redirect()->route('admin.stocks.index', $id);
     }
 }

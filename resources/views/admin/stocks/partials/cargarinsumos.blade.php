@@ -2,7 +2,7 @@
 {!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
 {!! Form::number('cantidad',null,['class'=>'insumocantidad', 'id'=>'insumocantidad' , 'placeholder'=>'cantidad'])!!}
 {!! Form::number('costo',null,['class'=>'insumocosto', 'id'=>'insumocosto' , 'placeholder'=>'costo'])!!}
-{!! Form::hidden('nombre',$insumo->nombre,['class'=>'nombre', 'id'=>'nombre'])!!}
+{!! Form::hidden('nombre',$insumo->nombre,['class'=>'nombreins', 'id'=>'nombreins'])!!}
 {!! Form::hidden('id_insumo',$insumo->id,['class'=>'id_insumo', 'id'=>'id_insumo'])!!}
 {!! Form::hidden('id_stock',$stock->id,['class'=>'id_stock', 'id'=>'id_stock'])!!}
 <button type="button" class="btn btn-danger" id="cargaring">cargar</button>
@@ -17,7 +17,7 @@
     var costo = $('.insumocosto').val();
     var tipo = $('.tipo').val();
     var id_stock = $('#id_stock').val();
-    var nombre = $('#nombre').val();
+    var nombre = $('#nombreins').val();
         
     var form = $('#form-insumoadd');
     var url = form.attr('action').replace(':INGREDIENTE_ID', id_insumo);

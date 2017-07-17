@@ -24,15 +24,13 @@
 							<tbody>
 								@foreach($clientes as $cliente)
 									<tr>
-										<td>{{ $cliente->nombre }}</td>
+										<td>
+											<a href="{{ route('admin.clientes.show', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
+											{{ $cliente->nombre }}
+										</td>
 										<td>{{ $cliente->email }}</td>
 										<td>{{ $cliente->telefono }}</td>
 										<td>{{ $cliente->direccion }}</td>
-										<td>
-										<a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="btn btn-warning"> <span class="glyphicon glyphicon-wrench"></span></a>
-						
-										<a href="{{ route('admin.clientes.destroy', $cliente->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
-										</td>
 									</tr>
 								@endforeach
 							</tbody>

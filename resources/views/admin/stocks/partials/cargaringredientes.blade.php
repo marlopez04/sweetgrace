@@ -2,7 +2,7 @@
 {!! Form::select('tipo', ['1' => 'ingreso', '2' => 'egreso'], null, ['class'=> 'tipo'])!!}
 {!! Form::number('cantidad',null,['class'=>'ingredientecantidad', 'id'=>'ingredientecantidad' , 'placeholder'=>'cantidad'])!!}
 {!! Form::number('costo',null,['class'=>'ingredientecosto', 'id'=>'ingredientecosto' , 'placeholder'=>'costo'])!!}
-{!! Form::hidden('nombre',$ingrediente->nombre,['class'=>'nombre', 'id'=>'nombre'])!!}
+{!! Form::hidden('nombre',$ingrediente->nombre,['class'=>'nombreing', 'id'=>'nombreing'])!!}
 {!! Form::hidden('id_ingrediente',$ingrediente->id,['class'=>'id_ingrediente', 'id'=>'id_ingrediente'])!!}
 {!! Form::hidden('id_stock',$stock->id,['class'=>'id_stock', 'id'=>'id_stock'])!!}
 <button type="button" class="btn btn-danger" id="cargarins">cargar</button>
@@ -17,7 +17,7 @@
     var costo = $('.ingredientecosto').val();
     var tipo = $('.tipo').val();
     var id_stock = $('#id_stock').val();
-    var nombre = $('#nombre').val();
+    var nombre = $('#nombreing').val();
         
     var form = $('#form-ingredienteadd');
     var url = form.attr('action').replace(':INGREDIENTE_ID', id_ingrediente);
