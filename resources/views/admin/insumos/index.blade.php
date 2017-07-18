@@ -3,7 +3,7 @@
 @section('title', 'Pedidos pendientes.')
 
 @section('content')
-
+				
 <div class="monthly-grid">
 	<div class="panel panel-widget">
 		<div class="panel-title">
@@ -22,7 +22,15 @@
 	</div>
 
 <!-- insumos inicio -->
+<table>
+	<?php $elementos = 0 ?>
 @foreach ($insumos as $insumo)
+<!--
+	@if($elementos ==0 or $elementos ==3)
+		<tr>
+	@endif
+		<td>
+-->
 	<div class="col-md-5 skil" style="margin-right:10px;margin-bottom:10px;background-color:#B393B5">
 		<div class="content-top-1">
 			<div class="col-md-6 top-content">
@@ -43,7 +51,15 @@
 				<div class="clearfix"> </div>
 		</div>
 	</div>
+		<?php $elementos++  ?>
+<!--
+		</td>
+	@if($elementos == 3 or $elementos == 6 or $elementos == 9 or $elementos == 12)
+            
+    @endif
+-->
 @endforeach
+</table>
 
 
 		<div class="clearfix"> </div>

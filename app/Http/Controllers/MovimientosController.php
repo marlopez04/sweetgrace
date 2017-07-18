@@ -243,6 +243,22 @@ $movimientos2->load('user', 'cobranzas', 'stocks');
      * @return \Illuminate\Http\Response
      */
 
+    public function estadisticas($id)
+    {
+
+        $movimientos = Movimiento::all();
+
+        return view('admin.movimientos.estadisticas')
+            ->with('movimientos', $movimientos);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function destroy($id)
     {
         $movimiento = Movimiento::find($id);

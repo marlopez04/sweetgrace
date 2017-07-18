@@ -153,6 +153,7 @@ footer {
       <h1>Stock general Ingredientes/Insumos {{$periodoactual}}</h1>
     </header>
     <main>
+      <h3>Ingredientes</h3>
       <table>
         <thead>
           <tr>
@@ -173,6 +174,7 @@ footer {
           @endforeach
         </tbody>
       </table>
+      <h3>Insumos</h3>
       <table>
         <thead>
           <tr>

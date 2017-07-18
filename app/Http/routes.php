@@ -193,6 +193,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.movimientos.intervalo'
 	]);
 
+	Route::get('movimientos/{id}/estadisticas',[
+		'uses' => 'MovimientosController@estadisticas',
+		'as'   => 'admin.movimientos.estadisticas'
+	]);
+
 	Route::resource('cobranzas', 'CobranzasController');
 	Route::get('cobranzas/{id}/destroy',[
 		'uses' => 'CobranzasController@destroy',

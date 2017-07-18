@@ -35,7 +35,7 @@
 										</li>
 										<li id="menu-academico" ><a href=""><i class="glyphicon glyphicon-signal"></i> <span>Balance</span> <span class="fa fa-angle-right" style="float: right"></span></a>
 										   <ul id="menu-academico-sub" >
-										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.movimientos.index')}}">Estadisticas</a></li>
+										   <li id="menu-academico-avaliacoes" ><a href="{{ route('admin.movimientos.estadisticas', 1)}}">Estadisticas</a></li>
 										  </ul>
 										</li>
 									<li id="menu-academico" ><a href=""><i class="fa fa-table"></i> <span>Usuarios</span> <span class="fa fa-angle-right" style="float: right"></span></a>
