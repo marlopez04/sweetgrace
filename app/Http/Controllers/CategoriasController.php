@@ -147,10 +147,10 @@ class CategoriasController extends Controller
             $file = $request->file('imagen');
             $nombre = 'categoria_' . time() .'.' . $file->getClientOriginalExtension();
             $file->move($path, $nombre);     
+            $categoria->imagen = $nombre;
         }
 
         $categoria->fill($request->all());
-        $categoria->imagen = $nombre;
         $categoria->save();
 
         return redirect()->route('admin.categorias.index');

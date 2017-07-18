@@ -267,6 +267,58 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function imprimir($id)
+    {
+        $insumos = Insumo::all();
+        $ingredientes = Ingrediente::all();
+        
+        $sysdate = Carbon::now(); //recupero el sysdate
+        $periodoactual = $sysdate->format('d/m/Y');
+
+
+             $html = view('admin.stocks.partials.imprimir')
+                   ->with('insumos', $insumos)
+                   ->with('ingredientes', $ingredientes)
+                   ->with('periodoactual', $periodoactual);
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHTML($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $output = $dompdf->output();
+
+        $archivos_dir = public_path() . "/archivos/";
+        $pdf_file = 'Stocks_'.date('Y-m-d_His') .'.pdf';
+
+        if(!is_dir($archivos_dir))
+        {
+            mkdir($archivos_dir);
+        }
+
+        $pdf_files = array_diff( scandir($archivos_dir), array('.','..') );
+        if($pdf_files)
+        {
+            foreach ($pdf_files as $file)
+            {
+                if(preg_match("#\.pdf#", $file))
+                {
+                    @ unlink($archivos_dir . $file);
+                }
+            }
+        }
+
+        file_put_contents($archivos_dir . $pdf_file,$output);
+
+        echo url("/archivos/{$pdf_file}");
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $stock = Stock::find($id);

@@ -18,7 +18,7 @@
 			<h4>Unidad</h4>
 			{!!	Form::number('unidad',null,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
 			<h4>Costo</h4>
-			{!!	Form::number('costo',null,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
+			{!!	Form::text('costo',null,['class'=>'form-control', 'id'=>'unidad', 'required'])!!}
 		</div>
 		<div class="form-group">
 			{!!	Form::submit('Registrar',['class' =>'btn btn-primary']) !!}

@@ -13,6 +13,7 @@
 				<!-- status -->
 				<div class="contain">
 					<a href="{{ route('admin.stocks.create') }}" class="btn btn-info">Nuevo Stock</a><hr>
+					<button type="button" class="btn btn-danger" id="imprimir">Imprimir Stock Total</button>
 					<div class="gantt">
 						<table class="table table-striped">
 							<thead>
@@ -48,9 +49,49 @@
 		</div>
 	</div>
 
+{!! Form::open(['route' => ['admin.stocks.imprimir', ':IMPRIMIR_ID'], 'method' => 'POST' , 'id' => 'form-imprimir' ]) !!}
+{!! Form::close() !!}
+
+
 @endsection
 
 
+@section('js')
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+	//cargo las listas de precios
+
+	$('#imprimir').click(function() {
+	  var form = $('#form-imprimir');
+	  var token = form.serialize();
+
+   var url = form.attr('action').replace(':IMPRIMIR_ID', 1);
+
+ 	  var form_data = {
+	    token: token
+	  };
+
+       $.get(url, form_data, function(res){
+       		window.open(res,'_blank');
+       });
+
+    });
+
+
+});
+
+function downloadURL(url) {
+    if( $('#idown').length ){
+        $('#idown').attr('src',url);
+    }else{
+        $('<iframe>', { id:'idown', src:url,'style':'height:50px;overflow:scroll' }).hide().appendTo('body');
+    }
+}
+</script>
+
+@endsection
 
 
 

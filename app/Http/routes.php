@@ -177,6 +177,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 		'as'   => 'admin.stocks.destroy'
 	]);
 
+	Route::get('stocks/{id}/imprimir',[
+		'uses' => 'StockController@imprimir',
+		'as'   => 'admin.stocks.imprimir'
+	]);
+
 	Route::resource('movimientos', 'MovimientosController');
 	Route::get('movimientos/{id}/destroy',[
 		'uses' => 'MovimientosController@destroy',

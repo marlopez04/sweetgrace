@@ -177,7 +177,7 @@ class PedidosController extends Controller
     {
 
         //controlo si el estado esta en BORRAR
-        if ($request->estado == 'borrar') {
+        if ($request->estado == 'borrar' and $pedido->estado <> 'entregado') {
             return redirect()->route('admin.pedidos.destroy', $id);
         }
         //recupero el pedido
