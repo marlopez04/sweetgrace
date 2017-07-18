@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="{{asset('plugins/estadist2/css/bootstrap.min.css')}}" >
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->
+<!-- 
+-->
 <link href="{{asset('plugins/estadist2/css/stylemod.css')}}" rel='stylesheet' type='text/css' />
 <link href="{{asset('plugins/estadist2/css/style-responsive.css')}}" rel="stylesheet"/>
 <!-- font CSS -->
@@ -168,6 +170,13 @@
 <script src="js/jquery.scrollTo.js"></script>
 <!-- morris JavaScript -->	
 <script>
+
+var movimientos = [
+@foreach ($movimientos as $movimiento)
+    [ "{{ $movimiento->periodo }}", "{{ $movimiento->importe }}" ], 
+@endforeach
+];
+
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
 	   jQuery('.small-graph-box').hover(function() {
@@ -198,22 +207,22 @@
         lineWidth: 0,
         fillOpacity:0.85,
 			data: [
-				{period: '2015 Q1', iphone: 2668, ipad: null, itouch: 2649},
-				{period: '2015 Q2', iphone: 15780, ipad: 13799, itouch: 12051},
-				{period: '2015 Q3', iphone: 12920, ipad: 10975, itouch: 9910},
-				{period: '2015 Q4', iphone: 8770, ipad: 6600, itouch: 6695},
-				{period: '2016 Q1', iphone: 10820, ipad: 10924, itouch: 12300},
-				{period: '2016 Q2', iphone: 9680, ipad: 9010, itouch: 7891},
-				{period: '2016 Q3', iphone: 4830, ipad: 3805, itouch: 1598},
-				{period: '2016 Q4', iphone: 15083, ipad: 8977, itouch: 5185},
-				{period: '2017 Q1', iphone: 10697, ipad: 4470, itouch: 2038},
+				{period: '2015 Q1', iphone: 2668, ipad: null},
+				{period: '2015 Q2', iphone: 15780, ipad: 13799},
+				{period: '2015 Q3', iphone: 12920, ipad: 10975},
+				{period: '2015 Q4', iphone: 8770, ipad: 6600},
+				{period: '2016 Q1', iphone: 10820, ipad: 10924},
+				{period: '2016 Q2', iphone: 9680, ipad: 9010},
+				{period: '2016 Q3', iphone: 4830, ipad: 3805},
+				{period: '2016 Q4', iphone: 15083, ipad: 8977},
+				{period: '2017 Q1', iphone: 10697, ipad: 4470},
 			
 			],
-			lineColors:['#eb6f6f','#926383','#eb6f6f'],
+			lineColors:['#eb6f6f','#926383'],
 			xkey: 'period',
             redraw: true,
-            ykeys: ['iphone', 'ipad', 'itouch'],
-            labels: ['All Visitors', 'Returning Visitors', 'Unique Visitors'],
+            ykeys: ['iphone', 'ipad'],
+            labels: ['All Visitors', 'Returning Visitors'],
 			pointSize: 2,
 			hideHover: 'auto',
 			resize: true
