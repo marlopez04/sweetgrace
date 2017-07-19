@@ -21,12 +21,12 @@ class CategoriasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //$categorias = Categoria::all();
         //$categorias = Categoria::all()->sortBy("id")->paginate(3);
   
-        $categorias = Categoria::orderBy('id', 'DESC')->paginate(8);
+        $categorias = Categoria::Search($request->nombre)->orderBy('id', 'DESC')->paginate(8);
         
         //$categorias->each(function($categorias){
         //    $categorias->imagenescategorias;

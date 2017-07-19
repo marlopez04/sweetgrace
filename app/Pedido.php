@@ -35,4 +35,9 @@ class Pedido extends Model
     	return $this->hasMany('App\Cobranza');
     }
 
+    public function scopeSearch($query, $nombre)
+    {
+        return $query->where('nombre', 'LIKE', "%$nombre%");
+    }
+
 }

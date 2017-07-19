@@ -13,8 +13,16 @@
 				<!-- status -->
 				<div class="contain">									
 					<div class="gantt">
-						<a href="{{ route('admin.ingredientes.create') }}" class="btn btn-info">Registrar nuevo ingrediente</a>
+						<a href="{{ route('admin.ingredientes.index') }}" class="btn btn-info">Registrar nuevo ingrediente</a>
 						</div>
+<!-- busca ingrediente -->
+                {!! Form::open(['route' => 'admin.ingredientes.index', 'method' => 'GET', 'class' => 'navbar-form pull-left'])!!}
+                <div class="input-group">
+                  {!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Buscar ingrediente..', 'aria-describedby' => 'search'])!!}
+                  <span class="input-group-addon" id="search"><span class="glyphicon glyphicon-search" id="search" aria-hidden="true"></span></span>
+                </div>
+              {!! Form::close() !!}
+
 				</div>
 			</div>
 			<!-- status -->

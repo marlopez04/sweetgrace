@@ -13,6 +13,14 @@
 				<!-- status -->
 				<div class="contain">
 					<a href="{{ route('admin.clientes.create') }}" class="btn btn-info">Registrar nuevo Cliente</a><hr>
+<!-- busca cliente -->
+                {!! Form::open(['route' => 'admin.clientes.index', 'method' => 'GET', 'class' => 'navbar-form pull-left'])!!}
+                <div class="input-group">
+                  {!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Buscar cliente..', 'aria-describedby' => 'search'])!!}
+                  <span class="input-group-addon" id="search"><span class="glyphicon glyphicon-search" id="search" aria-hidden="true"></span></span>
+                </div>
+              {!! Form::close() !!}
+
 					<div class="gantt">
 						<table class="table table-striped">
 							<thead>

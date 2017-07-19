@@ -11,7 +11,7 @@
         </div>
             <div class="panel-body">
                 <!-- status -->
-                <div class="contain">                                   
+                <div class="contain">
                     <div class="gantt">
                         <table class="table table-hover table-striped">
                             <thead>

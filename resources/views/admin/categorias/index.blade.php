@@ -13,7 +13,17 @@
           <div class="contain">
           <div class="gantt">
             <a href="{{ route('admin.categorias.create') }}" class="btn btn-info">Registrar nueva Categoria</a>
+
+<!-- busca categoria -->
+                {!! Form::open(['route' => 'admin.categorias.index', 'method' => 'GET', 'class' => 'navbar-form pull-left'])!!}
+                <div class="input-group">
+                  {!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Buscar categoria..', 'aria-describedby' => 'search'])!!}
+                  <span class="input-group-addon" id="search"><span class="glyphicon glyphicon-search" id="search" aria-hidden="true"></span></span>
+                </div>
+              {!! Form::close() !!}
+              
             </div>
+
         </div>
         </div>
         <!-- grids_of_4 -->

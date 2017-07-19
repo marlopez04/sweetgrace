@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Request\InsumoRequest;
 use App\Http\Controllers\Controller;
 use App\Insumo;
+use App\Receta;
+use App\Ingrediente;
 use Laracasts\Flash\Flash;
 
 class InsumosController extends Controller
@@ -16,9 +18,9 @@ class InsumosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $insumos = Insumo::orderBy('id', 'DESC')->paginate(12);
+        $insumos = Insumo::Search($request->nombre)->orderBy('id', 'DESC')->paginate(12);
         return view('admin.insumos.index')->with('insumos', $insumos);
     }
 
@@ -109,10 +111,48 @@ class InsumosController extends Controller
     {
         $insumo = Insumo::find($id);
         $insumo->fill($request->all());
-        $insumo->costo_u = doubleval($request->costo);
         if ($insumo->max < $request->cantidad) {
             $insumo->max = $request->cantidad;
         }
+
+        if ($insumo->costo_u <> doubleval($request->costo)) {
+            //cambio el costo
+            $insumo->costo_u = doubleval($request->costo);
+
+        //------ recalcular costo de las recetas
+
+        //obtengo las recetas que poseen ingredientes cargados en el stock
+
+                $recetas = \DB::select("SELECT ris.receta_id as receta_id
+                                        FROM recetainsumos ris 
+                                        WHERE ris.insumo_id = '{$id}'");
+
+                foreach ($recetas as $recetaid){
+
+                    $receta = Receta::find($recetaid->receta_id);
+        //recupero los ingredientes
+                    $costoingredientes = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ing.unidad) *  ing.costo_u, 2)) as costo
+                                        FROM recetaingredientes rin
+                                        INNER JOIN ingredientes ing on ing.id = rin.ingrediente_id
+                                        WHERE rin.receta_id = '{$recetaid->receta_id}'
+                                        GROUP BY rin.receta_id");
+
+        //recupero los insumos
+                    $costoinsumos = \DB::select("SELECT rin.receta_id, sum( round((rin.cantidad / ins.unidad) *  ins.costo_u, 2)) as costo
+                                                    FROM recetainsumos rin
+                                                    INNER JOIN insumos ins on ins.id = rin.insumo_id
+                                                    WHERE rin.receta_id = '{$recetaid->receta_id}'
+                                                    GROUP BY rin.receta_id");
+
+        //sumno los dos para sacar el costo total y grabarlo en la receta
+        //dd($costoinsumos[0]->costo);
+
+                    $receta->costo = $costoingredientes[0]->costo + $costoinsumos[0]->costo;
+                    $receta->save();
+                }
+
+        }
+
         $insumo->save();
 
         Flash::warning('El insumo '. $insumo->nombre . ' ha sido editado con exito');
