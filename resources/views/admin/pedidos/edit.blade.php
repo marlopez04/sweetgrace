@@ -181,11 +181,14 @@
       </div>
 
     <div class="panel-title">
+@if($pedido->estado <> 'entregado')
       <h4>Lista de Precio</h4>
       {!! Form::select('lista_id', $listasprecios, null, ['class' => 'form-control select-category', 'id' => 'lista_id']) !!}
             <h4>Categorias</h4>
+@endif
     </div>
 
+@if($pedido->estado <> 'entregado')
               <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 809px; height: 150px; overflow: hidden; visibility: hidden;">
                 <!-- Loading Screen -->
                 <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -212,8 +215,10 @@
                 <span data-u="arrowleft" class="jssora03l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
                 <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
             </div>
+@endif
             
         </div>
+
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
             <div class="col-md-3 cart-total" id="itemcontent">
@@ -231,8 +236,10 @@
 	                @foreach($pedido->pedidoarticulos as $pedidoarticulo)
 	                  <tr>
 	                    <td>
-	                    <a href="javascript:void(0)" class='btn_danger' onclick='borraritem2(this)' data-id="{{ $pedidoarticulo->id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-	                    {{ $pedidoarticulo->descripcion}}
+                        @if($pedido->estado <> 'entregado')
+	                         <a href="javascript:void(0)" class='btn_danger' onclick='borraritem2(this)' data-id="{{ $pedidoarticulo->id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        @endif
+	                     {{ $pedidoarticulo->descripcion}}
 	                    </td>
 	                    <td>{{ $pedidoarticulo->cantidad }}</td>
 	                    <td>$ {{ $pedidoarticulo->precio }}</td>

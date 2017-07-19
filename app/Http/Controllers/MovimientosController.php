@@ -246,7 +246,9 @@ $movimientos2->load('user', 'cobranzas', 'stocks');
     public function estadisticas($id)
     {
 
-        $movimientos = Movimiento::all();
+        $movimientos = Movimiento::where('importe', '!=', 0)
+                                ->where('periodo', '!=', 0)
+                                ->orderBy('id', 'asc')->get();
 
         return view('admin.movimientos.estadisticas')
             ->with('movimientos', $movimientos);

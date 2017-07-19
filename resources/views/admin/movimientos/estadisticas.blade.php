@@ -171,15 +171,14 @@
 <!-- morris JavaScript -->	
 <script>
 
-var movimientos = [
-@foreach ($movimientos as $movimiento)
-    [ "{{ $movimiento->periodo }}", "{{ $movimiento->importe }}" ], 
-@endforeach
-];
 
-movimientos.forEach(function(periodo){
-		console.log(periodo);
-});
+var elementos = [];
+console.log(elementos);
+
+@foreach ($movimientos as $movimiento)
+	elementos.push({periodo:'{{$movimiento->created_at}}', importe:'{{$movimiento->importe}}', });
+@endforeach
+console.log(elementos);
 
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -210,22 +209,11 @@ movimientos.forEach(function(periodo){
         pointSize: 0,
         lineWidth: 0,
         fillOpacity:0.85,
-			data: [
-				{period: '2015 Q1', iphone: 2668, ipad: null},
-				{period: '2015 Q2', iphone: 15780, ipad: 13799},
-				{period: '2015 Q3', iphone: 12920, ipad: 10975},
-				{period: '2015 Q4', iphone: 8770, ipad: 6600},
-				{period: '2016 Q1', iphone: 10820, ipad: 10924},
-				{period: '2016 Q2', iphone: 9680, ipad: 9010},
-				{period: '2016 Q3', iphone: 4830, ipad: 3805},
-				{period: '2016 Q4', iphone: 15083, ipad: 8977},
-				{period: '2017 Q1', iphone: 10697, ipad: 4470},
-			
-			],
-			lineColors:['#eb6f6f','#926383'],
-			xkey: 'period',
+			data: elementos,
+			lineColors:['#eb6f6f'],
+			xkey: 'periodo',
             redraw: true,
-            ykeys: ['iphone', 'ipad'],
+            ykeys: ['importe'],
             labels: ['All Visitors', 'Returning Visitors'],
 			pointSize: 2,
 			hideHover: 'auto',

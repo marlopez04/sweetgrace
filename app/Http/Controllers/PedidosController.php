@@ -175,13 +175,13 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $pedido = Pedido::find($id);
 
         //controlo si el estado esta en BORRAR
         if ($request->estado == 'borrar' and $pedido->estado <> 'entregado') {
             return redirect()->route('admin.pedidos.destroy', $id);
         }
         //recupero el pedido
-        $pedido = Pedido::find($id);
         $cobrado1 = 0;
 
         //recupero la fecha del dia y la transformo en un periodo EJ: 201705

@@ -16,7 +16,7 @@ class AddPedidoarticulosTable extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->integer('pedido_id')->unsigned();
-            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->foreign('pedido_id')->references('id')->on('pedidos')->onDelete('cascade');
             $table->integer('articulo_id')->unsigned();
             $table->foreign('articulo_id')->references('id')->on('articulos');
             $table->double('cantidad', 10, 0);
