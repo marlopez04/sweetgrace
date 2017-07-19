@@ -161,13 +161,13 @@
 @section('js')
 
 
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="js/scripts.js"></script>
-<script src="js/jquery.slimscroll.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
+<script src="{{asset('plugins/estadist2/js/bootstrap.js')}}"></script>
+<script src="{{asset('plugins/estadist2/js/jquery.dcjqaccordion.2.7.js')}}"></script>
+<script src="{{asset('plugins/estadist2/js/scripts.js')}}"></script>
+<script src="{{asset('plugins/estadist2/js/jquery.slimscroll.js')}}"></script>
+<script src="{{asset('plugins/estadist2/js/jquery.nicescroll.js')}}"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-<script src="js/jquery.scrollTo.js"></script>
+<script src="{{asset('plugins/estadist2/js/jquery.scrollTo.js')}}"></script>
 <!-- morris JavaScript -->	
 <script>
 
@@ -176,6 +176,10 @@ var movimientos = [
     [ "{{ $movimiento->periodo }}", "{{ $movimiento->importe }}" ], 
 @endforeach
 ];
+
+movimientos.forEach(function(periodo){
+		console.log(periodo);
+});
 
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -232,24 +236,9 @@ var movimientos = [
 	});
 	</script>
 <!-- calendar -->
-	<script type="text/javascript" src="js/monthly.js"></script>
+	<script type="text/javascript" src="{{asset('plugins/estadist2/js/monthly.js')}}"></script>
 	<script type="text/javascript">
 		$(window).load( function() {
-
-			$('#mycalendar').monthly({
-				mode: 'event',
-				
-			});
-
-			$('#mycalendar2').monthly({
-				mode: 'picker',
-				target: '#mytarget',
-				setWidth: '250px',
-				startHidden: true,
-				showTrigger: '#mytarget',
-				stylePast: true,
-				disablePast: true
-			});
 
 		switch(window.location.protocol) {
 		case 'http:':
