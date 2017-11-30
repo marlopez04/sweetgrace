@@ -21,7 +21,11 @@ class PedidosArticulosController extends Controller
      */
     public function index()
     {
-        //
+        //Layot de Sistema de riego
+
+        return view('admin.template.riego');
+
+        //Layot de Sistema de riego
     }
 
     /**
