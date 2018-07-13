@@ -259,7 +259,7 @@ class PedidosController extends Controller
 
             // selecciono las recetas, sumo los ingredientes y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
-           $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
+           $dataingredientes = \DB::select("SELECT ri.ingrediente_id as ingrediente_id, ri.nombre as nombre, sum(ri.cantidad * pa.cantidad) as cantidad
                                         FROM pedidoarticulos pa
                                         INNER JOIN articulos a on a.id = pa.articulo_id
                                         INNER JOIN recetas r on r.id = a.receta_id
@@ -269,7 +269,7 @@ class PedidosController extends Controller
 
             // selecciono las recetas, sumo los insumos y los devuelve sumados (ingrediente_id, nombre, cantidad)
 
-            $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad) as cantidad
+            $datainsumos = \DB::select("SELECT ri.insumo_id as insumo_id, ri.nombre as nombre, sum(ri.cantidad * pa.cantidad) as cantidad
                                     FROM pedidoarticulos pa
                                     INNER JOIN articulos a on a.id = pa.articulo_id
                                     INNER JOIN recetas r on r.id = a.receta_id

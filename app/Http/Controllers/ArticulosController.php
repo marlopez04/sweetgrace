@@ -135,18 +135,26 @@ class ArticulosController extends Controller
     {
         $articulo = Articulo::find($id);
 
+        $imagen = $articulo->imagen;
+
+        $articulo->fill($request->all());
+
         if ($request->file('imagen'))
         {
+            //si encuentra un cambio de imagen graba una imagen nueva
             $path = public_path() . '/imagenes/articulos/';
             unlink($path . $articulo->imagen);
 
             $file = $request->file('imagen');
             $nombre = 'articulo_' . time() .'.' . $file->getClientOriginalExtension();
             $file->move($path, $nombre);     
+    
+            $articulo->imagen = $nombre;
+        }else{
+            //mantiene la imagen anterior
+            $articulo->imagen = $imagen;
         }
 
-        $articulo->fill($request->all());
-        $articulo->imagen = $nombre;
         $articulo->save();
 
         return redirect()->route('admin.articulos.index');

@@ -65,7 +65,7 @@ class PedidosArticulosController extends Controller
         $pedidoarticulo->descripcion = $articulo->nombre;
         $pedidoarticulo->pedido_id = $_GET['id_pedido'];
         $pedidoarticulo->cantidad = $_GET['cantidad'];
-        $pedidoarticulo->precio = $articulo->precio;
+        $pedidoarticulo->precio = $articulo->precio * $pedidoarticulo->cantidad;
         $pedidoarticulo->save();
 
         $pedido = Pedido::find($pedidoarticulo->pedido_id);
@@ -86,10 +86,31 @@ class PedidosArticulosController extends Controller
 
 //fin suma de los importes
 
+        //creo un elemento que que agrupe los items 23/06/2018 (id,descripcion, cantidad, precio)
+        $idp = $pedido->id;
+        $pedidoarticulos = \DB::select("SELECT
+                                            max(pa.id) as id,
+                                            pa.descripcion as descripcion,
+                                            sum(pa.cantidad) as cantidad,
+                                            sum(pa.precio) as precio
+                                        FROM pedidoarticulos pa
+                                        INNER JOIN articulos a on a.id = pa.articulo_id
+                                        WHERE pedido_id = '{$idp}'
+                                        group by a.id");
+
+        //dd($pedidoarticulos);
+
 
         // dd($_GET['algo']);
         $html = view('admin.pedidos.partials.items')
                    ->with('pedido', $pedido);
+        //comentado 23/06/2018
+        /*
+
+        $html = view('admin.pedidos.partials.items')
+                   ->with('pedidoarticulos', $pedidoarticulos);
+        */
+        //comentado 23/06/2018
 
          return $html;
         // return view('admin.pedidos.partials.items');

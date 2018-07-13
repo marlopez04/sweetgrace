@@ -87,10 +87,14 @@ class StockController extends Controller
     public function show($id)
     {
         $stock = Stock::find($id);
-        $stock->load('stockingredientes', 'stockingredientes');
+        $stock->load('stockingredientes', 'stockingredientes', 'pedido');
+        $ingredientes = Ingrediente::all();
+        $insumos = Insumo::all();
 
         $html = view('admin.stocks.partials.insumosingredientes')
-                     ->with('stock', $stock);
+                     ->with('stock', $stock)
+                     ->with('ingredientes', $ingredientes)
+                     ->with('insumos', $insumos);
 
          return $html;
     }

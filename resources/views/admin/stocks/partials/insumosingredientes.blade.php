@@ -1,5 +1,8 @@
 <!-- INGREDIENTES       -->
+@if ($stock->costo == 0)
+@else
 <h4> COSTO TOTAL $ {{$stock->costo}}</h4>
+@endif
           <table class="table table-striped">
               <thead>
               <tr><td align="center " colspan="6"><h3><strong>Ingredientes</strong></h3></td></tr>
@@ -10,9 +13,14 @@
                 @endif
                 <th>Ingrediente</th>
                 <th>Cantidad</th>
+                @if ($stock->pedido)
+                <th>stock actual</th>
+                <th>diferencia</th>
+                @else
                 <th>Costo</th>
                 <th>Unidad</th>
                 <th>Costo/U</th>
+                @endif
               </thead>
               <tbody>
                 @foreach($stock->stockingredientes as $stockingrediente)
@@ -24,9 +32,19 @@
                     @endif
                     <td>{{ $stockingrediente->nombre }}</td>
                     <td>{{ $stockingrediente->cantidad }}</td>
-                    <td>{{ $stockingrediente->costo }}</td>
-                    <td>{{ $stockingrediente->unidad }}</td>
-                    <td>{{ $stockingrediente->costo_u }}</td>
+
+                    @if ($stock->pedido)
+                        @foreach($ingredientes as $ingrediente)
+                            @if ($ingrediente->id == $stockingrediente->ingrediente_id)
+                                <td>{{$ingrediente->cantidad}}</td>
+                                <td>{{$ingrediente->cantidad - $stockingrediente->cantidad}}</td>
+                            @endif
+                        @endforeach
+                    @else
+                        <td>{{ $stockingrediente->costo }}</td>
+                        <td>{{ $stockingrediente->unidad }}</td>
+                        <td>{{ $stockingrediente->costo_u }}</td>
+                    @endif
                   </tr>
                 @endforeach
               </tbody>
@@ -43,9 +61,14 @@
                 @endif
                 <th>Insumo</th>
                 <th>Cantidad</th>
+                @if ($stock->pedido)
+                <th>stock actual</th>
+                <th>diferencia</th>
+                @else
                 <th>Costo</th>
                 <th>Unidad</th>
                 <th>Costo/U</th>
+                @endif
               </thead>
               <tbody>
                 @foreach($stock->stockinsumos as $stockinsumo)
@@ -57,9 +80,19 @@
                     @endif
                     <td>{{ $stockinsumo->nombre }}</td>
                     <td>{{ $stockinsumo->cantidad }}</td>
-                    <td>{{ $stockinsumo->costo }}</td>
-                    <td>{{ $stockinsumo->unidad }}</td>
-                    <td>{{ $stockinsumo->costo_u }}</td>
+                    
+                    @if ($stock->pedido)
+                        @foreach($insumos as $insumo)
+                            @if ($insumo->id == $stockinsumo->insumo_id)
+                                <td>{{$insumo->cantidad}}</td>
+                                <td>{{$insumo->cantidad - $stockinsumo->cantidad}}</td>
+                            @endif
+                        @endforeach
+                    @else
+                      <td>{{ $stockinsumo->costo }}</td>
+                      <td>{{ $stockinsumo->unidad }}</td>
+                      <td>{{ $stockinsumo->costo_u }}</td>
+                    @endif
                   </tr>
                 @endforeach
               </tbody>

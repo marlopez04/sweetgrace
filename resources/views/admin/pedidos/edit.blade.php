@@ -217,7 +217,33 @@
             </div>
 @endif
             
+
+          <div class="col-6">
+            <div id="divcarga" hidden>
+              <label class="articuloelegido" hidden></label>
+              <table class="table table-striped">
+                        <thead>
+                          <th>Articulo</th>
+                          <th>Cantidad</th>
+                          <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td><label class="nombreMostrar"></label></td>
+                              <td>
+                              <input type="number" id="cantidad">
+                              </td>
+                              <td>
+                                <a href="#" class = "btn btn-primary" id="cargararticulo">Cargar</td>
+                            </tr>
+                        </tbody>
+              </table>
+            </div>
         </div>
+
+
+        </div>
+
 
             <div class="col-md-1"><h4>   </h4></div>
                 <!-- carrito de compras -->
@@ -411,64 +437,57 @@ function borraritem2(btn_danger){
 
 //funcion agregar el articulo al carrito de compras
                          $('.articulo').click(function(){
-                            var id_articulo = $(this).data('id');
-                            var id_pedido = $('.pedidoid').val();
-                            var id_stock = $('.stockid').val();
-  //                          var id_articulo = $(this).data('id'); 
-                            var form = $('#form-articulo');
-                            var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
-  //                          var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
-                            var token = form.serialize();
-                            data = {
-                              token: token,
-                              id_articulo: id_articulo,
-                              cantidad: "1",
-                              id_pedido: id_pedido,
-                              id_stock: id_stock
-                            };
-                            console.log(data);
-                            $.get(url, data, function(items){
+                           // var id_articulo = $(this).data('id');
+  //04/07 mod
+                            var articulo_nombre = $(this).data('name');
 
-                                   $('#items2').hide();
-                                   $('#items').fadeOut().html(items).fadeIn();
+                            $('.articuloelegido').html($(this).data('id'));
 
-//                                   $("body").animate({ scrollTop: $(document).height()});
+                            $('.nombreMostrar').html(articulo_nombre);
+                            console.log(articulo_nombre);
 
-//borrar un item del carrito
+                            $('#divcarga').show();
+
+
+//de aca
 /*
-                                    $('.btn-danger').on('click', function(){
-//                                      function borraritem(btn_danger){
-                                        console.log("llama a la funcion");
-                                        var id_item = $(btn_danger).data('id');
-                                        console.log(id_item);
-//                                        $('.btn-danger').on('click', function(){
-                                          var form = $('#form-deleteitem');
-                                          var url = form.attr('action').replace(':ITEM_ID', id_item);
-                                          var token = form.serialize();
-                                          data = {
-                                            token: token,
-                                            id_item: id_item
-                                          };
-                                          console.log(data);
-                                          $.get(url, data, function(items){
+                            $('#cargararticulo').click(function(){
+                              
+                              var id_articulo = $('.articuloelegido').html();
 
-                                                  $('#itemcontent').hide();                                          
+                              console.log("carga de articulo");
+                              
+                              var articulocantidad = $('#cantidad').val();
+                              console.log(articulocantidad);
+    //04/07 mod
+                              var id_pedido = $('.pedidoid').val();
+                              var id_stock = $('.stockid').val();
+                              var form = $('#form-articulo');
+                              var url = form.attr('action').replace(':ARTICULO_ID', id_articulo);
+                              var token = form.serialize();
+                              data = {
+                                token: token,
+                                id_articulo: id_articulo,
+                                cantidad: articulocantidad,
+                                id_pedido: id_pedido,
+                                id_stock: id_stock
+                              };
+                              console.log(data);
 
-                                                 $('#items').fadeOut().html(items).fadeIn();
+                              $.get(url, data, function(items){
 
-                                                 $('#itemcontent').show();
+                                     $('#divcarga').hide();
+                                     $('#items2').hide();
+                                     $('#items').fadeOut().html(items).fadeIn();
+  //fin de ajax carga de items             
+                            });
 
-                                                 $("body").animate({ scrollTop: $(document).height()});
 
-                                                 });
-                                        });
+                            });
 */
-//                                      };
+//hasta aca
 
 
-//fin de ajax carga de items
-           
-                          });
 //fin de click articulos
                       });
 //fin de ok ajax categoria                 
